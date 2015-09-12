@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:padding="10dp"
+    android:layout_height="fill_parent"
+    android:background="@drawable/wp2"
+    android:orientation="vertical"
+    android:weightSum="5">
+
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_width="match_parent"></LinearLayout>
+<LinearLayout
+
+android:layout_width="match_parent"
+android:layout_height="0dp"
+
+    android:layout_gravity="center"
+    android:id="@+id/lin_lay"
+    android:gravity="center"
+    android:layout_weight="2"
+    android:weightSum="100"
+    android:orientation="horizontal" >
+
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/logol"
+        android:visibility="invisible"
+        android:layout_weight="10"
+        android:background="@drawable/logol" />
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:visibility="invisible"
+        android:id="@+id/logo"
+        android:gravity="center"
+        android:background="#ffcb7e"
+        android:layout_weight="80"
+        android:orientation="horizontal"
+        >
+        <LinearLayout
+            android:layout_margin="20dp"
+            android:layout_width="match_parent"
+            android:id="@+id/logoin"
+            android:background="#ffcb7e"
+            android:orientation="horizontal"
+            android:layout_height="match_parent"></LinearLayout>
+        </LinearLayout>
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/logor"
+        android:visibility="invisible"
+        android:layout_weight="10"
+        android:background="@drawable/logor" />
+
+
+</LinearLayout>
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:gravity="bottom"
+        android:layout_width="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/loadingPanel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+android:visibility="invisible"
+            android:gravity="center" >
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminate="true" />
+        </RelativeLayout>
+        </LinearLayout>
+</LinearLayout>
