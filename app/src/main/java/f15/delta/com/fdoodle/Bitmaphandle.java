@@ -55,7 +55,7 @@ public class Bitmaphandle {
 
         // Decode bitmap with inSampleSize set
         options.inJustDecodeBounds = false;
-        Log.e("returnbit","*");
+        //Log.e("returnbit","*");
         return BitmapFactory.decodeResource(res, resId, options);
 
     }

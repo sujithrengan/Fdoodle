@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/wp2">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"
+        />
+
+
+    <Spinner
+        android:id="@+id/recyclespinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:spinnerMode="dialog"
+        android:outlineProvider="paddedBounds"
+        android:background="@color/festember_orange"
+        android:backgroundTint="#ffffff"
+        android:backgroundTintMode="src_atop"
+        android:layout_gravity="top|left"
+        android:layout_alignParentTop="false"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="false"
+        android:layout_toLeftOf="@+id/recyclespinnertime"
+        android:layout_below="@+id/toolbar"
+        android:layout_alignBaseline="@+id/recyclespinnercate" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/recyclespinnertime"
+        android:spinnerMode="dialog"
+        android:outlineProvider="paddedBounds"
+        android:background="@color/festember_orange"
+        android:backgroundTint="#ffffff"
+        android:backgroundTintMode="src_atop"
+        android:layout_gravity="top|right"
+        android:layout_alignParentLeft="false"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/toolbar"
+        android:layout_alignBaseline="@+id/recyclespinnercate" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/recyclespinnercate"
+        android:spinnerMode="dialog"
+        android:outlineProvider="paddedBounds"
+        android:background="@color/festember_orange"
+        android:backgroundTint="#ffffff"
+        android:backgroundTintMode="src_atop"
+        android:layout_gravity="top|right"
+        android:layout_alignParentTop="false"
+        android:layout_toRightOf="@+id/recyclespinnertime"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/toolbar" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclelist"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/recyclespinnercate"
+        android:layout_alignParentBottom="false"
+        android:layout_alignParentTop="false" />
+
+
+</RelativeLayout>

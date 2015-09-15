@@ -1,8 +1,10 @@
 package f15.delta.com.fdoodle;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -79,7 +81,10 @@ public class Hscreen extends ActionBarActivity {
                     //Bitmap bim=Bmpmute.convertToMutable(bm);
                     if (bm.getPixel(nTouchX * 1080 / screen_width, nTouchY * 1920 / screen_height) != 0) {
                         // non-transparent pixel touched,
-                        Toast.makeText(getApplicationContext(), "Doodle", Toast.LENGTH_SHORT).show();
+                        Intent i=new Intent(Hscreen.this,ScheduleActivity.class);
+                        startActivity(i);
+
+                        //Toast.makeText(getApplicationContext(), "Doodle", Toast.LENGTH_SHORT).show();
                         return true;
                     }
                     // transparent pixel touched
@@ -103,8 +108,11 @@ public class Hscreen extends ActionBarActivity {
                     //Bitmap bim=Bmpmute.convertToMutable(bm);
                     if (bm.getPixel(nTouchX * 1080 / screen_width, nTouchY * 1920 / screen_height) != 0) {
                         // non-transparent pixel touched,
-                        Toast.makeText(getApplicationContext(), "Raffle", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "My Profile", Toast.LENGTH_SHORT).show();
                         return true;
+
+                        //Toast.makeText(getApplicationContext(), "Raffle", Toast.LENGTH_SHORT).show();
+
                     }
                     // transparent pixel touched
                     return false;
@@ -127,7 +135,10 @@ public class Hscreen extends ActionBarActivity {
                     //Bitmap bim=Bmpmute.convertToMutable(bm);
                     if (bm.getPixel(nTouchX * 1080 / screen_width, nTouchY * 1920 / screen_height) != 0) {
                         // non-transparent pixel touched,
-                        Toast.makeText(getApplicationContext(), "Upcoming Events", Toast.LENGTH_SHORT).show();
+                        Intent i=new Intent(Hscreen.this,Painter.class);
+                        startActivity(i);
+
+                       // Toast.makeText(getApplicationContext(), "Upcoming Events", Toast.LENGTH_SHORT).show();
                         return true;
                     }
                     // transparent pixel touched
@@ -151,8 +162,8 @@ public class Hscreen extends ActionBarActivity {
                     //Bitmap bim=Bmpmute.convertToMutable(bm);
                     if (bm.getPixel(nTouchX * 1080 / screen_width, nTouchY * 1920 / screen_height) != 0) {
                         // non-transparent pixel touched,
-                        Toast.makeText(getApplicationContext(), "Schedule", Toast.LENGTH_SHORT).show();
-                        return true;
+                        Intent i=new Intent(Hscreen.this,RaffleActivity.class);
+                        startActivity(i);
                     }
                     // transparent pixel touched
                     return false;
@@ -175,8 +186,9 @@ public class Hscreen extends ActionBarActivity {
                     //Bitmap bim=Bmpmute.convertToMutable(bm);
                     if (bm.getPixel(nTouchX * 1080 / screen_width, nTouchY * 1920 / screen_height) != 0) {
                         // non-transparent pixel touched,
-                        Toast.makeText(getApplicationContext(), "My Profile", Toast.LENGTH_SHORT).show();
-                        return true;
+                        Intent i=new Intent(Hscreen.this,UpcomingActivity.class);
+                        startActivity(i);
+
                     }
                     // transparent pixel touched
                     return false;
@@ -186,16 +198,16 @@ public class Hscreen extends ActionBarActivity {
                 return false;
             }
         });
-
+/*
         Bitmaphandle.loadBitmap(R.drawable.f1,f[0]);
         Bitmaphandle.loadBitmap(R.drawable.f2,f[1]);
         Bitmaphandle.loadBitmap(R.drawable.f3,f[2]);
         Bitmaphandle.loadBitmap(R.drawable.f4,f[3]);
         Bitmaphandle.loadBitmap(R.drawable.f5,f[4]);
         Bitmaphandle.loadBitmap(R.drawable.f6,f[5]);
-
+*/
         StartAnimation(0);
-        //StartcomplexAnimation(anim[0]);
+
 
     final Animation anim[]=new Animation[6];
         for(int k=0;k<6;k++)
@@ -213,6 +225,7 @@ public class Hscreen extends ActionBarActivity {
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
+                    f[o[frame]].setImageBitmap(Bitmaphandle.decodeSampledBitmapFromResource(getResources(),getApplicationContext().getResources().getIdentifier("f"+String.valueOf(o[frame]+1), "drawable",getApplicationContext().getPackageName()),screen_width,screen_height));
                     f[o[frame]].setVisibility(View.VISIBLE);
                     if(finalK<5) {
                         ++frame;
@@ -227,7 +240,7 @@ public class Hscreen extends ActionBarActivity {
 
                 }
             });
-
+           // StartcomplexAnimation(anim[0]);
 
 
         }
@@ -240,15 +253,38 @@ public class Hscreen extends ActionBarActivity {
     }
 
 
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        Log.e("cycle","postcreate");
+    }
 
-public void StartcomplexAnimation(Animation anim)
+    @Override
+    protected void onPostResume() {
+        Log.e("cycle","postresumed");
+        super.onPostResume();
+    }
+
+    @Override
+    protected void onStop() {
+        Log.e("cycle","stopped");
+        super.onStop();
+    }
+
+
+    public void StartcomplexAnimation(Animation anim)
 {
+    f[o[0]].setImageBitmap(Bitmaphandle.decodeSampledBitmapFromResource(getResources(),this.getResources().getIdentifier("f"+String.valueOf(o[0]+1), "drawable",this.getPackageName()),screen_width,screen_height));
     f[o[0]].setVisibility(View.VISIBLE);
     f[o[frame]].startAnimation(anim);
 }
     public void StartAnimation(final int i) {
 
 
+
+        //Bitmaphandle.loadBitmap(this.getResources().getIdentifier("f"+String.valueOf(i+1), "drawable",this.getPackageName()),f[i]);
+
+        f[o[i]].setImageBitmap(Bitmaphandle.decodeSampledBitmapFromResource(getResources(),this.getResources().getIdentifier("f"+String.valueOf(o[i]+1), "drawable",this.getPackageName()),screen_width,screen_height));
         myHandler.postDelayed(new Runnable() {
             @Override
             public void run() {

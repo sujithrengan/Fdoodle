@@ -154,5 +154,10 @@
     <string name="title_activity_splash">SplashActivity</string>
     <string name="title_activity_f_activvity">fActivvity</string>
     <string name="title_activity_hscreen">Hscreen</string>
+    <string name="title_activity_raffle">RaffleActivity</string>
+    <string name="facebook_app_id">507440182763591</string>
+    <string name="title_activity_upcoming">UpcomingActivity</string>
+    <string name="title_activity_schedule">ScheduleActivity</string>
+    <string name="title_activity_popup">PopupActivity</string>
 
 </resources>

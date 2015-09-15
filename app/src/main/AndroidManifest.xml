@@ -1,17 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="f15.delta.com.fdoodle" >
+    package="f15.delta.com.fdoodle"
+    >
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.SET_WALLPAPER" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
 
 
     <application
         android:allowBackup="true"
+        android:largeHeap="true"
+        android:hardwareAccelerated="false"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:hardwareAccelerated="true"
         android:theme="@style/AppTheme" >
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+
+        <provider
+            android:name="com.facebook.FacebookContentProvider"
+            android:authorities="com.facebook.app.FacebookContentProvider507440182763591"
+            android:exported="true" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name" >
@@ -38,10 +50,32 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Hscreen"
             android:label="@string/title_activity_hscreen" >
+        </activity>
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
+            android:name=".RaffleActivity"
+            android:label="@string/title_activity_raffle" >
+        </activity>
+        <activity
+            android:name=".UpcomingActivity"
+            android:label="@string/title_activity_upcoming"
+            android:theme="@style/Theme.AppCompat.NoActionBar" >
+        </activity>
+        <activity
+            android:name=".ScheduleActivity"
+            android:label="@string/title_activity_schedule" >
+        </activity>
+        <activity
+            android:name=".PopupActivity"
+            android:label="@string/title_activity_popup"
+            android:theme="@android:style/Theme.Holo.Dialog.NoActionBar.MinWidth">
         </activity>
     </application>
 

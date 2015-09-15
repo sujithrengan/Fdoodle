@@ -6,8 +6,10 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -25,10 +27,13 @@ import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 public class SplashActivity extends Activity {
     int screen_width;
     int screen_height;
+    TextView bm=null;
+    String o="#BreakTheMonotomy";
     Handler myHandler;
 
     Runnable r=new Runnable() {
@@ -63,6 +68,29 @@ public class SplashActivity extends Activity {
         }, 400);
     }
 
+
+
+    public void Startmonotomy(final int i) {
+
+
+
+        //Bitmaphandle.loadBitmap(this.getResources().getIdentifier("f"+String.valueOf(i+1), "drawable",this.getPackageName()),f[i]);
+
+        String s="";
+        int t=0;
+        while(++t<17-(i%17))s+=" ";
+        bm.setText(o.substring((16-(i%17)),17));
+        myHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                if (i<50) Startmonotomy((i + 1));
+                else
+                    state5();
+            }
+        }, 300-15*(i%16));
+
+    }
     public void state4()
     {
         myHandler.postDelayed(new Runnable() {
@@ -70,14 +98,14 @@ public class SplashActivity extends Activity {
             public void run() {
                 RelativeLayout r=(RelativeLayout)findViewById(R.id.loadingPanel);
                 r.setVisibility(View.VISIBLE);
-                state5();
+                Startmonotomy(0);
 
             }
         }, 250);
     }
     public void state5()
     {
-        myHandler.postDelayed(r, 4000);
+        myHandler.postDelayed(r, 1000);
     }
     public void onAttachedToWindow() {
         super.onAttachedToWindow();
@@ -94,9 +122,13 @@ public class SplashActivity extends Activity {
         screen_height = displaymetrics.heightPixels;
         screen_width = displaymetrics.widthPixels;
         myHandler = new Handler();
+        bm=(TextView)findViewById(R.id.bmtext);
 
+        Typeface f = Typeface.createFromAsset(bm.getContext().getAssets(),
+                "fonts/gnu.ttf");
+        bm.setTypeface(f);
         //Cache
-
+/*
         Bitmaphandle.maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
 
 
@@ -130,11 +162,26 @@ public class SplashActivity extends Activity {
         task5.execute(R.drawable.f5);
         task6.execute(R.drawable.f6);
 
+*/
 
 
         StartAnimations();
     }
 
+    class Apicalls extends AsyncTask<Void,Void,Void>{
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            //Profile-state-api
+
+            //Events-api
+
+            //Events-description-once
+
+            //
+            return null;
+        }
+    }
     class BitmapWorkerTask extends AsyncTask<Integer, Void, Bitmap> {
 
         @Override
