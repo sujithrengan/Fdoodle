@@ -26,13 +26,14 @@ public class ScheduleActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule);
-
+TextView t1=(TextView)findViewById(R.id.textView1);
         f4 = Typeface.createFromAsset(getApplicationContext().getAssets(),
                 "fonts/gnu.ttf");
-
+t1.setTypeface(f4);
         mscheduleadapter=new Scheduleadapter(getSupportFragmentManager());
         mviewpager=(ViewPager)findViewById(R.id.pager);
         mviewpager.setAdapter(mscheduleadapter);
+
     }
 
 

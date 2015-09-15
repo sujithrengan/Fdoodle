@@ -5,7 +5,9 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
@@ -29,13 +31,15 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class SplashActivity extends Activity {
     int screen_width;
     int screen_height;
     TextView bm=null;
-    String o="#BreakTheMonotomy";
+    SharedPreferences prefs;
+    String o="#BreakTheMonotony";
     Handler myHandler;
-
     Runnable r=new Runnable() {
         @Override
         public void run() {
@@ -45,6 +49,8 @@ public class SplashActivity extends Activity {
 
         }
     };
+
+
     public void state2(final LinearLayout l2)
     {
         myHandler.postDelayed(new Runnable() {
@@ -69,10 +75,7 @@ public class SplashActivity extends Activity {
     }
 
 
-
     public void Startmonotomy(final int i) {
-
-
 
         //Bitmaphandle.loadBitmap(this.getResources().getIdentifier("f"+String.valueOf(i+1), "drawable",this.getPackageName()),f[i]);
 
@@ -107,12 +110,16 @@ public class SplashActivity extends Activity {
     {
         myHandler.postDelayed(r, 1000);
     }
+
+
     public void onAttachedToWindow() {
         super.onAttachedToWindow();
         Window window = getWindow();
         window.setFormat(PixelFormat.RGBA_8888);
     }
-    /** Called when the activity is first created. */
+
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -164,10 +171,40 @@ public class SplashActivity extends Activity {
 
 */
 
+        new Utilstask().execute();
 
         StartAnimations();
+
     }
 
+    private void updateUtils() {
+
+        prefs = getSharedPreferences("LoginPrefs", Context.MODE_PRIVATE);
+        Utilities.status = prefs.getInt("Logged_in", 0);
+        Utilities.f_id = prefs.getString("f_id", "");
+
+    }
+
+    class Utilstask extends AsyncTask<Void,Void,Void>{
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            new Apicalls().execute();
+
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            //Sharedprefs-content-Utils
+
+            //SharedPrefs-Profile Class
+
+            //JSON FILE-EventListdesc-Event objects
+
+
+            return null;
+        }
+    }
     class Apicalls extends AsyncTask<Void,Void,Void>{
 
         @Override

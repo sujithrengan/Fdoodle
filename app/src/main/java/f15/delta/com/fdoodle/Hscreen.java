@@ -30,6 +30,7 @@ public class Hscreen extends ActionBarActivity {
     DisplayMetrics displaymetrics;
     ImageView f[];
     int o[] = {0, 3, 2, 5, 4, 1};
+
     int frame;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +84,7 @@ public class Hscreen extends ActionBarActivity {
                         // non-transparent pixel touched,
                         Intent i=new Intent(Hscreen.this,ScheduleActivity.class);
                         startActivity(i);
+
 
                         //Toast.makeText(getApplicationContext(), "Doodle", Toast.LENGTH_SHORT).show();
                         return true;
@@ -240,7 +242,7 @@ public class Hscreen extends ActionBarActivity {
 
                 }
             });
-           // StartcomplexAnimation(anim[0]);
+           //StartcomplexAnimation(anim[0]);
 
 
         }

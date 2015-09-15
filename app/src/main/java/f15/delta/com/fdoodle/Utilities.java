@@ -2,12 +2,24 @@ package f15.delta.com.fdoodle;
 
 public class Utilities
 {
+
+    public static String url_auth="https://";
+    public static String url_fid="https://";
+    public static String url_profile="https://";
+    public static String url_events="https://";
+    public static String url_eventsdesc="https://";
+    public static String url_register="https://";
+    public static String url_registerevent="https://";
     public static String url_raffle="https://a6f79872.ngrok.io/raffleapi.php";
+
     public static String f_id;
     public static String f_pass;
+
+
     public static String fb_name;
     public static String fb_id;
     public static int status;
+
         //Status 0 - Not logged into the app (Festember registration)
         //Status 1 - Logged into the app (Festember registration)
         //Status 2 - Logged into the app + Facebook registration

@@ -59,10 +59,12 @@
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
         <activity
             android:name=".RaffleActivity"
             android:label="@string/title_activity_raffle" >
         </activity>
+
         <activity
             android:name=".UpcomingActivity"
             android:label="@string/title_activity_upcoming"
