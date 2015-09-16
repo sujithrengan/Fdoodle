@@ -13,35 +13,20 @@
 		android:orderInCategory="40" android:title="@string/menu_undo"
 		android:icon="@drawable/ic_menu_undo" />
 
-	<item android:id="@+id/menu_file" android:title="@string/menu_file"
-		android:icon="@drawable/ic_menu_file"
-		android:orderInCategory="50">
 
-		<menu>
-			<item android:id="@+id/menu_open" android:title="@string/menu_open"
-				android:orderInCategory="10" />
 
 			<item android:id="@+id/menu_share" android:title="@string/menu_share"
 				android:orderInCategory="20" />
 
-			<item android:id="@+id/menu_set_wallpaper"
-				android:orderInCategory="30" android:title="@string/menu_set_wallpaper" />
-		</menu>
-
-	</item>
+    <item android:id="@+id/menu_sharefb" android:title="Share on Facebook"
+        android:orderInCategory="20" />
 	
-	<item android:id="@+id/menu_more" android:title="@string/more"
-		android:icon="@drawable/ic_menu_more"
-		android:orderInCategory="50">
-		
-		<menu>
+
 			<item android:id="@+id/menu_rotate" android:orderInCategory="10"
 				android:title="@string/menu_rotate" />
 
 			<!--<item android:id="@+id/menu_preferences" android:orderInCategory="20"
 				android:title="@string/menu_preferences" />
 				!-->
-		</menu>
-		
-	</item>
+
 </menu>

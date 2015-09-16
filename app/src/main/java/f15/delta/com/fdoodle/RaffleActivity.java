@@ -188,7 +188,7 @@ public class RaffleActivity extends AppCompatActivity {
 //Setting up FB buttons
         LoginButton loginButton = (LoginButton) findViewById(R.id.loginButton);
         shareButton = (ShareButton) findViewById(R.id.shareButton);
-        if (Utilities.status == 2 || Utilities.status == 4 || Utilities.status == 5 || Utilities.status == 3) {
+        if (Utilities.status == 2 || Utilities.status == 6 || Utilities.status == 3) {
             startShareButton();
         }
 

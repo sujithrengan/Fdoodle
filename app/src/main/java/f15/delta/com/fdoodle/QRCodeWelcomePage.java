@@ -45,7 +45,7 @@ public class QRCodeWelcomePage extends ActionBarActivity {
         if (Utilities.qr_status == 2) {
             ImageView qrCodeImage = (ImageView) findViewById(R.id.qr_code_image);
             qrCodeImage.setVisibility(View.VISIBLE);
-            Bitmap bitmap = new SaveImage(Utilities.Name, null).loadFromCacheFile();
+            Bitmap bitmap = new SaveImage(Utilities.webmail_username, null).loadFromCacheFile();
             if (bitmap == null) new myAsyncTask().execute();
             else {
                 qrCodeImage.setImageBitmap(bitmap);

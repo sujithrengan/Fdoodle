@@ -27,6 +27,7 @@
             android:id="@+id/extratext"
             android:text="Log in through Facebook to win a place in the raffle draw!"
             android:textStyle="italic"
+            android:layout_gravity="center_horizontal"
             android:textSize="17sp"/>
         </LinearLayout>
 
