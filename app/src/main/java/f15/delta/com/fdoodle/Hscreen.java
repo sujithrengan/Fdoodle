@@ -27,6 +27,7 @@ public class Hscreen extends ActionBarActivity {
     int screen_height;
     Handler myHandler;
     Runnable r;
+    int w,h;
     DisplayMetrics displaymetrics;
     ImageView f[];
     int o[] = {0, 3, 2, 5, 4, 1};
@@ -43,7 +44,9 @@ public class Hscreen extends ActionBarActivity {
         screen_width = displaymetrics.widthPixels;
         myHandler = new Handler();
         frame=-00;
-
+        Bitmap p=Bitmaphandle.decodeSampledBitmapFromResource(getResources(),this.getResources().getIdentifier("f"+String.valueOf(o[0]+1), "drawable",this.getPackageName()),screen_width,screen_height);
+        w=p.getWidth();
+        h=p.getHeight();
         f = new ImageView[6];
         f[0] = (ImageView) findViewById(R.id.img_cut_1);
         f[0].setOnTouchListener(new View.OnTouchListener() {
@@ -54,16 +57,16 @@ public class Hscreen extends ActionBarActivity {
                     //Toast.makeText(getApplicationContext(), "touch", Toast.LENGTH_SHORT).show();
                     int nTouchX = (int) me.getX();
                     int nTouchY = (int) me.getY();
-                      Bitmap bm = ((BitmapDrawable) f[0].getDrawable()).getBitmap();
+                    Bitmap bm = ((BitmapDrawable) f[0].getDrawable()).getBitmap();
                     //Bitmap bim=Bmpmute.convertToMutable(bm);
-                     if (bm.getPixel(nTouchX*1080/screen_width, nTouchY*1920/screen_height) != 0) {
-                            // non-transparent pixel touched,
-                            Toast.makeText(getApplicationContext(), "Events", Toast.LENGTH_SHORT).show();
-                            return true;
-                        }
-                        // transparent pixel touched
-                        return false;
+                    if (bm.getPixel(nTouchX*w/screen_width, nTouchY*h/screen_height) != 0) {
+                        // non-transparent pixel touched,
+                        Toast.makeText(getApplicationContext(), "Events", Toast.LENGTH_SHORT).show();
+                        return true;
                     }
+                    // transparent pixel touched
+                    return false;
+                }
 
 
                 return false;
@@ -80,7 +83,7 @@ public class Hscreen extends ActionBarActivity {
                     int nTouchY = (int) me.getY();
                     Bitmap bm = ((BitmapDrawable) f[1].getDrawable()).getBitmap();
                     //Bitmap bim=Bmpmute.convertToMutable(bm);
-                    if (bm.getPixel(nTouchX * 1080 / screen_width, nTouchY * 1920 / screen_height) != 0) {
+                    if (bm.getPixel(nTouchX * w / screen_width, nTouchY * h / screen_height) != 0) {
                         // non-transparent pixel touched,
                         Intent i=new Intent(Hscreen.this,ScheduleActivity.class);
                         startActivity(i);
@@ -108,9 +111,11 @@ public class Hscreen extends ActionBarActivity {
                     int nTouchY = (int) me.getY();
                     Bitmap bm = ((BitmapDrawable) f[2].getDrawable()).getBitmap();
                     //Bitmap bim=Bmpmute.convertToMutable(bm);
-                    if (bm.getPixel(nTouchX * 1080 / screen_width, nTouchY * 1920 / screen_height) != 0) {
+                    if (bm.getPixel(nTouchX * w / screen_width, nTouchY * h / screen_height) != 0) {
                         // non-transparent pixel touched,
-                        Toast.makeText(getApplicationContext(), "My Profile", Toast.LENGTH_SHORT).show();
+                        Intent i=new Intent(Hscreen.this,UserProfile.class);
+                        startActivity(i);
+                                                // Toast.makeText(getApplicationContext(), "My Profile", Toast.LENGTH_SHORT).show();
                         return true;
 
                         //Toast.makeText(getApplicationContext(), "Raffle", Toast.LENGTH_SHORT).show();
@@ -135,12 +140,12 @@ public class Hscreen extends ActionBarActivity {
                     int nTouchY = (int) me.getY();
                     Bitmap bm = ((BitmapDrawable) f[3].getDrawable()).getBitmap();
                     //Bitmap bim=Bmpmute.convertToMutable(bm);
-                    if (bm.getPixel(nTouchX * 1080 / screen_width, nTouchY * 1920 / screen_height) != 0) {
+                    if (bm.getPixel(nTouchX * w/ screen_width, nTouchY * h/ screen_height) != 0) {
                         // non-transparent pixel touched,
                         Intent i=new Intent(Hscreen.this,Painter.class);
                         startActivity(i);
 
-                       // Toast.makeText(getApplicationContext(), "Upcoming Events", Toast.LENGTH_SHORT).show();
+                        // Toast.makeText(getApplicationContext(), "Upcoming Events", Toast.LENGTH_SHORT).show();
                         return true;
                     }
                     // transparent pixel touched
@@ -162,9 +167,10 @@ public class Hscreen extends ActionBarActivity {
                     int nTouchY = (int) me.getY();
                     Bitmap bm = ((BitmapDrawable) f[4].getDrawable()).getBitmap();
                     //Bitmap bim=Bmpmute.convertToMutable(bm);
-                    if (bm.getPixel(nTouchX * 1080 / screen_width, nTouchY * 1920 / screen_height) != 0) {
+                    if (bm.getPixel(nTouchX * w / screen_width, nTouchY * h / screen_height) != 0) {
                         // non-transparent pixel touched,
                         Intent i=new Intent(Hscreen.this,RaffleActivity.class);
+                        i.putExtra("callMode",1);
                         startActivity(i);
                     }
                     // transparent pixel touched
@@ -186,7 +192,7 @@ public class Hscreen extends ActionBarActivity {
                     int nTouchY = (int) me.getY();
                     Bitmap bm = ((BitmapDrawable) f[5].getDrawable()).getBitmap();
                     //Bitmap bim=Bmpmute.convertToMutable(bm);
-                    if (bm.getPixel(nTouchX * 1080 / screen_width, nTouchY * 1920 / screen_height) != 0) {
+                    if (bm.getPixel(nTouchX * w / screen_width, nTouchY * h / screen_height) != 0) {
                         // non-transparent pixel touched,
                         Intent i=new Intent(Hscreen.this,UpcomingActivity.class);
                         startActivity(i);
@@ -211,7 +217,7 @@ public class Hscreen extends ActionBarActivity {
         StartAnimation(0);
 
 
-    final Animation anim[]=new Animation[6];
+        final Animation anim[]=new Animation[6];
         for(int k=0;k<6;k++)
         {
             anim[k]=new ScaleAnimation(0.6f,1f,0.6f,1f,Animation.RELATIVE_TO_SELF, 0.5f,
@@ -242,7 +248,7 @@ public class Hscreen extends ActionBarActivity {
 
                 }
             });
-           //StartcomplexAnimation(anim[0]);
+            //StartcomplexAnimation(anim[0]);
 
 
         }
@@ -275,11 +281,11 @@ public class Hscreen extends ActionBarActivity {
 
 
     public void StartcomplexAnimation(Animation anim)
-{
-    f[o[0]].setImageBitmap(Bitmaphandle.decodeSampledBitmapFromResource(getResources(),this.getResources().getIdentifier("f"+String.valueOf(o[0]+1), "drawable",this.getPackageName()),screen_width,screen_height));
-    f[o[0]].setVisibility(View.VISIBLE);
-    f[o[frame]].startAnimation(anim);
-}
+    {
+        f[o[0]].setImageBitmap(Bitmaphandle.decodeSampledBitmapFromResource(getResources(),this.getResources().getIdentifier("f"+String.valueOf(o[0]+1), "drawable",this.getPackageName()),screen_width,screen_height));
+        f[o[0]].setVisibility(View.VISIBLE);
+        f[o[frame]].startAnimation(anim);
+    }
     public void StartAnimation(final int i) {
 
 

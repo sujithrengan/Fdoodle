@@ -43,7 +43,18 @@ public class SplashActivity extends Activity {
     Runnable r=new Runnable() {
         @Override
         public void run() {
-            Intent i=new Intent(SplashActivity.this,Hscreen.class);
+
+            Log.e("state5",String.valueOf(Utilities.status));
+            Intent i;
+            if(Utilities.status==1) {
+                i= new Intent(SplashActivity.this, Hscreen.class);
+
+            }
+
+            else
+            {
+                i= new Intent(SplashActivity.this, LoginActivity.class);
+            }
             startActivity(i);
             finish();
 
@@ -94,6 +105,7 @@ public class SplashActivity extends Activity {
         }, 300-15*(i%16));
 
     }
+
     public void state4()
     {
         myHandler.postDelayed(new Runnable() {
@@ -179,9 +191,14 @@ public class SplashActivity extends Activity {
 
     private void updateUtils() {
 
-        prefs = getSharedPreferences("LoginPrefs", Context.MODE_PRIVATE);
-        Utilities.status = prefs.getInt("Logged_in", 0);
+        prefs = getSharedPreferences("LogInPrefs", Context.MODE_PRIVATE);
+        Utilities.status = prefs.getInt("Logged_in",0);
         Utilities.f_id = prefs.getString("f_id", "");
+        Utilities.f_pass=prefs.getString("f_pass","");
+        Utilities.f_email=prefs.getString("f_email","");
+
+        if(Utilities.status!=0)
+        Profile.setProfile(Integer.valueOf(Utilities.f_id),prefs.getString("f_name",""),Utilities.f_email,prefs.getString("f_fullname",""));
 
     }
 
@@ -197,6 +214,7 @@ public class SplashActivity extends Activity {
         protected Void doInBackground(Void... voids) {
             //Sharedprefs-content-Utils
 
+            updateUtils();
             //SharedPrefs-Profile Class
 
             //JSON FILE-EventListdesc-Event objects
@@ -206,6 +224,14 @@ public class SplashActivity extends Activity {
         }
     }
     class Apicalls extends AsyncTask<Void,Void,Void>{
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            //bm.setText(o);
+            //state5();
+
+        }
 
         @Override
         protected Void doInBackground(Void... voids) {

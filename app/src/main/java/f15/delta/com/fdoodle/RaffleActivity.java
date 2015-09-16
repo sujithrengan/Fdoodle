@@ -1,68 +1,69 @@
 package f15.delta.com.fdoodle;
 
-        import android.app.ProgressDialog;
-        import android.content.Context;
-        import android.content.Intent;
-        import android.content.SharedPreferences;
-        import android.graphics.Bitmap;
-        import android.graphics.BitmapFactory;
-        import android.os.AsyncTask;
-        import android.support.v7.app.AppCompatActivity;
-        import android.os.Bundle;
-        import android.util.Log;
-        import android.view.View;
-        import android.widget.ArrayAdapter;
-        import android.widget.LinearLayout;
-        import android.widget.ListView;
-        import android.widget.TextView;
-        import android.widget.Toast;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
-        import com.facebook.AccessToken;
-        import com.facebook.CallbackManager;
-        import com.facebook.FacebookCallback;
-        import com.facebook.FacebookException;
-        import com.facebook.FacebookSdk;
-        import com.facebook.Profile;
-        import com.facebook.ProfileTracker;
-        import com.facebook.login.LoginManager;
-        import com.facebook.login.LoginResult;
-        import com.facebook.login.widget.LoginButton;
-        import com.facebook.share.Sharer;
-        import com.facebook.share.internal.ShareContentValidation;
-        import com.facebook.share.model.SharePhoto;
-        import com.facebook.share.model.SharePhotoContent;
-        import com.facebook.share.widget.ShareButton;
-        import com.facebook.share.widget.ShareDialog;
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.Profile;
+import com.facebook.ProfileTracker;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
+import com.facebook.share.Sharer;
+import com.facebook.share.internal.ShareContentValidation;
+import com.facebook.share.model.SharePhoto;
+import com.facebook.share.model.SharePhotoContent;
+import com.facebook.share.widget.ShareButton;
+import com.facebook.share.widget.ShareDialog;
 
-        import org.apache.http.HttpEntity;
-        import org.apache.http.HttpResponse;
-        import org.apache.http.client.HttpClient;
-        import org.apache.http.client.entity.UrlEncodedFormEntity;
-        import org.apache.http.client.methods.HttpPost;
-        import org.apache.http.impl.client.DefaultHttpClient;
-        import org.apache.http.message.BasicNameValuePair;
-        import org.apache.http.util.EntityUtils;
-        import org.json.JSONArray;
-        import org.json.JSONException;
-        import org.json.JSONObject;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-        import java.io.IOException;
-        import java.util.ArrayList;
-        import java.util.Collections;
-        import java.util.List;
-        import java.util.Set;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 
 
 public class RaffleActivity extends AppCompatActivity {
 
     private CallbackManager callbackManager;
-    private  LinearLayout lhelp;
+    private LinearLayout lhelp;
     private ShareButton shareButton;
     private SharedPreferences prefs;
     private SharePhotoContent sharePhotoContent;
     private ProfileTracker tracker;
     private ArrayList<String> couponList;
     private ArrayAdapter<String> adapter;
+    private int callMode;
 
     private void updateUI() {
         boolean enableTheWorld = AccessToken.getCurrentAccessToken() != null;
@@ -73,25 +74,29 @@ public class RaffleActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "You've just logged out, m8", Toast.LENGTH_SHORT).show();
             shareButton.setVisibility(View.INVISIBLE);
             shareButton.setClickable(false);
-            if(Utilities.status==2) Utilities.status = 4;
-            else if(Utilities.status==3) Utilities.status = 5;
+            if (Utilities.status == 2) Utilities.status = 4;
+            else if (Utilities.status == 3) Utilities.status = 5;
+            else if (Utilities.status == 6) Utilities.status = 7;
             prefs.edit().putInt("Logged_in", Utilities.status).apply();
         }
         if (enableTheWorld && profile != null)  //Detects log in.
         {
             Utilities.fb_name = profile.getName();
-            Utilities.fb_id=profile.getId();
-            if(Utilities.status==1) Utilities.status = 2;
+            Utilities.fb_id = profile.getId();
+            if (Utilities.status == 1) Utilities.status = 2;
             Toast.makeText(getApplicationContext(), "Welcome, " + Utilities.fb_name, Toast.LENGTH_LONG).show();
             prefs.edit().putInt("Logged_in", Utilities.status).putString("Name", Utilities.fb_name).putString("FBID", Utilities.fb_id).apply();
-            if(Utilities.status==2 && Utilities.coupons[0].equals("No coupon yet")) new myApiCaller().execute(1);
+            if (Utilities.status == 2 && Utilities.coupons[0].equals("No coupon yet"))
+                new myApiCaller().execute(1);
         }
         System.out.println("UpdateUI called");
         System.out.println("Utilities.status = " + Utilities.status);
     }
 
     private SharePhotoContent getMyShareContent() {
-        Bitmap image = BitmapFactory.decodeResource(getResources(), R.drawable.wp2);
+        Bitmap image;
+        if (callMode == 1) image = BitmapFactory.decodeResource(getResources(), R.drawable.wp2);
+        else image = Utilities.doodleBitmap;
         SharePhoto photo = new SharePhoto.Builder().setBitmap(image).build();
         sharePhotoContent = new SharePhotoContent.Builder().addPhoto(photo).build();
         return sharePhotoContent;
@@ -104,9 +109,8 @@ public class RaffleActivity extends AppCompatActivity {
         Utilities.f_id = prefs.getString("f_id", "");
         Utilities.fb_name = prefs.getString("Name", "");
         Utilities.fb_id = prefs.getString("FBID", "");
-        for(int i=0;i<11;i++)
-        {
-            Utilities.coupons[i] = prefs.getString("Coupon"+i,"No coupon yet");
+        for (int i = 0; i < 11; i++) {
+            Utilities.coupons[i] = prefs.getString("Coupon" + i, "No coupon yet");
         }
     }
 
@@ -119,7 +123,8 @@ public class RaffleActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Bundle bundle = getIntent().getExtras();
+        callMode = bundle.getInt("callMode");
 //Facebook initializations
         FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
@@ -141,12 +146,19 @@ public class RaffleActivity extends AppCompatActivity {
                 } catch (FacebookException e) {
                     e.printStackTrace();
                 }
-                if (Utilities.status == 2 || Utilities.status == 4) {
-                    Utilities.status = 3;
-                    prefs.edit().putInt("Logged_in", Utilities.status).apply();
-                    //API CALL TO REQUEST FIVE EXTRA COUPONS IF NOT ALREADY OBTAINED
-                    new myApiCaller().execute(2);
+                //API CALL TO REQUEST FIVE EXTRA COUPONS IF NOT ALREADY OBTAINED
+                if (callMode == 1) {
+                    if (Utilities.status == 2 || Utilities.status == 4 || Utilities.status==6 || Utilities.status==7) {
+                        Utilities.status = 3;
+                        new myApiCaller().execute(2);
+                    }
+                } else if (callMode == 2) {
+                    if (Utilities.status == 2 || Utilities.status == 4 || Utilities.status==3 || Utilities.status==5) {
+                        Utilities.status = 6;
+                        new myApiCaller().execute(3);
+                    }
                 }
+                prefs.edit().putInt("Logged_in", Utilities.status).apply();
             }
 
             @Override
@@ -163,7 +175,7 @@ public class RaffleActivity extends AppCompatActivity {
 
 //Calling Shared Preferences and updating utilities
         updateUtils();
-        adapter = new ArrayAdapter<>(getApplicationContext(),R.layout.single_list_item);
+        adapter = new ArrayAdapter<>(getApplicationContext(), R.layout.single_list_item);
         setArrayAdapter();
 
 //Layout initialisations
@@ -176,7 +188,7 @@ public class RaffleActivity extends AppCompatActivity {
 //Setting up FB buttons
         LoginButton loginButton = (LoginButton) findViewById(R.id.loginButton);
         shareButton = (ShareButton) findViewById(R.id.shareButton);
-        if (Utilities.status == 2 || Utilities.status==4 || Utilities.status == 5 || Utilities.status==3) {
+        if (Utilities.status == 2 || Utilities.status == 4 || Utilities.status == 5 || Utilities.status == 3) {
             startShareButton();
         }
 
@@ -247,17 +259,17 @@ public class RaffleActivity extends AppCompatActivity {
                     jsonObject = new JSONObject(s);
                     status = jsonObject.getInt("status");
                     System.out.println("Status of API call: " + status);
-                    switch(status)
-                    {
+                    switch (status) {
                         case 0: //Festember name and Festember password don't match
                         case 4: //Unexpected failure
-                            if(type[0]==1) {
-                                Utilities.status=1;
+                            if (type[0] == 1) {
+                                Utilities.status = 1;
                                 prefs.edit().putInt("Logged_in", Utilities.status).apply();
-                            }
-                            else if (type[0]==2)
-                            {
-                                Utilities.status=2;
+                            } else if (type[0] == 2) {
+                                Utilities.status = 2;
+                                prefs.edit().putInt("Logged_in", Utilities.status).apply();
+                            } else if (type[0] == 3) {
+                                Utilities.status = 6;
                                 prefs.edit().putInt("Logged_in", Utilities.status).apply();
                             }
                             break;
@@ -269,6 +281,11 @@ public class RaffleActivity extends AppCompatActivity {
                             } else if (type[0] == 2) {
                                 JSONArray array = jsonObject.getJSONArray("data");
                                 for (int i = 1; i < 6; i++) {
+                                    Utilities.coupons[i] = array.getJSONObject(i - 1).getString("coupon_code");
+                                }
+                            } else if (type[0] == 3) {
+                                JSONArray array = jsonObject.getJSONArray("data");
+                                for (int i = 6; i < 10; i++) {
                                     Utilities.coupons[i] = array.getJSONObject(i - 1).getString("coupon_code");
                                 }
                             }
@@ -290,7 +307,7 @@ public class RaffleActivity extends AppCompatActivity {
             super.onPostExecute(status);
             System.out.println("Utilities.status onPostExecute()" + Utilities.status);
             myPd_ring.dismiss();
-            for(int i=0;i<11;i++)
+            for (int i = 0; i < 11; i++)
                 prefs.edit().putString("Coupon" + i, Utilities.coupons[i]).apply();
             setArrayAdapter();
             updateh();
@@ -313,11 +330,10 @@ public class RaffleActivity extends AppCompatActivity {
         }
     }
 
-    private void updateh()
-    {
-        lhelp=(LinearLayout)findViewById(R.id.loginlayout);
+    private void updateh() {
+        lhelp = (LinearLayout) findViewById(R.id.loginlayout);
 
-        if(!couponList.isEmpty()) {
+        if (!couponList.isEmpty()) {
             //couponList.add(0,"Log in through Facebook to win a place in the raffle draw!");
 
 
@@ -327,20 +343,18 @@ public class RaffleActivity extends AppCompatActivity {
                 et.setText("Share #festember to win 5 extra tickets!");
 
 
-            }
-            else
-            {
+            } else {
                 lhelp.setVisibility(View.GONE);
             }
         }
 
     }
-    private void setArrayAdapter()
-    {
+
+    private void setArrayAdapter() {
         couponList.clear();
-        for(int i=0;i<11;i++)
-        {
-            if(!Utilities.coupons[i].equals("No coupon yet")) couponList.add(i,Utilities.coupons[i]);
+        for (int i = 0; i < 11; i++) {
+            if (!Utilities.coupons[i].equals("No coupon yet"))
+                couponList.add(i, Utilities.coupons[i]);
         }
         /*if(couponList.isEmpty()) {
             //couponList.add(0,"Log in through Facebook to win a place in the raffle draw!");

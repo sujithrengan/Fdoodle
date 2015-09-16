@@ -5,10 +5,11 @@ package f15.delta.com.fdoodle;
  */
 public class Profile {
 
-    private static int id;
-    private static String name;
-    private static String email;
-    private static String full_name;
+    public static int id;
+    public static String name;
+    public static String email;
+    public static String full_name;
+    public static String coupon="";
 
 
 
@@ -18,6 +19,10 @@ public class Profile {
         Profile.name=name;
         Profile.email=email;
         Profile.full_name=full_name;
+    }
+    public static void assigncoup(String coup)
+    {
+        coupon=coup;
     }
 
 }

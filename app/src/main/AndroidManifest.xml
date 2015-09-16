@@ -1,20 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="f15.delta.com.fdoodle"
-    >
+    package="f15.delta.com.fdoodle" >
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.SET_WALLPAPER" />
     <uses-permission android:name="android.permission.INTERNET" />
 
-
-
     <application
         android:allowBackup="true"
-        android:largeHeap="true"
         android:hardwareAccelerated="false"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:theme="@style/AppTheme" >
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -24,6 +21,7 @@
             android:name="com.facebook.FacebookContentProvider"
             android:authorities="com.facebook.app.FacebookContentProvider507440182763591"
             android:exported="true" />
+
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name" >
@@ -43,7 +41,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".SplashActivity"
-            android:label="@string/title_activity_splash" >
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -59,12 +57,10 @@
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-
         <activity
             android:name=".RaffleActivity"
             android:label="@string/title_activity_raffle" >
         </activity>
-
         <activity
             android:name=".UpcomingActivity"
             android:label="@string/title_activity_upcoming"
@@ -77,7 +73,27 @@
         <activity
             android:name=".PopupActivity"
             android:label="@string/title_activity_popup"
-            android:theme="@android:style/Theme.Holo.Dialog.NoActionBar.MinWidth">
+            android:theme="@android:style/Theme.Holo.Dialog.NoActionBar.MinWidth" >
+        </activity>
+        <activity
+            android:name=".UserProfile"
+            android:label="@string/title_activity_user_profile" >
+        </activity>
+        <activity
+            android:name=".QRCodeLogin"
+            android:label="@string/title_activity_qrcode_login" >
+        </activity>
+        <activity
+            android:name=".QRCodeWelcomePage"
+            android:label="@string/title_activity_qrcode_welcome_page" >
+        </activity>
+        <activity
+            android:name=".QRSplashScreen"
+            android:label="@string/title_activity_qrsplash_screen" >
+        </activity>
+        <activity
+            android:name=".LoginActivity"
+            android:label="@string/title_activity_login" >
         </activity>
     </application>
 

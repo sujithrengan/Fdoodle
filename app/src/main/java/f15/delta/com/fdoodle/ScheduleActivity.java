@@ -19,48 +19,28 @@ import android.widget.TextView;
 
 public class ScheduleActivity extends ActionBarActivity {
 
-    public static Typeface f4=null;
+    public static Typeface f4 = null;
     private Scheduleadapter mscheduleadapter;
     ViewPager mviewpager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule);
-TextView t1=(TextView)findViewById(R.id.textView1);
+        TextView t1 = (TextView) findViewById(R.id.textView1);
         f4 = Typeface.createFromAsset(getApplicationContext().getAssets(),
                 "fonts/gnu.ttf");
-t1.setTypeface(f4);
-        mscheduleadapter=new Scheduleadapter(getSupportFragmentManager());
-        mviewpager=(ViewPager)findViewById(R.id.pager);
+        t1.setTypeface(f4);
+        mscheduleadapter = new Scheduleadapter(getSupportFragmentManager());
+        mviewpager = (ViewPager) findViewById(R.id.pager);
         mviewpager.setAdapter(mscheduleadapter);
 
     }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_schedule, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    public class Scheduleadapter extends FragmentStatePagerAdapter
-    {
+    public class Scheduleadapter extends FragmentStatePagerAdapter {
         public Scheduleadapter(FragmentManager fm) {
             super(fm);
             // TODO Auto-generated constructor stub
@@ -73,8 +53,8 @@ t1.setTypeface(f4);
             Bundle args = new Bundle();
             // Our object is just an integer :-P
 
-            Fragment fragment=new Scheduleobject();
-            args.putInt(Scheduleobject.ARG_OBJECT,arg0 + 1);
+            Fragment fragment = new Scheduleobject();
+            args.putInt(Scheduleobject.ARG_OBJECT, arg0 + 1);
             fragment.setArguments(args);
             return fragment;
         }
@@ -94,41 +74,39 @@ t1.setTypeface(f4);
 
     }
 
-    public static class Scheduleobject extends Fragment
-    {
+    public static class Scheduleobject extends Fragment {
         public static final String ARG_OBJECT = "object";
+
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             // TODO Auto-generated method stub
-            View rootview=inflater.inflate(R.layout.fragment_left,container,false);
-            final Bundle args=getArguments();
-            if(args.getInt(ARG_OBJECT)==1)
-            {((ImageView)rootview.findViewById(R.id.schedimage)).setImageResource(R.drawable.d0_comp);
-                ((TextView)rootview.findViewById(R.id.daytxt)).setText("Days 0&1");
-                ((TextView)rootview.findViewById(R.id.daytxt)).setTypeface(f4);
+            View rootview = inflater.inflate(R.layout.fragment_left, container, false);
+            final Bundle args = getArguments();
+            if (args.getInt(ARG_OBJECT) == 1) {
+                ((ImageView) rootview.findViewById(R.id.schedimage)).setImageResource(R.drawable.d0_comp);
+                ((TextView) rootview.findViewById(R.id.daytxt)).setText("Days 0&1");
+                ((TextView) rootview.findViewById(R.id.daytxt)).setTypeface(f4);
             }
-            if(args.getInt(ARG_OBJECT)==2)
-            {
-                ((ImageView)rootview.findViewById(R.id.schedimage)).setImageResource(R.drawable.d1_comp);
-                ((TextView)rootview.findViewById(R.id.daytxt)).setText("Day 2");
-                ((TextView)rootview.findViewById(R.id.daytxt)).setTypeface(f4);
+            if (args.getInt(ARG_OBJECT) == 2) {
+                ((ImageView) rootview.findViewById(R.id.schedimage)).setImageResource(R.drawable.d1_comp);
+                ((TextView) rootview.findViewById(R.id.daytxt)).setText("Day 2");
+                ((TextView) rootview.findViewById(R.id.daytxt)).setTypeface(f4);
             }
-            if(args.getInt(ARG_OBJECT)==3)
-            {
+            if (args.getInt(ARG_OBJECT) == 3) {
 
-                ((ImageView)rootview.findViewById(R.id.schedimage)).setImageResource(R.drawable.d2_comp);
-                ((TextView)rootview.findViewById(R.id.daytxt)).setText("Day 3");
-                ((TextView)rootview.findViewById(R.id.daytxt)).setTypeface(f4);
+                ((ImageView) rootview.findViewById(R.id.schedimage)).setImageResource(R.drawable.d2_comp);
+                ((TextView) rootview.findViewById(R.id.daytxt)).setText("Day 3");
+                ((TextView) rootview.findViewById(R.id.daytxt)).setTypeface(f4);
             }
 
-            ((ImageView)rootview.findViewById(R.id.schedimage)).setOnClickListener(new View.OnClickListener() {
+            ((ImageView) rootview.findViewById(R.id.schedimage)).setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View v) {
                     // TODO Auto-generated method stub
-                    Intent intent=new Intent(getActivity(),PopupActivity.class);
-                    intent.putExtra("num",args.getInt(ARG_OBJECT));
+                    Intent intent = new Intent(getActivity(), PopupActivity.class);
+                    intent.putExtra("num", args.getInt(ARG_OBJECT));
                     startActivity(intent);
                 }
             });
@@ -137,7 +115,6 @@ t1.setTypeface(f4);
 
 
         }
-
 
 
     }
