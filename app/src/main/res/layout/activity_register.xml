@@ -1,0 +1,357 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context="festember.festember_registration.Registration"
+    android:orientation="vertical"
+    android:background="@drawable/poly_background">
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="70sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Email id"
+                    android:layout_marginTop="30sp"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="10sp" />
+
+                <EditText
+                    android:id="@+id/mail_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginTop="30sp"
+                    android:width="180sp"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="70sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Username"
+                    android:layout_marginTop="30sp"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+
+                    android:layout_marginLeft="10sp" />
+
+                <EditText
+                    android:id="@+id/username_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginTop="30sp"
+                    android:width="180sp"
+                    />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="70sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Password"
+                    android:layout_marginTop="30sp"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="10sp" />
+
+                <EditText
+                    android:id="@+id/password_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginTop="30sp"
+                    android:width="180sp"
+                    android:inputType="textPassword"
+                    />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="70sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Retype Password"
+
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="10sp"
+                    android:layout_marginTop="10sp" />
+
+                <EditText
+                    android:id="@+id/repassword_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginTop="30sp"
+                    android:width="180sp"
+                    android:inputType="textPassword"
+                    />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="70sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Full Name"
+                    android:layout_marginTop="30sp"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="10sp" />
+
+                <EditText
+                    android:id="@+id/fullname_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginTop="30sp"
+                    android:width="180sp"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="70sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="College"
+                    android:layout_marginTop="30sp"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="10sp" />
+                <TextView
+                    android:id="@+id/collegeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30sp"
+                    android:textSize="20sp"
+                    android:layout_marginLeft="20sp"
+
+                    android:textStyle="bold"
+                    android:width="200sp"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:onClick="callList"
+                    android:background="@android:color/transparent"
+                    android:text="Select College" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="100sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Name of college if not exists"
+                    android:layout_marginTop="30sp"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="10sp" />
+                <EditText
+                    android:id="@+id/college_not_present"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30sp"
+                    android:textSize="20sp"
+                    android:width="180sp"
+                    android:layout_weight="27.99"
+                    android:clickable="true"
+                    android:onClick="callList" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="70sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Degree"
+                    android:layout_marginTop="30sp"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="10sp" />
+                <TextView
+                    android:id="@+id/degreeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30sp"
+                    android:width="200sp"
+                    android:layout_weight="1"
+                    android:onClick="callDegree"
+                    android:layout_marginLeft="20sp"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:clickable="true"
+                    android:background="@android:color/transparent"
+                    android:text="Select Degree" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="70sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Branch"
+                    android:layout_marginTop="30sp"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="10sp" />
+                <TextView
+                    android:id="@+id/branchButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30sp"
+                    android:textSize="20sp"
+                    android:width="200sp"
+                    android:layout_weight="1"
+                    android:onClick="callBranch"
+                    android:layout_marginLeft="20sp"
+                    android:textStyle="bold"
+                    android:clickable="true"
+                    android:background="@android:color/transparent"
+                    android:text="Select Branch" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="70sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Year"
+                    android:layout_marginTop="30sp"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="10sp" />
+                <TextView
+                    android:id="@+id/yearButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30sp"
+                    android:textSize="20sp"
+                    android:width="200sp"
+                    android:layout_weight="1"
+                    android:onClick="callYear"
+                    android:layout_marginLeft="20sp"
+                    android:textStyle="bold"
+                    android:clickable="true"
+                    android:background="@android:color/transparent"
+                    android:text="Select Year" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="70sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Phone number"
+                    android:layout_marginTop="30sp"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="10sp" />
+                <EditText
+                    android:id="@+id/phone_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30sp"
+                    android:textSize="20sp"
+                    android:width="180sp"
+                    android:layout_weight="27.99"
+                    android:inputType="phone"
+                    android:maxLength="10" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="70sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Register for company promotions?"
+                    android:layout_marginTop="30sp"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="10sp"/>
+                <Switch
+                    android:id="@+id/on_off_switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textOff="OFF"
+                    android:textOn="ON"
+                    android:layout_marginTop="25sp"
+                    android:layout_marginRight="50sp"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="horizontal">
+                <Button
+                    android:layout_width="fill_parent"
+                    android:layout_height="90sp"
+                    android:layout_margin="5dp"
+                    android:text="Signup"
+                    android:background="@drawable/button_style"
+                    android:textColor="#FFFFFF"
+                    android:id="@+id/signUp"
+                    android:textSize="40sp"
+                    android:layout_weight="1"
+                    android:onClick="callSignUp"
+                    android:clickable="true"/>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

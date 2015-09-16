@@ -165,5 +165,6 @@
     <string name="title_activity_qrcode_welcome_page">Your QR Code</string>
     <string name="title_activity_qrsplash_screen">QRSplashScreen</string>
     <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_register">RegisterActivity</string>
 
 </resources>

@@ -116,7 +116,7 @@ public class LoginActivity extends Activity {
         return matcher.matches();
     }
     public void callRegistration(View view){
-        Intent i = new Intent(this,Hscreen.class);
+        Intent i = new Intent(this,RegisterActivity.class);
         startActivity(i);
     }
     public void callSignIn(View view){
@@ -126,6 +126,7 @@ public class LoginActivity extends Activity {
             // else if(!isValidEmail(username))username_text.setError("Invalid Username");
         else if(password.length()==0)password_text.setError("Invalid password");
         else  check_login();
+
 
 
     }
