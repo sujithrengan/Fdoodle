@@ -46,7 +46,7 @@ public class SplashActivity extends Activity {
 
             Log.e("state5",String.valueOf(Utilities.status));
             Intent i;
-            if(Utilities.status==1) {
+            if(Utilities.status!=0) {
                 i= new Intent(SplashActivity.this, Hscreen.class);
 
             }

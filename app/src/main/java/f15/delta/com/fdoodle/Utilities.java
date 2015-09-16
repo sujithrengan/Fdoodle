@@ -12,13 +12,10 @@ public class Utilities
     public static String url_events="https://";
     public static String url_eventsdesc="https://";
     public static String url_registerevent="https://";
-    public static String url_raffle="https://a6f79872.ngrok.io/raffleapi.php";
-    public static   String url_reg = "https://api.festember.com/user/register";
+    public static String url_raffle="https://eeec9dca.ngrok.io/raffleapi.php";
+    public static String url_reg = "https://api.festember.com/user/register";
     public static String url_auth = "https://api.festember.com/user/auth";
     public static String url_details = "https://api.festember.com/user/getDetails";
-
-
-    public static String Name="";
 
     public static String f_id="";
     public static String f_pass="";
@@ -41,7 +38,6 @@ public class Utilities
 
 //Doodle module
     public static Bitmap doodleBitmap = null;
-    public static String Picturename="";
 
 //QR Code module
     public static String webmail_username="";

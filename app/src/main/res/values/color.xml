@@ -12,4 +12,5 @@
     <color name = "festember_orange_deep">#ffff4400</color>
     <color name = "festember_orange_deep_translucent">#86ff4400</color>
     <color name="Transparent80">#80000000</color>
+    <color name = "register_button_login">#ffcb3e</color>
 </resources>

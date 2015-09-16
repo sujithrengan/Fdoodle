@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -53,7 +52,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-
 public class RaffleActivity extends AppCompatActivity {
 
     private CallbackManager callbackManager;
@@ -87,10 +85,11 @@ public class RaffleActivity extends AppCompatActivity {
             if (Utilities.status == 1) Utilities.status = 2;
             Toast.makeText(getApplicationContext(), "Welcome, " + Utilities.fb_name, Toast.LENGTH_LONG).show();
             prefs.edit().putInt("Logged_in", Utilities.status).putString("Name", Utilities.fb_name).putString("FBID", Utilities.fb_id).apply();
+            startShareButton();
             if (Utilities.status == 2 && Utilities.coupons[0].equals("No coupon yet"))
                 new myApiCaller().execute(1);
         }
-        System.out.println("UpdateUI called");
+        System.out.println("UpdateUI called.");
         System.out.println("Utilities.status = " + Utilities.status);
     }
 
@@ -104,7 +103,7 @@ public class RaffleActivity extends AppCompatActivity {
     }
 
     private void updateUtils() {
-        couponList = new ArrayList<>();
+        couponList = new ArrayList<>(11);
         prefs = getSharedPreferences("LogInPrefs", Context.MODE_PRIVATE);
         Utilities.status = prefs.getInt("Logged_in", 1);
         Utilities.f_id = prefs.getString("f_id", "");
@@ -126,7 +125,6 @@ public class RaffleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Bundle bundle = getIntent().getExtras();
         callMode = bundle.getInt("callMode");
-
 //Facebook initializations
         FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
@@ -150,12 +148,12 @@ public class RaffleActivity extends AppCompatActivity {
                 }
                 //API CALL TO REQUEST FIVE EXTRA COUPONS IF NOT ALREADY OBTAINED
                 if (callMode == 1) {
-                    if (Utilities.status == 2 || Utilities.status == 4 || Utilities.status==6 || Utilities.status==7) {
+                    if (Utilities.status == 2 || Utilities.status == 4 || Utilities.status == 6 || Utilities.status == 7) {
                         Utilities.status = 3;
                         new myApiCaller().execute(2);
                     }
                 } else if (callMode == 2) {
-                    if (Utilities.status == 2 || Utilities.status == 4 || Utilities.status==3 || Utilities.status==5) {
+                    if (Utilities.status == 2 || Utilities.status == 4 || Utilities.status == 3 || Utilities.status == 5) {
                         Utilities.status = 6;
                         new myApiCaller().execute(3);
                     }
@@ -182,11 +180,6 @@ public class RaffleActivity extends AppCompatActivity {
 
 //Layout initialisations
         setContentView(R.layout.activity_raffle);
-        if(callMode==2)
-        {
-            ImageView v=(ImageView)findViewById(R.id.doodle);
-            v.setImageBitmap(Utilities.doodleBitmap);
-        }
         updateh();
 
         ListView listView = (ListView) findViewById(R.id.listView);
@@ -195,9 +188,7 @@ public class RaffleActivity extends AppCompatActivity {
 //Setting up FB buttons
         LoginButton loginButton = (LoginButton) findViewById(R.id.loginButton);
         shareButton = (ShareButton) findViewById(R.id.shareButton);
-        if (Utilities.status == 2 || Utilities.status == 6 || Utilities.status == 3) {
-            startShareButton();
-        }
+        if(Profile.getCurrentProfile()!=null) startShareButton();
 
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
@@ -223,7 +214,6 @@ public class RaffleActivity extends AppCompatActivity {
         });
 
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -292,8 +282,8 @@ public class RaffleActivity extends AppCompatActivity {
                                 }
                             } else if (type[0] == 3) {
                                 JSONArray array = jsonObject.getJSONArray("data");
-                                for (int i = 6; i < 10; i++) {
-                                    Utilities.coupons[i] = array.getJSONObject(i - 1).getString("coupon_code");
+                                for (int i = 6; i < 11; i++) {
+                                    Utilities.coupons[i] = array.getJSONObject(i - 6).getString("coupon_code");
                                 }
                             }
                             break;
@@ -317,6 +307,10 @@ public class RaffleActivity extends AppCompatActivity {
             for (int i = 0; i < 11; i++)
                 prefs.edit().putString("Coupon" + i, Utilities.coupons[i]).apply();
             setArrayAdapter();
+            if (callMode == 2 && couponList.size()>1) {
+                callMode = 1;
+                startShareButton();
+            }
             updateh();
             switch (status) {
                 case 0: //Authorization error
@@ -344,10 +338,11 @@ public class RaffleActivity extends AppCompatActivity {
             //couponList.add(0,"Log in through Facebook to win a place in the raffle draw!");
 
 
-            if (couponList.size() == 1) {
+            if (couponList.size() != 11) {
                 //couponList.add(1, "Share #festember to win 5 extra tickets!");
                 TextView et = (TextView) findViewById(R.id.extratext);
-                et.setText("Share #festember to win 5 extra tickets!");
+                if (callMode == 1) et.setText("Share #festember to win 5 extra tickets!");
+                else et.setText("Click to share your doodle and earn 5 extra raffle tickets!");
 
 
             } else {
@@ -361,7 +356,7 @@ public class RaffleActivity extends AppCompatActivity {
         couponList.clear();
         for (int i = 0; i < 11; i++) {
             if (!Utilities.coupons[i].equals("No coupon yet"))
-                couponList.add(i, Utilities.coupons[i]);
+                couponList.add(Utilities.coupons[i]);
         }
         /*if(couponList.isEmpty()) {
             //couponList.add(0,"Log in through Facebook to win a place in the raffle draw!");

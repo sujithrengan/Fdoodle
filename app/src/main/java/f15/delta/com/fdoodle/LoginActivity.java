@@ -16,6 +16,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -65,7 +66,7 @@ public class LoginActivity extends Activity {
 
     private EditText username_text,password_text;
     private CheckBox checkBox;
-    public  String user_mail,password;
+    public String user_mail,password;
     public SharedPreferences prefs;
     public Button SignIn;
     public Button register;
@@ -85,12 +86,14 @@ public class LoginActivity extends Activity {
         checkBox = (CheckBox)findViewById(R.id.showPasswordCheckBox);
         SignIn = (Button)findViewById(R.id.signInButton);
         register=(Button)findViewById(R.id.RegisterButton);
-        prefs = getSharedPreferences("LogInPrefs",0);
+        prefs = getSharedPreferences("LogInPrefs", 0);
         typeface = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/gnu.ttf");
         username_text.setTypeface(typeface);
         password_text.setTypeface(typeface);
         SignIn.setTypeface(typeface);
         register.setTypeface(typeface);
+        TextView welcomeText = (TextView) findViewById(R.id.welcomeToFestember);
+        welcomeText.setTypeface(typeface);
         i= new Intent(LoginActivity.this,Hscreen.class);
         checkBox.setTypeface(typeface);
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

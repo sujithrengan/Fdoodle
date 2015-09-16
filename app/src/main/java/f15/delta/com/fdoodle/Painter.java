@@ -121,7 +121,6 @@ public class Painter extends ActionBarActivity {
         protected void onPostExecute(String pictureName) {
             Uri uri = Uri.fromFile(new File(pictureName));
             sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri));
-            Utilities.Picturename=pictureName;
             dialog.hide();
             mCanvas.getThread().activate();
         }
@@ -388,8 +387,8 @@ public class Painter extends ActionBarActivity {
                 rotate();
                 break;
             //case R.id.menu_open:
-              //  open();
-                //break;
+            //  open();
+            //break;
             case R.id.menu_undo:
                 mCanvas.undo();
                 break;
@@ -397,8 +396,8 @@ public class Painter extends ActionBarActivity {
             //showPreferences();
             //break;
             //case R.id.menu_set_wallpaper:
-              //  new SetWallpaperTask().execute();
-                //break;
+            //  new SetWallpaperTask().execute();
+            //break;
         }
 
 
