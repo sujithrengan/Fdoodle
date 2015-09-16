@@ -23,14 +23,13 @@ public class RecycleList extends RecyclerView.Adapter<RecycleList.CustomViewHold
     public final int[][] time;
     //private final String[] cate;
     public final String[] Number;
-    public final String[][] register;
-    public final int m;
 
     Calendar timenow=new GregorianCalendar(TimeZone.getTimeZone("GMT+5:30"));
 
+
     int n=3,a,b,c,d;
 
-    public RecycleList(Context context, String[][] present, int[][] time, int o,/*String[] location,String[] cate,*/String[] Number, String[][] register, int m) {
+    public RecycleList(Context context, String[][] present, int[][] time, int o,/*String[] location,String[] cate,*/String[] Number) {
 
         this.context = context;
         this.present = present;
@@ -38,8 +37,7 @@ public class RecycleList extends RecyclerView.Adapter<RecycleList.CustomViewHold
         this.time=time;
         //this.cate=cate;
         this.Number=Number;
-        this.register=register;
-        this.m=m;
+
     }
 
 
@@ -72,23 +70,15 @@ public class RecycleList extends RecyclerView.Adapter<RecycleList.CustomViewHold
     @Override
     public void onBindViewHolder(CustomViewHolder customViewHolder, int i) {
         int position=i;
-        for(int j=0;j<m;j++) {
-            if(present[position].equals(register[j])) {
-                //Toast.makeText(customViewHolder.itemView.getContext(), "Position: ", Toast.LENGTH_LONG).show();
-               // Toast.makeText(getApplicationContext(), "Entered choice", Toast.LENGTH_LONG).show();
-                customViewHolder.lay.setBackgroundColor(Color.parseColor("#80ff6600"));//rowView.setBackgroundColor(Color.GREEN);//((ToggleButton) view).
-                customViewHolder.Event.setTextColor(Color.WHITE);
-                customViewHolder.Time.setTextColor(Color.WHITE);
-                customViewHolder.Location.setTextColor(Color.WHITE);
-                customViewHolder.Cate.setTextColor(Color.WHITE);
-                customViewHolder.text.setBackgroundColor(Color.parseColor("#86ff4400"));
-                break;
+        int date=25;
 
-            }
-        }
+        timenow.set(Calendar.DATE,date);
+
+
 
         Calendar time5 = new GregorianCalendar(TimeZone.getTimeZone("GMT+5:30"));
         time5.set(timenow.get(Calendar.YEAR), 8, time[position][0], time[position][1], time[position][2]);
+
         Calendar time6 = new GregorianCalendar(TimeZone.getTimeZone("GMT+5:30"));
         time6.set(timenow.get(Calendar.YEAR), 8, time[position][3], time[position][4], time[position][5]);
         //TextView txtTitle = (TextView) rowView.findViewById(R.id.Event);
