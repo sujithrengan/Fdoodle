@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -125,6 +126,7 @@ public class RaffleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Bundle bundle = getIntent().getExtras();
         callMode = bundle.getInt("callMode");
+
 //Facebook initializations
         FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
@@ -180,6 +182,11 @@ public class RaffleActivity extends AppCompatActivity {
 
 //Layout initialisations
         setContentView(R.layout.activity_raffle);
+        if(callMode==2)
+        {
+            ImageView v=(ImageView)findViewById(R.id.doodle);
+            v.setImageBitmap(Utilities.doodleBitmap);
+        }
         updateh();
 
         ListView listView = (ListView) findViewById(R.id.listView);

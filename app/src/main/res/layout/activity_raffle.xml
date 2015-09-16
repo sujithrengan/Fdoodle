@@ -57,6 +57,10 @@
         android:text="TEST Case 2"
         />
 -->
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/doodle"/>
     <com.facebook.login.widget.LoginButton
         android:layout_width="fill_parent"
         android:id="@+id/loginButton"

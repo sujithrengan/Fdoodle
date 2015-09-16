@@ -37,6 +37,7 @@ import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Display;
 import android.view.InflateException;
 import android.view.KeyEvent;
@@ -111,6 +112,7 @@ public class Painter extends ActionBarActivity {
             mCanvas.getThread().freeze();
             String pictureName = getUniquePictureName(getSaveDir());
             saveBitmap(pictureName);
+
             mSettings.preset = mCanvas.getCurrentPreset();
             saveSettings();
             return pictureName;
@@ -119,7 +121,7 @@ public class Painter extends ActionBarActivity {
         protected void onPostExecute(String pictureName) {
             Uri uri = Uri.fromFile(new File(pictureName));
             sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri));
-
+            Utilities.Picturename=pictureName;
             dialog.hide();
             mCanvas.getThread().activate();
         }
@@ -716,6 +718,10 @@ public class Painter extends ActionBarActivity {
             protected void onPostExecute(String pictureName) {
                 mIsNewFile = false;
 
+                if(taskAction==20)
+                {
+
+                }
                 if (taskAction == Painter.ACTION_SAVE_AND_SHARE) {
                     startShareActivity(pictureName);
                 }
@@ -958,15 +964,39 @@ public class Painter extends ActionBarActivity {
     }
     private void sharefb()
     {
-
+/*
         FrameLayout view=(FrameLayout)findViewById(R.id.painterroot);
         View v = view.getRootView();
         v.setDrawingCacheEnabled(true);
-        Utilities.doodleBitmap = v.getDrawingCache();
-        Intent i=new Intent(Painter.this,RaffleActivity.class);
-        i.putExtra("callMode",2);
-        startActivity(i);
+        //Utilities.doodleBitmap = v.getDrawingCache();
+
+        Utilities.doodleBitmap = save(v);
+
+
+*/
+
+        //savePicture(20);
+        mCanvas.getThread().freeze();
+        Utilities.doodleBitmap=mCanvas.getThread().getBitmap();
+
+        mCanvas.getThread().activate();
+
+        if(mCanvas.getThread().getBitmap()!=null) {
+            Intent i = new Intent(Painter.this, RaffleActivity.class);
+            i.putExtra("callMode", 2);
+            startActivity(i);
+        }
+        else{
+            Toast.makeText(getApplicationContext(),"Retry again",Toast.LENGTH_SHORT);
+        }
         //share();
+    }
+    public Bitmap save(View v)
+    {
+        Bitmap b = Bitmap.createBitmap(v.getWidth(), v.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas c = new Canvas(b);
+        v.draw(c);
+        return b;
     }
 
     private void startShareActivity(String pictureName) {

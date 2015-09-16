@@ -41,6 +41,7 @@ public class Utilities
 
 //Doodle module
     public static Bitmap doodleBitmap = null;
+    public static String Picturename="";
 
 //QR Code module
     public static String webmail_username="";
