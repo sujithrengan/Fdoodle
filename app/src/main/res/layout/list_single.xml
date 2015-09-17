@@ -17,20 +17,25 @@
         android:layout_alignParentStart="true"
         android:text="aaaaa"
         android:textColor="@color/festember_orange"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:textAllCaps="true"
+        android:layout_toLeftOf="@+id/Time"
+        android:layout_marginRight="5dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:id="@+id/Time"
-        android:layout_alignBottom="@+id/Event"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_marginRight="5dp"
         android:layout_marginBottom="5dp"
         android:text="begins in 12 hours 10 mins"
-        android:textColor="@color/festember_orange" />
+        android:textColor="@color/festember_orange"
+        android:layout_alignTop="@+id/Event"
+        android:layout_toRightOf="@+id/textView"
+        android:layout_marginLeft="-170dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -43,22 +48,14 @@
         android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
         android:text="aaaaa"
-        android:textColor="@color/festember_orange" />
+        android:textColor="@color/festember_orange"
+        android:layout_toLeftOf="@+id/Cate"
+        android:layout_marginRight="5dp" />
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/describe"
-        android:layout_alignTop="@+id/map"
-        android:layout_toLeftOf="@+id/map"
-        android:layout_toStartOf="@+id/Time"
-        android:layout_marginRight="20dp"
-        android:layout_marginEnd="20dp" />
-
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/map"
         android:layout_alignBottom="@+id/Location"
         android:layout_alignRight="@+id/Time"
         android:layout_alignEnd="@+id/Time" />
@@ -66,17 +63,17 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:id="@+id/Cate"
-        android:layout_alignBottom="@+id/describe"
-        android:layout_toLeftOf="@+id/describe"
-        android:layout_toStartOf="@+id/describe"
-        android:layout_marginRight="20dp"
-        android:layout_marginEnd="20dp"
         android:textColor="@color/festember_orange"
-        android:textStyle="bold"
-        android:textSize="20dp"
-        android:gravity="center_horizontal" />
+        android:layout_alignParentRight="false"
+        android:layout_alignTop="@+id/Location"
+        android:layout_alignLeft="@+id/Time"
+        android:textAllCaps="false"
+        android:layout_marginRight="2dp"
+        android:textSize="15dp"
+        android:layout_toLeftOf="@+id/describe"
+        android:layout_marginLeft="5dp" />
 
     <TextView
         android:layout_width="fill_parent"
@@ -84,6 +81,6 @@
         android:id="@+id/textView"
         android:maxHeight="2dp"
         android:layout_marginTop="5dp"
-        android:layout_below="@+id/Location"
+        android:layout_below="@+id/Cate"
         android:background="#ffffff" />
 </RelativeLayout>
