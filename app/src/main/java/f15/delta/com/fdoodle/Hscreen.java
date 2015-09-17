@@ -61,7 +61,10 @@ public class Hscreen extends ActionBarActivity {
                     //Bitmap bim=Bmpmute.convertToMutable(bm);
                     if (bm.getPixel(nTouchX*w/screen_width, nTouchY*h/screen_height) != 0) {
                         // non-transparent pixel touched,
-                        Toast.makeText(getApplicationContext(), "Events", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), "Events", Toast.LENGTH_SHORT).show();
+                        Intent i = new Intent(Hscreen.this,EventsActivity.class);
+                        startActivity(i);
+
                         return true;
                     }
                     // transparent pixel touched

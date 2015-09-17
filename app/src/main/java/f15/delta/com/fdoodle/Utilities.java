@@ -3,6 +3,8 @@ package f15.delta.com.fdoodle;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 
+import java.util.List;
+
 public class Utilities
 {
 
@@ -47,5 +49,10 @@ public class Utilities
     public static String url_qr = "https://festember.com/final15/festember15api/mobile_tshirt_qr.php";
     public static String url_qr_auth = "https://festember.com/final15/festember15api/mobile_auth.php";
     public static int qr_status=0;
+
+
+
+//Events
+
 
 }
