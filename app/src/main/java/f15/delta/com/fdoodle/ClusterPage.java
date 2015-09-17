@@ -42,6 +42,7 @@ public class ClusterPage extends ActionBarActivity {
     public List<Event> cluster10;
     RecyclerView rv;
     int touch_check=1;
+    int cluster_no=-1;
     private  Read_write_file fileOps;
     EventAdapter adapter;
 
@@ -92,64 +93,126 @@ public class ClusterPage extends ActionBarActivity {
                                 EventAdapter adapter = new EventAdapter(cluster0);
                                 rv.setAdapter(adapter);
                                 rv.setLayoutManager(llm);
+                                cluster_no=0;
                                 break;
                             case 1:
                                 adapter = new EventAdapter(cluster1);
                                 rv.setAdapter(adapter);
                                 rv.setLayoutManager(llm);
+                                cluster_no=1;
                                 break;
                             case 2:
                                 adapter = new EventAdapter(cluster2);
                                 rv.setAdapter(adapter);
                                 rv.setLayoutManager(llm);
+                                cluster_no=2;
                                 break;
                             case 3:
                                 adapter = new EventAdapter(cluster3);
                                 rv.setAdapter(adapter);
                                 rv.setLayoutManager(llm);
+                                cluster_no=3;
                                 break;
                             case 4:
                                 adapter = new EventAdapter(cluster4);
                                 rv.setAdapter(adapter);
                                 rv.setLayoutManager(llm);
+                                cluster_no=4;
                                 break;
                             case 5:
                                 adapter = new EventAdapter(cluster5);
                                 rv.setAdapter(adapter);
                                 rv.setLayoutManager(llm);
+                                cluster_no=5;
                                 break;
                             case 6:
                                 adapter = new EventAdapter(cluster6);
                                 rv.setAdapter(adapter);
                                 rv.setLayoutManager(llm);
+                                cluster_no=6;
                                 break;
                             case 7:
                                 adapter = new EventAdapter(cluster7);
                                 rv.setAdapter(adapter);
                                 rv.setLayoutManager(llm);
+                                cluster_no=7;
                                 break;
                             case 8:
                                 adapter = new EventAdapter(cluster8);
                                 rv.setAdapter(adapter);
                                 rv.setLayoutManager(llm);
+                                cluster_no=8;
                                 break;
                             case 9:
                                 adapter = new EventAdapter(cluster9);
                                 rv.setAdapter(adapter);
                                 rv.setLayoutManager(llm);
+                                cluster_no=9;
                                 break;
                             case 10:
                                 adapter = new EventAdapter(cluster10);
                                 rv.setAdapter(adapter);
                                 rv.setLayoutManager(llm);
+                                cluster_no=10;
                                 break;
 
 
                         }
                     }
                     else {
+
                         Intent i = new Intent(ClusterPage.this,Single_Activity.class);
+                        switch(cluster_no){
+
+                            case 0: i.putExtra("id",cluster0.get(pos).id);
+                                    i.putExtra("desc",cluster0.get(pos).id);
+                                    i.putExtra("name",cluster0.get(pos).id);
+                                    break;
+                            case 1: i.putExtra("id",cluster1.get(pos).id);
+                                i.putExtra("desc",cluster1.get(pos).id);
+                                i.putExtra("name",cluster1.get(pos).id);
+                                break;
+                            case 2: i.putExtra("id",cluster2.get(pos).id);
+                                i.putExtra("desc",cluster2.get(pos).id);
+                                i.putExtra("name",cluster2.get(pos).id);
+                                break;
+                            case 3: i.putExtra("id",cluster3.get(pos).id);
+                                i.putExtra("desc",cluster3.get(pos).id);
+                                i.putExtra("name",cluster3.get(pos).id);
+                                break;
+                            case 4: i.putExtra("id",cluster4.get(pos).id);
+                                i.putExtra("desc",cluster4.get(pos).id);
+                                i.putExtra("name",cluster4.get(pos).id);
+                                break;
+                            case 5: i.putExtra("id",cluster5.get(pos).id);
+                                i.putExtra("desc",cluster5.get(pos).id);
+                                i.putExtra("name",cluster5.get(pos).id);
+                                break;
+                            case 6: i.putExtra("id",cluster6.get(pos).id);
+                                i.putExtra("desc",cluster6.get(pos).id);
+                                i.putExtra("name",cluster6.get(pos).id);
+                                break;
+                            case 7: i.putExtra("id",cluster7.get(pos).id);
+                                i.putExtra("desc",cluster7.get(pos).id);
+                                i.putExtra("name",cluster7.get(pos).id);
+                                break;
+                            case 8: i.putExtra("id",cluster8.get(pos).id);
+                                i.putExtra("desc",cluster8.get(pos).id);
+                                i.putExtra("name",cluster8.get(pos).id);
+                                break;
+                            case 9: i.putExtra("id",cluster9.get(pos).id);
+                                i.putExtra("desc",cluster9.get(pos).id);
+                                i.putExtra("name",cluster9.get(pos).id);
+                                break;
+                            case 10: i.putExtra("id",cluster10.get(pos).id);
+                                i.putExtra("desc",cluster10.get(pos).id);
+                                i.putExtra("name",cluster10.get(pos).id);
+                                break;
+
+                        }
                         startActivity(i);
+
+
                     }
 
 
