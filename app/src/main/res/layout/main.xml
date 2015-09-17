@@ -39,12 +39,19 @@
 		
 		<LinearLayout android:id="@+id/properties_bar"
 			style="@style/BrushProperties.Wrapper" >
-			<LinearLayout style="@style/BrushProperties.Controls" >
-				<TextView style="@style/BrushProperties.Label"
-					android:text="@string/brush_color"/>
-				<ImageButton android:src="@drawable/ic_menu_colors"					
-					android:onClick="changeBrushColor"
-					style="@style/BrushProperties.Control.Image"	/>
+
+            <LinearLayout style="@style/BrushProperties.Controls" >
+                <TextView style="@style/BrushProperties.Label"
+                    android:text="@string/brush_color"/>
+                <ImageButton android:src="@drawable/ic_menu_colors"
+                    android:onClick="changeBrushColor"
+                    style="@style/BrushProperties.Control.Image"	/>
+
+            </LinearLayout>
+            <LinearLayout style="@style/BrushProperties.Controls" >
+                <TextView style="@style/BrushProperties.Label"
+                    android:text="Symmetry X/Y"/>
+
                 <ToggleButton
                     android:layout_width="wrap_content"
                     android:text="Mirror"
@@ -55,7 +62,7 @@
                     android:text="Mirror"
                     android:id="@+id/mirrory"
                     android:layout_height="wrap_content" />
-			</LinearLayout>
+            </LinearLayout>
 			<LinearLayout style="@style/BrushProperties.Controls" >
 				<TextView style="@style/BrushProperties.Label"
 					android:text="@string/brush_size"/>

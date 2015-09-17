@@ -76,12 +76,12 @@ public class PainterPreferences extends PreferenceActivity implements
 		dialogBuilder.setView(dialogView);
 
 		try {
-			((TextView) dialogView.findViewById(R.id.version))
+			/*(TextView) dialogView.findViewById(R.id.version))
 					.setText(getString(
-							R.string.app_version,
+							,
 							getPackageManager().getPackageInfo(
 									getPackageName(),
-									PackageManager.GET_META_DATA).versionName));
+									PackageManager.GET_META_DATA).versionName));*/
 		} catch (Exception e) {
 		}
 

@@ -1,40 +1,12 @@
 package f15.delta.com.fdoodle;
 
-import android.app.ProgressDialog;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
-import android.widget.Toast;
-
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TimeZone;
-
 
 
 
 import android.app.ProgressDialog;
 
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -48,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -56,6 +29,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
+import java.sql.Date;
+import java.sql.Time;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
@@ -74,56 +49,19 @@ import com.android.volley.toolbox.Volley;
 
 public class UpcomingActivity extends AppCompatActivity {
 
-    /*{"students":[
-    {"UserId":12, "Registered":{"cat","cow"},"Following":{"cat","cow","rat"}}
-    ,...
-    ]}
+    Typeface p;
 
-    {"events":[
-    {"Eventname":"cat", "time":{18,18,0,18,21,15}, "location":"barn", "cate":"GL"e}, "description":"adsadgshsrthbrsgn"},
-    ....
-    ]}
-    */
-
-
-
-    /*String[][] events = {{"cat","barn","GL"},
-            {"dog","sac","W"},
-            {"rat","lhc","GL"},
-            {"horse","eee","P"},
-            {"chicken","barn","GL"},
-            {"rabbit","sac","W"},
-            {"dragon","lhc","GL"},
-            {"sheep","eee","P"},
-            {"snake","oat","P"},
-            {"tiger","sac","W"},
-            {"monkey","lhc","GL"},
-            {"boar","lhc","GL"},
-            {"cow","oat","P"}};
-            int n=events.length*/
-
-    //Calendar timeday=new GregorianCalendar(TimeZone.getTimeZone("GMT+5:30"));
-
-    //timeday.get(Calendar.DATE),month=8;
-    /*int[][] time = {{date, 10, 0, date, 12, 15},
-    {date, 13, 30, date, 18, 45},
-    {date, 12, 30, date, 14, 30},
-            {date,23,15,(date+1),0,30},
-            {date, 20, 0, date, 23, 15},
-            {date, 8, 30, date, 10, 45},
-            {date, 16, 30, date, 20, 30},
-            {date,23,15,(date+1),0,30},
-            {date,14,30,date,16,30},
-            {date, 16, 30, date, 20, 30},
-            {date,19,15,(date+1),0,30},
-            {date,17,30,date,21,30},
-           {date,11,30,date,13,30}};*/
     String[] Number;
     String[][] present;
     String[][] tempeve;
     int[][] prtime;
     int[][] temptime;
     int[] id;
+    String[] evstarttime;
+    String[] evendtime;
+    String[] evdate;
+    String[] evlastupdate;
+
 
     int no,t,ch=0,catech=0;
     int timelimit=1;
@@ -135,7 +73,8 @@ public class UpcomingActivity extends AppCompatActivity {
 
     Event[] Eve;
 
-    int date=25;
+    int date=28;
+    String noentrytest="No ongoing/upcoming events.\nWhy not visit the FOODSTALLS instead?";
 
 
 
@@ -350,12 +289,18 @@ public class UpcomingActivity extends AppCompatActivity {
         for (int q = 0; q < t; q++) {
 
             present[q] = store[q];
+
+
         }
 
 
 
 
+
+
     }
+
+
 
 
 
@@ -386,6 +331,11 @@ public class UpcomingActivity extends AppCompatActivity {
                             tempeve=new String[no][3];
                             temptime=new int[no][6];
                             id=new int[no];
+                            Eve=new Event [no];
+                            evstarttime=new String[no];
+                            evendtime=new String[no];
+                            evdate=new String[no];
+                            evlastupdate=new String[no];
 
 
 
@@ -394,20 +344,19 @@ public class UpcomingActivity extends AppCompatActivity {
                                 JSONObject c = dataJsonArr.getJSONObject(i);
 
 
-                                String[] evstarttime=new String[no];
-                                String[] evendtime=new String[no];
 
 
-                                tempeve[i][0] = c.getString("event_name");
+
+                                tempeve[i][0] = (c.getString("event_name"));
                                 evstarttime[i] = c.getString("event_start_time");
                                 evendtime[i] = c.getString("event_end_time");
                                 tempeve[i][1] = c.getString("event_venue");
                                 tempeve[i][2] =c.getString("event_cluster");
-                                String evdate = c.getString("event_date");
+                                evdate[i] = c.getString("event_date");
                                 id[i] =  c.getInt("event_id");
-                                android.text.format.DateFormat df = new android.text.format.DateFormat();
-                                df.format("yyyy-MM-dd", new java.util.Date());
-                                temptime[i][0] = (Integer.parseInt(evdate.substring(8, 10)));
+                                evlastupdate[i]=c.getString("event_last_update_time");
+
+                                temptime[i][0] = (Integer.parseInt(evdate[i].substring(8, 10)));
                                 temptime[i][1] = (Integer.parseInt(evstarttime[i].substring(0, 2)));
                                 temptime[i][2] = (Integer.parseInt(evstarttime[i].substring(3, 5)));
                                 temptime[i][4] = (Integer.parseInt(evendtime[i].substring(0, 2))) ;
@@ -429,12 +378,10 @@ public class UpcomingActivity extends AppCompatActivity {
 
                             }
                             pDialog.dismiss();
-                            sort(tempeve, temptime, no);
-                            RecycleList adapter = new
-                                    RecycleList(getApplicationContext(), present,prtime,t,Number);
-                            mRecyclerView = (RecyclerView) findViewById(R.id.recyclelist);
-                            mRecyclerView.setLayoutManager(new LinearLayoutManager(UpcomingActivity.this));
-                            mRecyclerView.setAdapter(adapter);
+
+                            optsel();
+
+
 
 
 
@@ -469,6 +416,26 @@ public class UpcomingActivity extends AppCompatActivity {
     }
 
 
+    public void optsel(){
+        sort(tempeve, temptime, no);
+        RecycleList adapter = new
+                RecycleList(UpcomingActivity.this, present,prtime,t,Number);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recyclelist);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(UpcomingActivity.this));
+        mRecyclerView.setAdapter(adapter);
+        TextView texx=(TextView) findViewById(R.id.noevent);
+        if(t==0){
+            texx.setText(noentrytest);
+            texx.setTypeface(p);
+
+        }
+        else{
+            texx.setText(null);
+        }
+
+    }
+
+
 
 
     @Override
@@ -479,14 +446,33 @@ public class UpcomingActivity extends AppCompatActivity {
 
         setTitle("Upcoming Events Schedule");
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar.setBackgroundColor(getResources().getColor(R.color.ColorUpcoming));
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        p= Typeface.createFromAsset(getAssets(),"fonts/gnu.ttf");
         /*pDialog = new ProgressDialog(this);
         pDialog.setMessage("Please wait...");
         pDialog.setCancelable(false);*/
 
         parseevents();
+        for(int i=0;i<no;i++) {
+
+            Eve[i].name = tempeve[i][0];
+            Eve[i].start_time= Time.valueOf(evstarttime[i]);
+            Eve[i].end_time=Time.valueOf(evendtime[i]);
+
+            Eve[i].venue = tempeve[i][1];
+            Eve[i].cluster = tempeve[i][2];
+            Eve[i].date=Date.valueOf(evdate[i]);
+            Eve[i].id = id[i];
+            Eve[i].last_updated=Time.valueOf(evlastupdate[i]);
+            Eve[i].desc=" ";
+        }
+
+
+
+
 
 
 
@@ -504,7 +490,8 @@ public class UpcomingActivity extends AppCompatActivity {
                                        int position, long id) {
                 ch=position;
 
-                parseevents();
+                //parseevents();
+                optsel();
 
 
 
@@ -517,7 +504,7 @@ public class UpcomingActivity extends AppCompatActivity {
 
 
 
-                sort(tempeve, temptime, no);
+                optsel();
 
             }
 
@@ -547,8 +534,8 @@ public class UpcomingActivity extends AppCompatActivity {
                 }
 
 
-                parseevents();
-
+                //parseevents();
+                optsel();
 
 
 
@@ -559,7 +546,7 @@ public class UpcomingActivity extends AppCompatActivity {
 
 
 
-                sort(tempeve, temptime, no);
+                optsel();
 
             }
         });
@@ -577,7 +564,9 @@ public class UpcomingActivity extends AppCompatActivity {
 
                 catech=position;
 
-                parseevents();
+                //parseevents();
+                optsel();
+                //Toast.makeText(getApplicationContext(), tempeve[0][2], Toast.LENGTH_SHORT).show();
 
 
 
@@ -589,7 +578,7 @@ public class UpcomingActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> arg0) {
 
 
-                sort(tempeve, temptime, no);
+                optsel();
 
             }
         });

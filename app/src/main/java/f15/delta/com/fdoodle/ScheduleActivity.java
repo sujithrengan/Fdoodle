@@ -2,6 +2,7 @@ package f15.delta.com.fdoodle;
 
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -27,6 +28,9 @@ public class ScheduleActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources()
+                .getColor(R.color.ColorSchedule)));
         TextView t1 = (TextView) findViewById(R.id.textView1);
         f4 = Typeface.createFromAsset(getApplicationContext().getAssets(),
                 "fonts/gnu.ttf");

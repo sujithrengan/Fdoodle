@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="ColorPrimary">#FFFFAA28</color>
+    <color name="ColorProfile">#8f4f50</color>
+    <color name="ColorRaffle">#563444</color>
+    <color name="ColorDoodle">#432c3c</color>
+    <color name="ColorSchedule">#a55c56</color>
+    <color name="ColorEvents">#bf705f</color>
+    <color name="ColorUpcoming">#281b2d</color>
+
     <color name="ColorPrimaryDark">#00695C</color>
     <color name="colorPrimary">#FFFFAA28</color>
     <color name="colorPrimaryDark">#00695C</color>
