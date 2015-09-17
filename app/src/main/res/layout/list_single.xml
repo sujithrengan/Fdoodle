@@ -11,16 +11,16 @@
         android:id="@+id/Event"
         android:layout_marginTop="5dp"
         android:layout_marginLeft="5dp"
-        android:layout_marginStart="12dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:layout_alignParentStart="false"
         android:text="aaaaa"
         android:textColor="@color/festember_orange"
         android:textStyle="bold"
         android:textAllCaps="true"
-        android:layout_toLeftOf="@+id/Time"
-        android:layout_marginRight="5dp" />
+        android:layout_toLeftOf="@+id/Cate"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentRight="false" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -56,9 +56,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/describe"
-        android:layout_alignBottom="@+id/Location"
         android:layout_alignRight="@+id/Time"
-        android:layout_alignEnd="@+id/Time" />
+        android:layout_alignEnd="@+id/Time"
+        android:layout_alignTop="@+id/Location" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -70,7 +70,7 @@
         android:layout_alignTop="@+id/Location"
         android:layout_alignLeft="@+id/Time"
         android:textAllCaps="false"
-        android:layout_marginRight="2dp"
+        android:layout_marginRight="5dp"
         android:textSize="15dp"
         android:layout_toLeftOf="@+id/describe"
         android:layout_marginLeft="5dp" />
