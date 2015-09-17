@@ -1,5 +1,9 @@
 package f15.delta.com.fdoodle;
 
+package com.shilpasweth.upcomingevents1;
+
+
+import android.app.Application;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
@@ -8,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -59,6 +64,33 @@ public class RecycleList extends RecyclerView.Adapter<RecycleList.CustomViewHold
         }
     }
 
+    public String propergram(String word){
+
+
+        // word.toLowerCase();
+        String[] tempstr =word.split("_");
+        String tempstr2;
+
+        for(int i=0;i<tempstr.length;i++){
+            if((tempstr[i].charAt(0))>='A'&&(tempstr[i].charAt(0))<='Z') {
+                tempstr2 = (String.valueOf(tempstr[i].charAt(0)));
+            }
+            else {
+                tempstr2 = (String.valueOf(tempstr[i].charAt(0))).toUpperCase();
+            }
+            tempstr[i] = tempstr2.concat(tempstr[i].substring(1));
+            if (i != 0) {
+                word=word.concat(" ").concat(tempstr[i]);
+            } else {
+                word = tempstr[i];
+            }
+
+        }
+        return word;
+
+
+    }
+
     @Override
     public CustomViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_single, null);
@@ -71,8 +103,13 @@ public class RecycleList extends RecyclerView.Adapter<RecycleList.CustomViewHold
     public void onBindViewHolder(CustomViewHolder customViewHolder, int i) {
         int position=i;
         int date=25;
+        String[] temp=present[position];
 
         timenow.set(Calendar.DATE,date);
+
+
+
+
 
 
 
@@ -82,11 +119,11 @@ public class RecycleList extends RecyclerView.Adapter<RecycleList.CustomViewHold
         Calendar time6 = new GregorianCalendar(TimeZone.getTimeZone("GMT+5:30"));
         time6.set(timenow.get(Calendar.YEAR), 8, time[position][3], time[position][4], time[position][5]);
         //TextView txtTitle = (TextView) rowView.findViewById(R.id.Event);
-        customViewHolder.Event.setText(present[position][0]);
+        customViewHolder.Event.setText(propergram(temp[0]));
         //txtTitle = (TextView) rowView.findViewById(R.id.Location);
-        customViewHolder.Location.setText(present[position][1]);
+        customViewHolder.Location.setText(propergram(temp[1]));
         //txtTitle = (TextView) rowView.findViewById(R.id.Cate);
-        customViewHolder.Cate.setText(present[position][2]);
+        customViewHolder.Cate.setText(propergram(temp[2]));
         //txtTitle = (TextView) rowView.findViewById(R.id.Time);
 
         if (time5.after(timenow)) {
