@@ -1,5 +1,8 @@
 package f15.delta.com.fdoodle;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by HP on 14-09-2015.
  */
@@ -10,6 +13,7 @@ public class Profile {
     public static String email;
     public static String full_name;
     public static String coupon="";
+    public static ArrayList<String> eventlist=new ArrayList<String>();
 
 
 
@@ -19,6 +23,7 @@ public class Profile {
         Profile.name=name;
         Profile.email=email;
         Profile.full_name=full_name;
+
     }
     public static void assigncoup(String coup)
     {

@@ -1,22 +1,43 @@
 package f15.delta.com.fdoodle;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class UserProfile extends ActionBarActivity {
 
     SharedPreferences prefs=null;
+    ListView regEventsList;
+    ArrayAdapter<String> eventsArrayAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +47,7 @@ public class UserProfile extends ActionBarActivity {
 
         setData();
     }
+
 
     private void setData() {
         Typeface face = Typeface.createFromAsset(getApplicationContext().getAssets(),
@@ -49,14 +71,117 @@ public class UserProfile extends ActionBarActivity {
                 reg_events.add("Event "+i);
             }
         //Setting the details
-        ArrayAdapter<String> eventsArrayAdapter = new ArrayAdapter<>(getApplicationContext(), R.layout.single_list_item, reg_events);
-        ListView regEventsList = (ListView) findViewById(R.id.registeredEventsListView);
+
+        regEventsList = (ListView) findViewById(R.id.registeredEventsListView);
+
         nameView.setText(nameView.getText().toString() + Profile.name + "!");
         fIDView.setText(fIDView.getText().toString() + String.valueOf(Profile.id));
         emailIDView.setText(emailIDView.getText().toString() + Profile.email);
         couponView.setText(couponView.getText().toString() + Profile.coupon);
-        regEventsList.setAdapter(eventsArrayAdapter);
+
+
+        //if(eventsArrayAdapter!=null)
+        //regEventsList.setAdapter(eventsArrayAdapter);
+        check_events();
     }
+
+
+
+    public void check_events(){
+        final ProgressDialog pDialog = new ProgressDialog(this);
+        pDialog.setMessage("Loading...");
+        pDialog.setCancelable(false);
+        pDialog.setCanceledOnTouchOutside(false);
+        pDialog.show();
+
+        StringRequest postRequest = new StringRequest(Request.Method.POST, Utilities.url_profile_events,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+
+                        try {
+                            JSONObject jsonResponse = new JSONObject(response);
+                            //Log.e("params",jsonResponse.toString());
+                            int status = jsonResponse.getInt("status");
+                            //String error = jsonResponse.getString("data");
+                            pDialog.dismiss();
+                            switch (status) {
+                                case 0:
+                                    Toast.makeText(UserProfile.this, "There was a problem connecting to the server. Please check your username and password and try again.", Toast.LENGTH_LONG).show();
+
+
+                                    break;
+                                case 1:case 2:
+
+                                    JSONArray elist=jsonResponse.getJSONArray("data");
+                                    Log.e("paramllist",elist.toString());
+                                    int i=0;
+                                    Profile.eventlist.clear();
+                                    while(i<elist.length())
+                                    {
+                                        JSONObject j=(JSONObject)elist.get(i);
+
+                                        Log.e("param",j.toString());
+                                        i++;
+                                        Profile.eventlist.add(j.get("event_name").toString());
+                                    }
+                                    //eventsArrayAdapter = new ArrayAdapter<>(getApplicationContext(), R.layout.single_list_item,Profile.eventlist);
+
+
+
+                                    final Typeface mFont = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/gnu.ttf");
+                                    eventsArrayAdapter = new ArrayAdapter<String>(UserProfile.this, R.layout.single_list_item, R.id.regevent, Profile.eventlist) {
+                                        @Override
+                                        public View getView(int position, View convertView, ViewGroup parent) {
+                                            View view = super.getView(position, convertView, parent);
+                                            TextView textview = (TextView) view;
+                                            textview.setTypeface(mFont);
+                                            return textview;
+                                        }
+                                    };
+
+                                    regEventsList.setAdapter(eventsArrayAdapter);
+                                    //Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_LONG).show();
+                                    //startActivity(i);
+                                    //finish();
+                                    break;
+
+
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        pDialog.dismiss();
+                        error.printStackTrace();
+                        Toast.makeText(UserProfile.this, "Error", Toast.LENGTH_LONG).show();
+
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams()
+            {
+                Map<String, String> params = new HashMap<>();
+                // the POST parameters:
+                params.put("user_id",Utilities.f_id);
+                params.put("user_pass", Utilities.f_pass);
+                Log.e("params:",Utilities.f_email+"-"+Utilities.f_pass);
+                return params;
+            }
+        };
+        Volley.newRequestQueue(this).add(postRequest);
+
+    }
+
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
