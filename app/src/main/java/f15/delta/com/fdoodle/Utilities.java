@@ -26,6 +26,7 @@ public class Utilities
     public static String fb_name;
     public static String fb_id;
     public static int status=0;
+    public static int check_desc = 0;
 
         //Status 0 - Not logged into the app (Festember registration)
         //Status 1 - Logged into the app (Festember registration)
@@ -44,6 +45,8 @@ public class Utilities
     public static String webmail_username="";
     public static String webmail_password="";
     public static SharedPreferences qr_prefs;
+    public static SharedPreferences desc_check;
+    public static int upcoming_check;
     public static String url_qr = "https://festember.com/final15/festember15api/mobile_tshirt_qr.php";
     public static String url_qr_auth = "https://festember.com/final15/festember15api/mobile_auth.php";
     public static int qr_status=0;
