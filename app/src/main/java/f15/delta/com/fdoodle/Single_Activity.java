@@ -33,10 +33,13 @@ String name="";
 String desc;
 // Tab titles
 private String[] tabs = { "Introduction", "Rules & Format", "Prizes","Timings","Contacts" };
+TextView title;
 
 @Override
 protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
 
 
         setContentView(R.layout.activity_single_);
@@ -46,9 +49,12 @@ protected void onCreate(Bundle savedInstanceState) {
                 name = extras.getString("name");
                 id  = extras.getInt("id");
                 desc = extras.getString("desc");
+            Utilities.event_name=name;
+            Utilities.event_desc=desc;
                 // and get whatever type user account id is
 
         }
+
 
 
         // Initilization

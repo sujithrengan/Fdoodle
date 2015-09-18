@@ -170,48 +170,48 @@ public class ClusterPage extends ActionBarActivity {
                         switch(cluster_no){
 
                             case 0: i.putExtra("id",cluster0.get(pos).id);
-                                    i.putExtra("desc",cluster0.get(pos).id);
-                                    i.putExtra("name",cluster0.get(pos).id);
+                                    i.putExtra("desc",stringPareser1(cluster0.get(pos).desc));
+                                    i.putExtra("name",stringPareser1(cluster0.get(pos).name));
                                     break;
                             case 1: i.putExtra("id",cluster1.get(pos).id);
-                                i.putExtra("desc",cluster1.get(pos).id);
-                                i.putExtra("name",cluster1.get(pos).id);
+                                i.putExtra("desc",stringPareser1(cluster1.get(pos).desc));
+                                i.putExtra("name",stringPareser1(cluster1.get(pos).name));
                                 break;
                             case 2: i.putExtra("id",cluster2.get(pos).id);
-                                i.putExtra("desc",cluster2.get(pos).id);
-                                i.putExtra("name",cluster2.get(pos).id);
+                                i.putExtra("desc",stringPareser1(cluster2.get(pos).desc));
+                                i.putExtra("name",stringPareser1(cluster2.get(pos).name));
                                 break;
                             case 3: i.putExtra("id",cluster3.get(pos).id);
-                                i.putExtra("desc",cluster3.get(pos).id);
-                                i.putExtra("name",cluster3.get(pos).id);
+                                i.putExtra("desc",stringPareser1(cluster3.get(pos).desc));
+                                i.putExtra("name",stringPareser1(cluster3.get(pos).name));
                                 break;
                             case 4: i.putExtra("id",cluster4.get(pos).id);
-                                i.putExtra("desc",cluster4.get(pos).id);
-                                i.putExtra("name",cluster4.get(pos).id);
+                                i.putExtra("desc",stringPareser1(cluster4.get(pos).desc));
+                                i.putExtra("name",stringPareser1(cluster4.get(pos).name));
                                 break;
                             case 5: i.putExtra("id",cluster5.get(pos).id);
-                                i.putExtra("desc",cluster5.get(pos).id);
-                                i.putExtra("name",cluster5.get(pos).id);
+                                i.putExtra("desc",stringPareser1(cluster5.get(pos).desc));
+                                i.putExtra("name",stringPareser1(cluster5.get(pos).name));
                                 break;
                             case 6: i.putExtra("id",cluster6.get(pos).id);
-                                i.putExtra("desc",cluster6.get(pos).id);
-                                i.putExtra("name",cluster6.get(pos).id);
+                                i.putExtra("desc",stringPareser1(cluster6.get(pos).desc));
+                                i.putExtra("name",stringPareser1(cluster6.get(pos).name));
                                 break;
                             case 7: i.putExtra("id",cluster7.get(pos).id);
-                                i.putExtra("desc",cluster7.get(pos).id);
-                                i.putExtra("name",cluster7.get(pos).id);
+                                i.putExtra("desc",stringPareser1(cluster7.get(pos).desc));
+                                i.putExtra("name",stringPareser1(cluster7.get(pos).name));
                                 break;
                             case 8: i.putExtra("id",cluster8.get(pos).id);
-                                i.putExtra("desc",cluster8.get(pos).id);
-                                i.putExtra("name",cluster8.get(pos).id);
+                                i.putExtra("desc",stringPareser1(cluster8.get(pos).desc));
+                                i.putExtra("name",stringPareser1(cluster8.get(pos).name));
                                 break;
                             case 9: i.putExtra("id",cluster9.get(pos).id);
-                                i.putExtra("desc",cluster9.get(pos).id);
-                                i.putExtra("name",cluster9.get(pos).id);
+                                i.putExtra("desc",stringPareser1(cluster9.get(pos).desc));
+                                i.putExtra("name",stringPareser1(cluster9.get(pos).name));
                                 break;
                             case 10: i.putExtra("id",cluster10.get(pos).id);
-                                i.putExtra("desc",cluster10.get(pos).id);
-                                i.putExtra("name",cluster10.get(pos).id);
+                                i.putExtra("desc",stringPareser1(cluster10.get(pos).desc));
+                                i.putExtra("name",stringPareser1(cluster10.get(pos).name));
                                 break;
 
                         }
@@ -369,7 +369,7 @@ public class ClusterPage extends ActionBarActivity {
     }
     public class Event {
 
-        public Integer id ;
+        public int id ;
         public String name;
         public String start_time;
         public String end_time;
@@ -381,7 +381,7 @@ public class ClusterPage extends ActionBarActivity {
 
 
 
-        public Event(Integer id,String name,String start_time,String end_time,String venue,String desc,String date,String cluster)
+        public Event(int id,String name,String start_time,String end_time,String venue,String desc,String date,String cluster)
         {
 
             this.id=id;
@@ -412,6 +412,21 @@ public class ClusterPage extends ActionBarActivity {
             rv.setAdapter(adapter);
             rv.setLayoutManager(llm);
         }
+    }
+    public String stringPareser1(String t){
+        String temp2="";
+        if (t.contains("_")) {
+            // Split it.
+            String[] temp = t.split("_");
+            for(int j=0;j<temp.length;j++) {
+                String temp3 = temp[j].substring(0,1).toUpperCase() + temp[j].substring(1);
+                temp2 = temp2 + temp3 + " ";
+            }
+
+        }
+        else temp2=t;
+
+        return temp2;
     }
 }
 
