@@ -30,14 +30,16 @@
         android:textColor="#000000" />
 
     <Button
-        android:layout_width="100sp"
+        android:layout_width="300sp"
         android:layout_height="50sp"
         android:text="Register"
         android:id="@+id/event_regButton"
         android:layout_marginBottom="43dp"
-        android:background="#FFFFAA28"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:textColor="#FFFFFF"
+        android:textSize="30sp"
+        android:background="@drawable/button_style"
         android:enabled="true"
         android:clickable="true"
         android:onClick="callRegEvent"/>

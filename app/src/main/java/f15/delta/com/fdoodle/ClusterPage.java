@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.GestureDetector;
@@ -26,7 +27,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class ClusterPage extends ActionBarActivity {
+public class ClusterPage extends AppCompatActivity {
 
     private List<Cluster> clusters;
     public List<Event> events;
@@ -275,7 +276,7 @@ public class ClusterPage extends ActionBarActivity {
             else if(temp.cluster.equals("arts"))cluster7.add(events.get(i));
             else if(temp.cluster.equals("hindilits"))cluster8.add(events.get(i));
             else if(temp.cluster.equals("englishlits"))cluster9.add(events.get(i));
-            else if(temp.cluster.equals("tanillits"))cluster10.add(events.get(i));
+            else if(temp.cluster.equals("tamillits"))cluster10.add(events.get(i));
 
             }
         }
@@ -403,15 +404,21 @@ public class ClusterPage extends ActionBarActivity {
 
     }
 
+
+
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+
         if(touch_check==2) {
             touch_check = 1;
             RecycleAdapter_cluster adapter = new RecycleAdapter_cluster(clusters);
             rv.setAdapter(adapter);
             rv.setLayoutManager(llm);
         }
+        else if(touch_check==1){
+            super.onBackPressed();
+        }
+
     }
     public String stringPareser1(String t){
         String temp2="";
@@ -424,7 +431,7 @@ public class ClusterPage extends ActionBarActivity {
             }
 
         }
-        else temp2=t;
+        else temp2=t.substring(0,1).toUpperCase() + t.substring(1);
 
         return temp2;
     }

@@ -79,8 +79,9 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
                temp2 = temp2 + temp3 + " ";
            }
 
-        }
+        }else temp2=name.substring(0,1).toUpperCase() + name.substring(1);
 
+        clusterViewHolder.eventname.setTypeface(Utilities.typeface);
         clusterViewHolder.eventname.setText(temp2);
 
 

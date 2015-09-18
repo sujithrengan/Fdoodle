@@ -2,6 +2,7 @@ package f15.delta.com.fdoodle;
 
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.Typeface;
 
 public class Utilities
 {
@@ -52,5 +53,7 @@ public class Utilities
     public static int qr_status=0;
     public static String event_name;
     public static String event_desc;
+    public static Typeface typeface;
+    public static int event_id;
 
 }

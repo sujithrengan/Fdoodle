@@ -45,6 +45,7 @@ public class RecycleAdapter_cluster extends RecyclerView.Adapter<RecycleAdapter_
                 super(itemView);
 
                 cv = (CardView) itemView.findViewById(R.id.cv);
+
                 clustername = (TextView) itemView.findViewById(R.id.cluster_name);
 
 
@@ -68,6 +69,7 @@ public class RecycleAdapter_cluster extends RecyclerView.Adapter<RecycleAdapter_
 
     @Override
     public void onBindViewHolder(ClusterViewHolder clusterViewHolder, int i) {
+        clusterViewHolder.clustername.setTypeface(Utilities.typeface);
         clusterViewHolder.clustername.setText(clusters.get(i).name);
 
 

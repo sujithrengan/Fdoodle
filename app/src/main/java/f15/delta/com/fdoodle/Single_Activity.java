@@ -132,7 +132,7 @@ public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTrans
                             int status = jsonResponse.getInt("status");
                             String error = jsonResponse.getString("data");
                             pDialog.dismiss();
-                            Toast.makeText(Single_Activity.this, error, Toast.LENGTH_SHORT);
+                            Toast.makeText(Single_Activity.this, error, Toast.LENGTH_SHORT).show();
                             System.out.println(error);
 
 

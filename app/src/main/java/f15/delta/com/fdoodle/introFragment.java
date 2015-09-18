@@ -13,6 +13,8 @@ import android.widget.TextView;
 public class introFragment extends Fragment {
     TextView desc,title;
 
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -20,6 +22,8 @@ public class introFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.intro_fragment, container, false);
         desc=(TextView)rootView.findViewById(R.id.introText);
         title=(TextView)rootView.findViewById(R.id.textView2);
+        title.setTypeface(Utilities.typeface);
+        desc.setTypeface(Utilities.typeface);
         title.setText(Utilities.event_name);
         desc.setText(Utilities.event_desc);
 
