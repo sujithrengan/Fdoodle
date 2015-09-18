@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import java.util.List;
 
 /**
@@ -68,7 +69,19 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
 
     @Override
     public void onBindViewHolder(EventViewHolder clusterViewHolder, int i) {
-        clusterViewHolder.eventname.setText(events.get(i).name);
+        String name = events.get(i).name;
+        String temp2="";
+        if (name.contains("_")) {
+            // Split it.
+            String[] temp = name.split("_");
+           for(int j=0;j<temp.length;j++) {
+               String temp3 = temp[j].substring(0,1).toUpperCase() + temp[j].substring(1);
+               temp2 = temp2 + temp3 + " ";
+           }
+
+        }
+
+        clusterViewHolder.eventname.setText(temp2);
 
 
     }

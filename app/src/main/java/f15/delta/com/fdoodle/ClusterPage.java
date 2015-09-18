@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
 import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,11 +46,15 @@ public class ClusterPage extends ActionBarActivity {
     int cluster_no=-1;
     private  Read_write_file fileOps;
     EventAdapter adapter;
+    GridLayoutManager llm;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
+
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_cluster_page);
         fileOps = new Read_write_file(this);
         final GestureDetector mGestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
@@ -64,7 +69,7 @@ public class ClusterPage extends ActionBarActivity {
         initializeCluster();
         initializeEvents();
         separateEvents();
-        final GridLayoutManager llm = new GridLayoutManager(ClusterPage.this,2);
+         llm = new GridLayoutManager(ClusterPage.this,2);
 
         RecycleAdapter_cluster adapter = new RecycleAdapter_cluster(clusters);
         rv.setAdapter(adapter);
@@ -401,7 +406,12 @@ public class ClusterPage extends ActionBarActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if(touch_check==2)touch_check=1;
+        if(touch_check==2) {
+            touch_check = 1;
+            RecycleAdapter_cluster adapter = new RecycleAdapter_cluster(clusters);
+            rv.setAdapter(adapter);
+            rv.setLayoutManager(llm);
+        }
     }
 }
 

@@ -47,6 +47,7 @@ protected void onCreate(Bundle savedInstanceState) {
                 id  = extras.getInt("id");
                 desc = extras.getString("desc");
                 // and get whatever type user account id is
+
         }
 
 
@@ -56,8 +57,8 @@ protected void onCreate(Bundle savedInstanceState) {
         mAdapter = new TabPagerAdapter(getSupportFragmentManager());
 
         viewPager.setAdapter(mAdapter);
-        //  actionBar.setHomeButtonEnabled(false);
-     //   actionBar.setDisplayShowHomeEnabled(false);
+        actionBar.setHomeButtonEnabled(false);
+        actionBar.setDisplayShowHomeEnabled(false);
         actionBar.setDisplayShowTitleEnabled(false);
 
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);

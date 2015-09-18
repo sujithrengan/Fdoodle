@@ -24,10 +24,10 @@
                 android:id="@+id/cluster_name"
                 android:textSize="30sp"
                 android:textStyle="bold"
-
                 android:textColor="#FFFFFF"
                 android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true" />
+                android:layout_centerHorizontal="true"
+                android:paddingLeft="5sp" />
 
 
         </RelativeLayout>
