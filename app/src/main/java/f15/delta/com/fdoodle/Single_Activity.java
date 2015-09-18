@@ -121,7 +121,7 @@ public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTrans
         pDialog.setCanceledOnTouchOutside(false);
         pDialog.show();
 
-        StringRequest postRequest = new StringRequest(Request.Method.POST, Utilities.url_auth,
+        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
