@@ -4,7 +4,7 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:padding="5dp"
-    android:background="@color/festember_orange"
+    android:background="@color/switch_thumb_normal_material_dark"
     android:gravity="center"
     android:textSize="30sp"
     android:id="@+id/regevent"

@@ -8,6 +8,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -49,6 +50,7 @@ public class UserProfile extends ActionBarActivity {
 
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources()
                 .getColor(R.color.ColorProfile)));
+        getSupportActionBar().setTitle(Html.fromHtml("<font color='#ffffff'> Profile </font>"));
         setData();
     }
 
@@ -142,7 +144,11 @@ public class UserProfile extends ActionBarActivity {
                                             TextView textview = (TextView) view;
                                             textview.setTypeface(mFont);
                                             return textview;
+
                                         }
+
+
+
                                     };
 
                                     regEventsList.setAdapter(eventsArrayAdapter);

@@ -166,6 +166,9 @@
     <string name="title_activity_qrsplash_screen">QRSplashScreen</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_register">RegisterActivity</string>
-    <string name="title_activity_events">EventsActivity</string>
+    <string name="title_activity_cluster_page">ClusterPage</string>
+    <string name="title_activity_dummy">dummyActivity</string>
+    <string name="title_activity_event">EventActivity</string>
+    <string name="title_activity_single_">Single_Activity</string>
 
 </resources>

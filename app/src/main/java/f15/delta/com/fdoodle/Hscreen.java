@@ -2,6 +2,7 @@ package f15.delta.com.fdoodle;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -43,6 +44,7 @@ public class Hscreen extends ActionBarActivity {
         screen_height = displaymetrics.heightPixels;
         screen_width = displaymetrics.widthPixels;
         myHandler = new Handler();
+        Utilities.typeface= Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/gnu.ttf");
         frame=-00;
         Bitmap p=Bitmaphandle.decodeSampledBitmapFromResource(getResources(),this.getResources().getIdentifier("f"+String.valueOf(o[0]+1), "drawable",this.getPackageName()),screen_width,screen_height);
         w=p.getWidth();
@@ -61,10 +63,8 @@ public class Hscreen extends ActionBarActivity {
                     //Bitmap bim=Bmpmute.convertToMutable(bm);
                     if (bm.getPixel(nTouchX*w/screen_width, nTouchY*h/screen_height) != 0) {
                         // non-transparent pixel touched,
-                        //Toast.makeText(getApplicationContext(), "Events", Toast.LENGTH_SHORT).show();
-                        Intent i = new Intent(Hscreen.this,EventsActivity.class);
+                        Intent i = new Intent(Hscreen.this,ClusterPage.class);
                         startActivity(i);
-
                         return true;
                     }
                     // transparent pixel touched

@@ -9,6 +9,19 @@ import java.util.Date;
  */
 public class Event {
 
+    public Integer id ;
+    public String name;
+    public Time start_time;
+    public Time end_time;
+    public Time last_updated;
+    public String venue;
+    public String desc;
+    public Date date;
+    public String cluster;
+    private Read_write_file fileOps;
+
+
+
     public Event(Integer id,String name,Time start_time,Time end_time,Time last_updated,String venue,String desc,Date date,String cluster)
     {
 
@@ -24,16 +37,10 @@ public class Event {
 
 
 
+
     }
 
-    public Integer id ;
-    public String name;
-    public Time start_time;
-    public Time end_time;
-    public Time last_updated;
-    public String venue;
-    public String desc;
-    public Date date;
-    public String cluster;
+
+
 
 }

@@ -4,13 +4,15 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 /**
@@ -19,20 +21,17 @@ import java.util.List;
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHolder> {
 
 
-    List<EventsActivity.Event> events;
-    ArrayList<Integer> colours=new ArrayList<Integer>();
+    List<ClusterPage.Event> events;
+
     Context context;
-    //CustomItemClickListener listener;
-
-Typeface t;
+    CustomItemClickListener listener;
 
 
-    EventAdapter(List<EventsActivity.Event> events,Context context,ArrayList<Integer> colours){
+
+
+    EventAdapter(List<ClusterPage.Event> events){
 
         this.events = events;
-        this.context=context;
-        t= Typeface.createFromAsset(context.getAssets(), "fonts/gnu.ttf");
-        this.colours=colours;
 
 
     }
@@ -40,10 +39,9 @@ Typeface t;
 
 
     public static class EventViewHolder extends RecyclerView.ViewHolder {
-        RelativeLayout r;
         CardView cv;
         TextView eventname;
-
+        RelativeLayout r;
 
         EventViewHolder(View itemView) {
             super(itemView);
@@ -52,8 +50,6 @@ Typeface t;
             eventname = (TextView) itemView.findViewById(R.id.cluster_name);
 
             r=(RelativeLayout)itemView.findViewById(R.id.rl);
-
-
 
 
         }
@@ -74,10 +70,23 @@ Typeface t;
 
     @Override
     public void onBindViewHolder(EventViewHolder clusterViewHolder, int i) {
-        clusterViewHolder.eventname.setText(events.get(i).name);
-        clusterViewHolder.eventname.setTypeface(t);
-        clusterViewHolder.r.setBackgroundColor(colours.get(i%6));
+        String name = events.get(i).name;
+        String temp2="";
+        if (name.contains("_")) {
+            // Split it.
+            String[] temp = name.split("_");
+           for(int j=0;j<temp.length;j++) {
+               String temp3 = temp[j].substring(0,1).toUpperCase() + temp[j].substring(1);
+               temp2 = temp2 + temp3 + " ";
+           }
+
+        }else temp2=name.substring(0,1).toUpperCase() + name.substring(1);
+
+        clusterViewHolder.eventname.setTypeface(Utilities.typeface);
+        clusterViewHolder.eventname.setText(temp2);
+        clusterViewHolder.r.setBackgroundColor(Utilities.colours.get(i%5));
         clusterViewHolder.r.setAlpha(100f);
+
 
     }
 

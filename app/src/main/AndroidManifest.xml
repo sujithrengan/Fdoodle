@@ -100,8 +100,17 @@
             android:label="@string/title_activity_register" >
         </activity>
         <activity
-            android:name=".EventsActivity"
-            android:label="@string/title_activity_events" >
+            android:name=".ClusterPage"
+            android:label="@string/title_activity_cluster_page" >
+        </activity>
+        <activity
+            android:name=".EventActivity"
+            android:label="@string/title_activity_event" >
+        </activity>
+        <activity
+            android:name=".Single_Activity"
+            android:label="@string/title_activity_single_"
+            android:theme="@style/AppTheme2">
         </activity>
     </application>
 

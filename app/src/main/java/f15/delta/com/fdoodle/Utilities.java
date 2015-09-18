@@ -1,9 +1,11 @@
 package f15.delta.com.fdoodle;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.Typeface;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class Utilities
 {
@@ -28,6 +30,7 @@ public class Utilities
     public static String fb_name;
     public static String fb_id;
     public static int status=0;
+    public static int check_desc = 0;
 
         //Status 0 - Not logged into the app (Festember registration)
         //Status 1 - Logged into the app (Festember registration)
@@ -46,13 +49,30 @@ public class Utilities
     public static String webmail_username="";
     public static String webmail_password="";
     public static SharedPreferences qr_prefs;
+    public static SharedPreferences desc_check;
+    public static int upcoming_check;
     public static String url_qr = "https://festember.com/final15/festember15api/mobile_tshirt_qr.php";
     public static String url_qr_auth = "https://festember.com/final15/festember15api/mobile_auth.php";
     public static int qr_status=0;
 
-
-
 //Events
+    public static String event_name;
+    public static String event_desc;
+    public static Typeface typeface;
+    public static int event_id;
 
+
+   public static ArrayList<Integer> colours=new ArrayList<Integer>();
+
+    public static void initcolours(Context context)
+    {
+        colours=new ArrayList<Integer>();
+        //colours.add(context.getResources().getColor(R.color.ColorUpcoming));
+        colours.add(context.getResources().getColor(R.color.ColorRaffle));
+        colours.add(context.getResources().getColor(R.color.ColorDoodle));
+        colours.add(context.getResources().getColor(R.color.ColorProfile));
+        colours.add(context.getResources().getColor(R.color.ColorSchedule));
+        colours.add(context.getResources().getColor(R.color.ColorEvents));
+    }
 
 }

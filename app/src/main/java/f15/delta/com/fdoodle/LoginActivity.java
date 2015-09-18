@@ -88,6 +88,7 @@ public class LoginActivity extends Activity {
         register=(Button)findViewById(R.id.RegisterButton);
         prefs = getSharedPreferences("LogInPrefs", 0);
         typeface = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/gnu.ttf");
+
         username_text.setTypeface(typeface);
         password_text.setTypeface(typeface);
         SignIn.setTypeface(typeface);

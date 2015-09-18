@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,6 +32,7 @@ public class ScheduleActivity extends ActionBarActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources()
                 .getColor(R.color.ColorSchedule)));
+        getSupportActionBar().setTitle(Html.fromHtml("<font color='#ffffff'> Schedule </font>"));
         TextView t1 = (TextView) findViewById(R.id.textView1);
         f4 = Typeface.createFromAsset(getApplicationContext().getAssets(),
                 "fonts/gnu.ttf");

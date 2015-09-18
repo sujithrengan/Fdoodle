@@ -10,6 +10,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -127,6 +128,7 @@ public class RaffleActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources()
                 .getColor(R.color.ColorRaffle)));
+        getSupportActionBar().setTitle(Html.fromHtml("<font color='#ffffff'> Raffle </font>"));
         callMode = bundle.getInt("callMode");
 //Facebook initializations
         FacebookSdk.sdkInitialize(getApplicationContext());

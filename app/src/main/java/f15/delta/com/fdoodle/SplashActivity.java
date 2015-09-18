@@ -30,7 +30,21 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.wrapp.floatlabelededittext.Utils;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
 public class SplashActivity extends Activity {
@@ -39,7 +53,10 @@ public class SplashActivity extends Activity {
     TextView bm=null;
     SharedPreferences prefs;
     String o="#BreakTheMonotony";
+    String url1 = "https://api.festember.com/events/desclist";
+    String url2 = "https://api.festember.com/events/list";
     Handler myHandler;
+    Read_write_file fileOps;
     Runnable r=new Runnable() {
         @Override
         public void run() {
@@ -142,10 +159,22 @@ public class SplashActivity extends Activity {
         screen_width = displaymetrics.widthPixels;
         myHandler = new Handler();
         bm=(TextView)findViewById(R.id.bmtext);
-
+        fileOps = new Read_write_file(this);
         Typeface f = Typeface.createFromAsset(bm.getContext().getAssets(),
                 "fonts/gnu.ttf");
         bm.setTypeface(f);
+        Utilities.desc_check = getSharedPreferences("desc", 0);
+        Utilities.check_desc = Utilities.desc_check.getInt("check", 0);
+        Utilities.upcoming_check = Utilities.desc_check.getInt("upcoming_parse",0);
+        if(Utilities.check_desc==0){
+            System.out.println("calling parse");
+            callDescParse(url1,"description.txt");
+        }
+
+        if(Utilities.upcoming_check == 0){
+            System.out.println("calling upcoming");
+            callDescParse(url2,"upcoming.txt");
+        }
         //Cache
 /*
         Bitmaphandle.maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
@@ -353,5 +382,42 @@ public class SplashActivity extends Activity {
 
 
     }
+    public void callDescParse(String url, final String filename){
 
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        // Result handling
+                        System.out.println("resopnse saving");
+                        fileOps.writeToFile(response, filename);
+                        Utilities.check_desc=1;
+                        Utilities.upcoming_check=1;
+                        SharedPreferences.Editor editor = Utilities.desc_check.edit();
+                        editor.putInt("check",1);
+                        editor.putInt("upcoming_parse",1);
+                        editor.apply();
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                // Error handling
+                System.out.println("Something went wrong!");
+                error.printStackTrace();
+
+            }
+        });
+
+// Add the request to the queue
+        Volley.newRequestQueue(this).add(stringRequest);
+    }
+
+    @Override
+    public Context getApplicationContext() {
+        return super.getApplicationContext();
+    }
 }
