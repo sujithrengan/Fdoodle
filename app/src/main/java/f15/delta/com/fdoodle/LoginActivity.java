@@ -8,6 +8,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -48,8 +49,10 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -70,6 +73,7 @@ public class LoginActivity extends Activity {
     public SharedPreferences prefs;
     public Button SignIn;
     public Button register;
+    Read_write_file fileOps;
 
     public Intent i;
     Typeface typeface;
@@ -88,7 +92,7 @@ public class LoginActivity extends Activity {
         register=(Button)findViewById(R.id.RegisterButton);
         prefs = getSharedPreferences("LogInPrefs", 0);
         typeface = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/gnu.ttf");
-
+        fileOps=new Read_write_file(this);
         username_text.setTypeface(typeface);
         password_text.setTypeface(typeface);
         SignIn.setTypeface(typeface);
@@ -209,7 +213,11 @@ public class LoginActivity extends Activity {
                 return params;
             }
         };
+        int socketTimeout = 10000;//10 seconds
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        postRequest.setRetryPolicy(policy);
         Volley.newRequestQueue(this).add(postRequest);
+        //Volley.newRequestQueue(this).add(postRequest);
 
     }
     public void getDetails(){
@@ -258,11 +266,13 @@ public class LoginActivity extends Activity {
                                     Utilities.f_id=id;
                                     Profile.setProfile(Integer.valueOf(id),name,email,fullname);
                                     editor.apply();
+                                    callDescParse(Utilities.url_eventsdesc,"description.txt");
+                                    callDescParse(Utilities.url_events,"upcoming.txt");
                                     startActivity(i);
                                     finish();
                                     break;
 
-                                case 3:
+                                 case 3:
                                     Toast.makeText(LoginActivity.this, "error", Toast.LENGTH_SHORT).show();
                                     username_text.setText("");
                                     password_text.setText("");
@@ -296,7 +306,11 @@ public class LoginActivity extends Activity {
                 return params;
             }
         };
+        int socketTimeout = 10000;//10 seconds
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        postRequest.setRetryPolicy(policy);
         Volley.newRequestQueue(this).add(postRequest);
+        //Volley.newRequestQueue(this).add(postRequest);
 
     }
 
@@ -309,7 +323,42 @@ public class LoginActivity extends Activity {
     }
 
 
+    public void callDescParse(String url, final String filename){
 
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        // Result handling
+                        System.out.println("resopnse saving");
+                        fileOps.writeToFile(response, filename);
+                        Utilities.check_desc=1;
+                        Utilities.upcoming_check=1;
+                        SharedPreferences.Editor editor = Utilities.desc_check.edit();
+                        editor.putInt("check",1);
+                        editor.putInt("upcoming_parse",1);
+                        editor.apply();
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                // Error handling
+                Log.e("file", "Something went wrong!");
+                error.printStackTrace();
+
+            }
+        });
+        // Add the request to the queue
+        int socketTimeout = 10000;//10 seconds
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        stringRequest.setRetryPolicy(policy);
+        Volley.newRequestQueue(this).add(stringRequest);
+
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will

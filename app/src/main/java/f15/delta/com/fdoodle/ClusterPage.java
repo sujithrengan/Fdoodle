@@ -2,12 +2,14 @@ package f15.delta.com.fdoodle;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,6 +19,14 @@ import android.view.Window;
 import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -322,46 +332,55 @@ public class ClusterPage extends AppCompatActivity {
             clusters.add(new Cluster("Tamil Lits"));
 
         }
+
+
     public void initializeEvents(){
 
         events = new ArrayList<>();
         String[] description = new String[100];
-        String response = fileOps.readFromFile("description.txt");
-        try {
-            JSONObject jsonObject = new JSONObject(response);
-            String data = jsonObject.getString("data");
-            JSONArray jsonArray = new JSONArray(data);
-            for(int i=0;i<jsonArray.length();i++){
-                jsonObject = jsonArray.getJSONObject(i);
-                description[i]=jsonObject.getString("event_desc");
 
+
+
+
+
+            String response = fileOps.readFromFile("description.txt");
+            try {
+                JSONObject jsonObject = new JSONObject(response);
+                String data = jsonObject.getString("data");
+                JSONArray jsonArray = new JSONArray(data);
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    jsonObject = jsonArray.getJSONObject(i);
+                    description[i] = jsonObject.getString("event_desc");
+
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        response = fileOps.readFromFile("upcoming.txt");
-        try {
-            JSONObject jsonObject = new JSONObject(response);
-            String data = jsonObject.getString("data");
-            JSONArray jsonArray = new JSONArray(data);
-            for(int i=0;i<jsonArray.length();i++){
-                jsonObject = jsonArray.getJSONObject(i);
-                events.add(new Event(
-                        jsonObject.getInt("event_id"),
-                        jsonObject.getString("event_name"),
-                        jsonObject.getString("event_start_time"),
-                        jsonObject.getString("event_end_time"),
-                        jsonObject.getString("event_venue"),
-                        description[i],
-                        jsonObject.getString("event_date"),
-                        jsonObject.getString("event_cluster")
-                ));
 
 
+           response = fileOps.readFromFile("upcoming.txt");
+            try {
+                JSONObject jsonObject = new JSONObject(response);
+                String data = jsonObject.getString("data");
+                JSONArray jsonArray = new JSONArray(data);
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    jsonObject = jsonArray.getJSONObject(i);
+                    events.add(new Event(
+                            jsonObject.getInt("event_id"),
+                            jsonObject.getString("event_name"),
+                            jsonObject.getString("event_start_time"),
+                            jsonObject.getString("event_end_time"),
+                            jsonObject.getString("event_venue"),
+                            description[i],
+                            jsonObject.getString("event_date"),
+                            jsonObject.getString("event_cluster")
+                    ));
+
+
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 
 
     }

@@ -3,22 +3,22 @@ package f15.delta.com.fdoodle;
 
 
 
-        import android.app.Application;
-        import android.content.Context;
-        import android.graphics.Color;
-        import android.graphics.Typeface;
-        import android.support.v7.widget.RecyclerView;
-        import android.view.LayoutInflater;
-        import android.view.View;
-        import android.view.ViewGroup;
-        import android.widget.LinearLayout;
-        import android.widget.RelativeLayout;
-        import android.widget.TextView;
-        import android.widget.Toast;
+import android.app.Application;
+import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
-        import java.util.Calendar;
-        import java.util.GregorianCalendar;
-        import java.util.TimeZone;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
 /**
  * Created by Lenovo on 9/8/2015.
@@ -39,14 +39,13 @@ public class RecycleList extends RecyclerView.Adapter<RecycleList.CustomViewHold
 
     public RecycleList(Context context, String[][] present, int[][] time, int o,/*String[] location,String[] cate,*/String[] Number) {
 
-
         this.context = context;
-        this.t=Typeface.createFromAsset(context.getAssets(),"fonts/gnu.ttf");
         this.present = present;
         //this.location=location;
         this.time=time;
         //this.cate=cate;
         this.Number=Number;
+        this.t=Typeface.createFromAsset(context.getAssets(),"fonts/gnu.ttf");
 
     }
 
@@ -55,8 +54,8 @@ public class RecycleList extends RecyclerView.Adapter<RecycleList.CustomViewHold
 
         public TextView Event,Time,Location,Cate,text;
         public RelativeLayout lay;
-        public LinearLayout glow;
 
+        public LinearLayout glow;
         public CustomViewHolder(View view) {
             super(view);
 
@@ -70,7 +69,6 @@ public class RecycleList extends RecyclerView.Adapter<RecycleList.CustomViewHold
             Cate.setTypeface(t);
             this.lay=(RelativeLayout)itemView.findViewById(R.id.singlelistlayout);
             this.glow=(LinearLayout)view.findViewById(R.id.glow);
-            //this.text=(TextView)view.findViewById(R.id.textView);
             //Event.setBackground(@color/festember_orange);
         }
     }
@@ -113,7 +111,7 @@ public class RecycleList extends RecyclerView.Adapter<RecycleList.CustomViewHold
     @Override
     public void onBindViewHolder(CustomViewHolder customViewHolder, int i) {
         int position=i;
-        int date=25;
+        int date=26;
         String[] temp=present[position];
 
         timenow.set(Calendar.DATE,date);
@@ -138,38 +136,47 @@ public class RecycleList extends RecyclerView.Adapter<RecycleList.CustomViewHold
         //txtTitle = (TextView) rowView.findViewById(R.id.Time);
 
         if (time5.after(timenow)) {
-            if ((timenow.get(Calendar.MINUTE) <= time[position][2])) {
-                a = (-timenow.get(Calendar.HOUR_OF_DAY) + time[position][1]);
-                b = (time[position][2] - timenow.get(Calendar.MINUTE));
+            // if ((timenow.get(Calendar.MINUTE) <= time[position][2])) {
+            a =((int)((time5.getTimeInMillis() - timenow.getTimeInMillis())/3600000)); //(-timenow.get(Calendar.HOUR_OF_DAY) + time[position][1]);
+            b =((int)((time5.getTimeInMillis() - timenow.getTimeInMillis())/60000))%60; //(time[position][2] - timenow.get(Calendar.MINUTE));
 
-            } else {
+            // }
+            /*else {
                 a = (-timenow.get(Calendar.HOUR_OF_DAY) + time[position][1] - 1);
                 b = (60 - timenow.get(Calendar.MINUTE) + time[position][2]);
 
-            }
-            if ((timenow.get(Calendar.HOUR) > time[position][1])) {
+            }*/
+            /*if ((timenow.get(Calendar.HOUR) > time[position][1])) {
                 a+= 24;
                 //b = (time[position][2] - timenow.get(Calendar.MINUTE));
-            }
+            }*/
 
-            customViewHolder.Time.setText("begins in " + a/*timenow.get(Calendar.YEAR)*/ + " hours " + b + " mins ");
             customViewHolder.glow.setBackgroundColor(Color.RED);
-
-
-        } else {
-            if ((timenow.get(Calendar.MINUTE) <= time[position][5])) {
-                c = (-timenow.get(Calendar.HOUR_OF_DAY) + time[position][4]);
-                d = (time[position][5] - timenow.get(Calendar.MINUTE));
-            } else {
+            customViewHolder.glow.setAlpha(0.3f);
+            customViewHolder.Time.setText("begins in " + a/*timenow.get(Calendar.YEAR)*/ + " hours " + b + " mins ");
+        }
+        else if (time6.before(timenow)) {
+            // if ((timenow.get(Calendar.MINUTE) <= time[position][2])) {
+            customViewHolder.glow.setBackgroundColor(Color.YELLOW);
+            customViewHolder.glow.setAlpha(0.3f);
+            customViewHolder.Time.setText("ends in 0 hours 0 mins ");
+        }
+        else {
+            //if ((timenow.get(Calendar.MINUTE) <= time[position][5])) {
+            c = ((int)((time6.getTimeInMillis() - timenow.getTimeInMillis())/3600000));//(-timenow.get(Calendar.HOUR_OF_DAY) + time[position][4]);
+            d =((int)((time6.getTimeInMillis() - timenow.getTimeInMillis())/60000))%60; //(time[position][5] - timenow.get(Calendar.MINUTE));
+            // }
+          /* else {
                 c = (-timenow.get(Calendar.HOUR_OF_DAY) + time[position][4] - 1);
                 d = (60 - timenow.get(Calendar.MINUTE) + time[position][5]);
             }
             if ((timenow.get(Calendar.HOUR) > time[position][4])) {
                 c+= 24;
                 //b = (time[position][2] - timenow.get(Calendar.MINUTE));
-            }
-            customViewHolder.Time.setText("ends in " + c/*timenow.get(Calendar.YEAR)*/ + " hours " + d + " mins ");
+            }*/
             customViewHolder.glow.setBackgroundColor(Color.GREEN);
+            customViewHolder.glow.setAlpha(0.3f);
+            customViewHolder.Time.setText("ends in " + c/*timenow.get(Calendar.YEAR)*/ + " hours " + d + " mins ");
         }
     }
 

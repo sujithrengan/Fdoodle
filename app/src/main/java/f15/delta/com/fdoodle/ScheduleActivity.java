@@ -1,9 +1,12 @@
 package f15.delta.com.fdoodle;
 
+import android.app.ActionBar;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -19,31 +22,86 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
-public class ScheduleActivity extends ActionBarActivity {
+public class ScheduleActivity extends FragmentActivity implements ActionBar.TabListener {
 
     public static Typeface f4 = null;
     private Scheduleadapter mscheduleadapter;
+    private ViewPager viewPager;
+
+    private ActionBar actionBar;
+    private String[] tabs2 = { "Days 0-1","Day 2","Day 3" };
     ViewPager mviewpager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources()
-                .getColor(R.color.ColorSchedule)));
-        getSupportActionBar().setTitle(Html.fromHtml("<font color='#ffffff'> Schedule </font>"));
+        //getSupportActionBar().setDisplayShowHomeEnabled(true);
+        //getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources()
+                //.getColor(R.color.ColorSchedule)));
+        //getSupportActionBar().setTitle(Html.fromHtml("<font color='#ffffff'> Schedule </font>"));
+
+        viewPager = (ViewPager) findViewById(R.id.pager);
+        actionBar = getActionBar();
+        mscheduleadapter = new Scheduleadapter(getSupportFragmentManager());
+
+        viewPager.setAdapter(mscheduleadapter);
+        actionBar.setHomeButtonEnabled(false);
+        actionBar.setDisplayShowHomeEnabled(false);
+        actionBar.setDisplayShowTitleEnabled(false);
+
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        actionBar.setStackedBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.ColorSchedule)));
+        actionBar.setTitle(Html.fromHtml("<font color='#ffffff'> Schedule </font>"));
+        // actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.ColorPrimaryDark)));
+        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+            @Override
+            public void onPageSelected(int position) {
+                // on changing the page
+                // make respected tab selected
+                actionBar.setSelectedNavigationItem(position);
+
+            }
+
+            @Override
+            public void onPageScrolled(int arg0, float arg1, int arg2) {
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int arg0) {
+            }
+        });
+
+        // Adding Tabs
+        for (String tab_name : tabs2) {
+            actionBar.addTab(actionBar.newTab().setText(tab_name)
+                    .setTabListener(this));
+        }
         TextView t1 = (TextView) findViewById(R.id.textView1);
         f4 = Typeface.createFromAsset(getApplicationContext().getAssets(),
                 "fonts/gnu.ttf");
         t1.setTypeface(f4);
-        mscheduleadapter = new Scheduleadapter(getSupportFragmentManager());
-        mviewpager = (ViewPager) findViewById(R.id.pager);
-        mviewpager.setAdapter(mscheduleadapter);
+
+        //mviewpager = (ViewPager) findViewById(R.id.pager);
+        //mviewpager.setAdapter(mscheduleadapter);
 
     }
 
+    @Override
+    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+        viewPager.setCurrentItem(tab.getPosition());
+    }
 
+    @Override
+    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+
+    }
+
+    @Override
+    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+
+    }
 
 
     public class Scheduleadapter extends FragmentStatePagerAdapter {
@@ -91,19 +149,19 @@ public class ScheduleActivity extends ActionBarActivity {
             final Bundle args = getArguments();
             if (args.getInt(ARG_OBJECT) == 1) {
                 ((ImageView) rootview.findViewById(R.id.schedimage)).setImageResource(R.drawable.d0_comp);
-                ((TextView) rootview.findViewById(R.id.daytxt)).setText("Days 0&1");
-                ((TextView) rootview.findViewById(R.id.daytxt)).setTypeface(f4);
+                //((TextView) rootview.findViewById(R.id.daytxt)).setText("Days 0&1");
+                //((TextView) rootview.findViewById(R.id.daytxt)).setTypeface(f4);
             }
             if (args.getInt(ARG_OBJECT) == 2) {
                 ((ImageView) rootview.findViewById(R.id.schedimage)).setImageResource(R.drawable.d1_comp);
-                ((TextView) rootview.findViewById(R.id.daytxt)).setText("Day 2");
-                ((TextView) rootview.findViewById(R.id.daytxt)).setTypeface(f4);
+             //   ((TextView) rootview.findViewById(R.id.daytxt)).setText("Day 2");
+             //   ((TextView) rootview.findViewById(R.id.daytxt)).setTypeface(f4);
             }
             if (args.getInt(ARG_OBJECT) == 3) {
 
                 ((ImageView) rootview.findViewById(R.id.schedimage)).setImageResource(R.drawable.d2_comp);
-                ((TextView) rootview.findViewById(R.id.daytxt)).setText("Day 3");
-                ((TextView) rootview.findViewById(R.id.daytxt)).setTypeface(f4);
+               // ((TextView) rootview.findViewById(R.id.daytxt)).setText("Day 3");
+              //  ((TextView) rootview.findViewById(R.id.daytxt)).setTypeface(f4);
             }
 
             ((ImageView) rootview.findViewById(R.id.schedimage)).setOnClickListener(new View.OnClickListener() {

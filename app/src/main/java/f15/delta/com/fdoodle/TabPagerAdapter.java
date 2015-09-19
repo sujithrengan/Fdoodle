@@ -18,17 +18,17 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
             case 0:
                 // Top Rated fragment activity
                 return new introFragment();
-            case 1:
+            case 4 :
                 // Games fragment activity
                 return new rulesFragment();
-            case 2:
+            case 3:
                 // Movies fragment activity
                 return new prizeFragment();
 
-            case 3:
+            case 1:
                 return new timeFragment();
 
-            case 4:
+            case 2:
                 return new contactFragment();
 
 
@@ -40,7 +40,7 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         // get item count - equal to number of tabs
-        return 5;
+        return 3;
     }
 
 }

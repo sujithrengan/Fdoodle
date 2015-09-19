@@ -1,49 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="10dp"
-    android:background="@drawable/poly_background">
 
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+    android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+    android:weightSum="10"
+        android:background="@drawable/poly_background">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_weight="2"
         android:textAppearance="?android:attr/textAppearanceLarge"
+        android:gravity="center"
         android:text="Introduction"
         android:id="@+id/textView2"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="56dp"
+
         android:textSize="35sp"
         android:textStyle="bold"
         android:textColor="#000000"/>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+android:padding="10dp"
+        android:layout_weight="6"
+        >
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Coming soon!"
         android:id="@+id/introText"
         android:layout_below="@+id/textView2"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="105dp"
+
+
         android:textSize="20sp"
         android:textStyle="bold"
         android:textColor="#000000" />
+    </ScrollView>
 
     <Button
-        android:layout_width="300sp"
-        android:layout_height="50sp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+
+
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
         android:text="Register"
-        android:id="@+id/event_regButton"
-        android:layout_marginBottom="43dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
+
+android:id="@+id/regbutton"
         android:textColor="#FFFFFF"
         android:textSize="30sp"
-        android:background="@color/colorPrimary"
+        android:background="@drawable/button_style"
         android:enabled="true"
         android:clickable="true"
         android:onClick="callRegEvent"/>
 
 
-</RelativeLayout>
+</LinearLayout>

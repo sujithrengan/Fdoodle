@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 /**
@@ -12,7 +13,7 @@ import android.widget.TextView;
  */
 public class introFragment extends Fragment {
     TextView desc,title;
-
+Button rb;
 
 
     @Override
@@ -26,6 +27,8 @@ public class introFragment extends Fragment {
         desc.setTypeface(Utilities.typeface);
         title.setText(Utilities.event_name);
         desc.setText(Utilities.event_desc);
+        rb=(Button)rootView.findViewById(R.id.regbutton);
+        rb.setTypeface(Utilities.typeface);
 
 
         return rootView;

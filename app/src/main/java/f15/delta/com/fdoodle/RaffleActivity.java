@@ -74,7 +74,7 @@ public class RaffleActivity extends AppCompatActivity {
             Log.e("Profile", "null");
             Toast.makeText(getApplicationContext(), "You've just logged out, m8", Toast.LENGTH_SHORT).show();
             shareButton.setVisibility(View.INVISIBLE);
-            shareButton.setClickable(false);
+           shareButton.setClickable(false);
             if (Utilities.status == 2) Utilities.status = 4;
             else if (Utilities.status == 3) Utilities.status = 5;
             else if (Utilities.status == 6) Utilities.status = 7;
@@ -121,6 +121,7 @@ public class RaffleActivity extends AppCompatActivity {
         shareButton.setClickable(true);
         shareButton.setShareContent(getMyShareContent());
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -248,9 +249,10 @@ public class RaffleActivity extends AppCompatActivity {
 
             try {
                 List<BasicNameValuePair> nameValuePairs = new ArrayList<>();
+
+                nameValuePairs.add(new BasicNameValuePair("user_id", Utilities.f_id));
+                nameValuePairs.add(new BasicNameValuePair("user_pass", Utilities.f_pass));
                 nameValuePairs.add(new BasicNameValuePair("fbid", Utilities.fb_name));
-                nameValuePairs.add(new BasicNameValuePair("fname", Utilities.f_id));
-                nameValuePairs.add(new BasicNameValuePair("fpsw", Utilities.f_pass));
                 nameValuePairs.add(new BasicNameValuePair("type", type[0].toString()));
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
                 HttpResponse response = httpclient.execute(httppost);
@@ -293,6 +295,19 @@ public class RaffleActivity extends AppCompatActivity {
                             }
                             break;
                         case 3:
+                            if (type[0] == 1) {
+                                Utilities.coupons[0] = jsonObject.getString("data");
+                            } else if (type[0] == 2) {
+                                JSONArray array = jsonObject.getJSONArray("data");
+                                for (int i = 1; i < 6; i++) {
+                                    Utilities.coupons[i] = array.getJSONObject(i - 1).getString("coupon_code");
+                                }
+                            } else if (type[0] == 3) {
+                                JSONArray array = jsonObject.getJSONArray("data");
+                                for (int i = 6; i < 11; i++) {
+                                    Utilities.coupons[i] = array.getJSONObject(i - 6).getString("coupon_code");
+                                }
+                            }
                             break;
                     }
                 } catch (JSONException e) {

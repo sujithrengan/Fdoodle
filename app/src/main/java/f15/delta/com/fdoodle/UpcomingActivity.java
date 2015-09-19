@@ -5,7 +5,6 @@ package f15.delta.com.fdoodle;
 
 import android.app.ProgressDialog;
 
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -38,9 +37,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 
 import com.android.volley.toolbox.StringRequest;
@@ -48,8 +49,8 @@ import com.android.volley.toolbox.Volley;
 
 
 public class UpcomingActivity extends AppCompatActivity {
-
     Typeface p;
+
 
     String[] Number;
     String[][] present;
@@ -73,9 +74,9 @@ public class UpcomingActivity extends AppCompatActivity {
 
     Event[] Eve;
 
-    int date=28;
+    int date=26;
     String noentrytest="No ongoing/upcoming events.\nWhy not visit the FOODSTALLS instead?";
-
+    private Read_write_file fileOps;
 
 
     protected void sort(String[][] tevents,  int[][] ttime,  int o){
@@ -301,7 +302,79 @@ public class UpcomingActivity extends AppCompatActivity {
     }
 
 
+public void netparse(String response)
+{
+    try {
 
+
+
+        JSONObject dataJsonObj = new JSONObject(response);
+
+        JSONArray dataJsonArr = new JSONArray();
+
+        dataJsonArr = dataJsonObj.getJSONArray("data");
+        no=dataJsonArr.length();
+        tempeve=new String[no][3];
+        temptime=new int[no][6];
+        id=new int[no];
+        Eve=new Event [no];
+        evstarttime=new String[no];
+        evendtime=new String[no];
+        evdate=new String[no];
+        evlastupdate=new String[no];
+
+
+
+        for (int i = 0; i < no; i++) {
+
+            JSONObject c = dataJsonArr.getJSONObject(i);
+
+
+
+
+
+            tempeve[i][0] = (c.getString("event_name"));
+            evstarttime[i] = c.getString("event_start_time");
+            evendtime[i] = c.getString("event_end_time");
+            tempeve[i][1] = c.getString("event_venue");
+            tempeve[i][2] =c.getString("event_cluster");
+            evdate[i] = c.getString("event_date");
+            id[i] =  c.getInt("event_id");
+            evlastupdate[i]=c.getString("event_last_update_time");
+
+            temptime[i][0] = (Integer.parseInt(evdate[i].substring(8, 10)));
+            temptime[i][1] = (Integer.parseInt(evstarttime[i].substring(0, 2)));
+            temptime[i][2] = (Integer.parseInt(evstarttime[i].substring(3, 5)));
+            temptime[i][4] = (Integer.parseInt(evendtime[i].substring(0, 2))) ;
+            temptime[i][5] = (Integer.parseInt(evendtime[i].substring(3, 5)));
+            if (temptime[i][1] < temptime[i][4]) {
+                temptime[i][3] = temptime[i][0] ;
+            }
+            else if(temptime[i][2]<temptime[i][5]){
+                temptime[i][3] = temptime[i][0] ;
+            }
+            else{
+                temptime[i][3] = temptime[i][0]+1 ;
+            }
+
+
+
+
+
+
+        }
+
+
+
+
+
+
+
+
+    } catch (JSONException e) {
+        e.printStackTrace();
+    }
+}
 
 
 
@@ -318,78 +391,12 @@ public class UpcomingActivity extends AppCompatActivity {
                     public void onResponse(String response) {
 
 
-                        try {
+                        netparse(response);
+                        pDialog.dismiss();
 
 
+                        optsel();
 
-                            JSONObject dataJsonObj = new JSONObject(response);
-
-                            JSONArray dataJsonArr = new JSONArray();
-
-                            dataJsonArr = dataJsonObj.getJSONArray("data");
-                            no=dataJsonArr.length();
-                            tempeve=new String[no][3];
-                            temptime=new int[no][6];
-                            id=new int[no];
-                            Eve=new Event [no];
-                            evstarttime=new String[no];
-                            evendtime=new String[no];
-                            evdate=new String[no];
-                            evlastupdate=new String[no];
-
-
-
-                            for (int i = 0; i < no; i++) {
-
-                                JSONObject c = dataJsonArr.getJSONObject(i);
-
-
-
-
-
-                                tempeve[i][0] = (c.getString("event_name"));
-                                evstarttime[i] = c.getString("event_start_time");
-                                evendtime[i] = c.getString("event_end_time");
-                                tempeve[i][1] = c.getString("event_venue");
-                                tempeve[i][2] =c.getString("event_cluster");
-                                evdate[i] = c.getString("event_date");
-                                id[i] =  c.getInt("event_id");
-                                evlastupdate[i]=c.getString("event_last_update_time");
-
-                                temptime[i][0] = (Integer.parseInt(evdate[i].substring(8, 10)));
-                                temptime[i][1] = (Integer.parseInt(evstarttime[i].substring(0, 2)));
-                                temptime[i][2] = (Integer.parseInt(evstarttime[i].substring(3, 5)));
-                                temptime[i][4] = (Integer.parseInt(evendtime[i].substring(0, 2))) ;
-                                temptime[i][5] = (Integer.parseInt(evendtime[i].substring(3, 5)));
-                                if (temptime[i][1] < temptime[i][4]) {
-                                    temptime[i][3] = temptime[i][0] ;
-                                }
-                                else if(temptime[i][2]<temptime[i][5]){
-                                    temptime[i][3] = temptime[i][0] ;
-                                }
-                                else{
-                                    temptime[i][3] = temptime[i][0]+1 ;
-                                }
-
-
-
-
-
-
-                            }
-                            pDialog.dismiss();
-
-                            optsel();
-
-
-
-
-
-
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
                     }
                 },
                 new Response.ErrorListener() {
@@ -397,7 +404,10 @@ public class UpcomingActivity extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         pDialog.dismiss();
                         error.printStackTrace();
-                        Toast.makeText(UpcomingActivity.this, "Error", Toast.LENGTH_LONG).show();
+                        Toast.makeText(UpcomingActivity.this, "Could not update schedule. Please try again.", Toast.LENGTH_LONG).show();
+                        String response = fileOps.readFromFile("upcoming.txt");
+                        netparse(response);
+                        optsel();
 
                     }
                 }
@@ -411,6 +421,9 @@ public class UpcomingActivity extends AppCompatActivity {
                 return params;
             }
         };
+        int socketTimeout = 10000;//10 seconds
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        postRequest.setRetryPolicy(policy);
         Volley.newRequestQueue(this).add(postRequest);
 
     }
@@ -449,8 +462,9 @@ public class UpcomingActivity extends AppCompatActivity {
         mToolbar.setBackgroundColor(getResources().getColor(R.color.ColorUpcoming));
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-
+        fileOps = new Read_write_file(this);
         p= Typeface.createFromAsset(getAssets(),"fonts/gnu.ttf");
+
         /*pDialog = new ProgressDialog(this);
         pDialog.setMessage("Please wait...");
         pDialog.setCancelable(false);*/

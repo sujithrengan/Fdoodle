@@ -32,8 +32,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -53,8 +55,7 @@ public class SplashActivity extends Activity {
     TextView bm=null;
     SharedPreferences prefs;
     String o="#BreakTheMonotony";
-    String url1 = "https://api.festember.com/events/desclist";
-    String url2 = "https://api.festember.com/events/list";
+
     Handler myHandler;
     Read_write_file fileOps;
     Runnable r=new Runnable() {
@@ -107,9 +108,9 @@ public class SplashActivity extends Activity {
 
         //Bitmaphandle.loadBitmap(this.getResources().getIdentifier("f"+String.valueOf(i+1), "drawable",this.getPackageName()),f[i]);
 
-        String s="";
-        int t=0;
-        while(++t<17-(i%17))s+=" ";
+        //String s="";
+        //int t=0;
+        //while(++t<17-(i%17))s+=" ";
         bm.setText(o.substring((16-(i%17)),17));
         myHandler.postDelayed(new Runnable() {
             @Override
@@ -166,51 +167,8 @@ public class SplashActivity extends Activity {
         Utilities.desc_check = getSharedPreferences("desc", 0);
         Utilities.check_desc = Utilities.desc_check.getInt("check", 0);
         Utilities.upcoming_check = Utilities.desc_check.getInt("upcoming_parse",0);
-        if(Utilities.check_desc==0){
-            System.out.println("calling parse");
-            callDescParse(url1,"description.txt");
-        }
-
-        if(Utilities.upcoming_check == 0){
-            System.out.println("calling upcoming");
-            callDescParse(url2,"upcoming.txt");
-        }
-        //Cache
-/*
-        Bitmaphandle.maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
 
 
-        // Use 1/8th of the available memory for this memory cache.
-        Bitmaphandle.cacheSize = Bitmaphandle.maxMemory / 8;
-
-        Log.e("ll",String.valueOf(Bitmaphandle.maxMemory));
-        Log.e("ll",String.valueOf(Bitmaphandle.cacheSize));
-
-       Bitmaphandle.mMemoryCache = new LruCache<String, Bitmap>(Bitmaphandle.cacheSize) {
-            @Override
-            protected int sizeOf(String key, Bitmap bitmap) {
-                // The cache size will be measured in kilobytes rather than
-                // number of items.
-                return bitmap.getByteCount() / 1024;
-            }
-        };
-
-
-
-        BitmapWorkerTask task = new BitmapWorkerTask();
-        BitmapWorkerTask task2 = new BitmapWorkerTask();
-        BitmapWorkerTask task3 = new BitmapWorkerTask();
-        BitmapWorkerTask task4 = new BitmapWorkerTask();
-        BitmapWorkerTask task5 = new BitmapWorkerTask();
-        BitmapWorkerTask task6 = new BitmapWorkerTask();
-        task.execute(R.drawable.f1);
-        task3.execute(R.drawable.f2);
-        task2.execute(R.drawable.f3);
-        task4.execute(R.drawable.f4);
-        task5.execute(R.drawable.f5);
-        task6.execute(R.drawable.f6);
-
-*/
 
         new Utilstask().execute();
 
@@ -264,40 +222,31 @@ public class SplashActivity extends Activity {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            //Profile-state-api
+
 
             //Events-api
 
             //Events-description-once
 
             //
+
+            //if(Utilities.check_desc==0)
+            {
+                System.out.println("calling parse");
+                callDescParse(Utilities.url_eventsdesc,"description.txt");
+            }
+
+            //if(Utilities.upcoming_check == 0)
+            {
+                System.out.println("calling upcoming");
+                callDescParse(Utilities.url_events,"upcoming.txt");
+            }
+
+
             return null;
         }
     }
-    class BitmapWorkerTask extends AsyncTask<Integer, Void, Bitmap> {
 
-        @Override
-        protected void onPostExecute(Bitmap bitmap) {
-            super.onPostExecute(bitmap);
-            Log.e("ll","taskdone");
-        }
-
-        // Decode image in background.
-        @Override
-        protected Bitmap doInBackground(Integer... params) {
-            final Bitmap bitmap = Bitmaphandle.decodeSampledBitmapFromResource(
-                    getResources(), params[0], screen_width, screen_height);
-            if(bitmap!=null)
-                Log.e("ll",String.valueOf(params[0])+"---notnull in decode");
-
-            Bitmaphandle.addBitmapToMemoryCache(String.valueOf(params[0]), bitmap);
-
-            if(Bitmaphandle.getBitmapFromMemCache(String.valueOf(params[0]))!=null)
-                Log.e("ll",String.valueOf(params[0])+"---notnull in cache");
-            return bitmap;
-        }
-
-    }
     @Override
     public void onBackPressed() {
         myHandler.removeCallbacks(r);
@@ -406,14 +355,17 @@ public class SplashActivity extends Activity {
             public void onErrorResponse(VolleyError error) {
 
                 // Error handling
-                System.out.println("Something went wrong!");
+                Log.e("file","Something went wrong!");
                 error.printStackTrace();
 
             }
         });
-
-// Add the request to the queue
+        // Add the request to the queue
+        int socketTimeout = 10000;//10 seconds
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        stringRequest.setRetryPolicy(policy);
         Volley.newRequestQueue(this).add(stringRequest);
+
     }
 
     @Override

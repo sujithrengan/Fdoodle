@@ -20,8 +20,10 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -40,6 +42,8 @@ public class UserProfile extends ActionBarActivity {
     SharedPreferences prefs=null;
     ListView regEventsList;
     ArrayAdapter<String> eventsArrayAdapter;
+    String o="#BreakTheMonotony";
+    TextView lt;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +83,9 @@ public class UserProfile extends ActionBarActivity {
         //Setting the details
 
         regEventsList = (ListView) findViewById(R.id.registeredEventsListView);
+        //regEventsList.setVisibility(View.INVISIBLE);
+        lt=(TextView)findViewById(R.id.loadingtext);
+        lt.setTypeface(face);
 
         nameView.setText(nameView.getText().toString() + Profile.name + "!");
         fIDView.setText(fIDView.getText().toString() + String.valueOf(Profile.id));
@@ -94,11 +101,16 @@ public class UserProfile extends ActionBarActivity {
 
 
     public void check_events(){
-        final ProgressDialog pDialog = new ProgressDialog(this);
+
+        /*final ProgressDialog pDialog = new ProgressDialog(this);
         pDialog.setMessage("Loading...");
         pDialog.setCancelable(false);
+
+
+
         pDialog.setCanceledOnTouchOutside(false);
         pDialog.show();
+*/
 
         StringRequest postRequest = new StringRequest(Request.Method.POST, Utilities.url_profile_events,
                 new Response.Listener<String>() {
@@ -111,7 +123,7 @@ public class UserProfile extends ActionBarActivity {
                             //Log.e("params",jsonResponse.toString());
                             int status = jsonResponse.getInt("status");
                             //String error = jsonResponse.getString("data");
-                            pDialog.dismiss();
+                            //pDialog.dismiss();
                             switch (status) {
                                 case 0:
                                     Toast.makeText(UserProfile.this, "There was a problem connecting to the server. Please check your username and password and try again.", Toast.LENGTH_LONG).show();
@@ -151,6 +163,7 @@ public class UserProfile extends ActionBarActivity {
 
                                     };
 
+                                    lt.setVisibility(View.INVISIBLE);
                                     regEventsList.setAdapter(eventsArrayAdapter);
                                     //Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_LONG).show();
                                     //startActivity(i);
@@ -168,8 +181,9 @@ public class UserProfile extends ActionBarActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        pDialog.dismiss();
+                        //pDialog.dismiss();
                         error.printStackTrace();
+                        lt.setText("Could not update :/");
                         Toast.makeText(UserProfile.this, "Error", Toast.LENGTH_LONG).show();
 
                     }
@@ -186,7 +200,11 @@ public class UserProfile extends ActionBarActivity {
                 return params;
             }
         };
+        int socketTimeout = 10000;//10 seconds
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        postRequest.setRetryPolicy(policy);
         Volley.newRequestQueue(this).add(postRequest);
+        //Volley.newRequestQueue(this).add(postRequest);
 
     }
 

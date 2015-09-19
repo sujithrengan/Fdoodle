@@ -11,13 +11,12 @@ public class Utilities
 {
 
 
-    public static String url_fid="https://";
-    public static String url_profile="https://";
-    public static String url_events="https://";
-    public static String url_eventsdesc="https://";
+
+    public static String url_events="https://api.festember.com/events/list";
+    public static String url_eventsdesc="https://api.festember.com/events/desclist";
     public static String url_registerevent="https://";
     public static String url_profile_events="https://api.festember.com/user/getEvents";
-    public static String url_raffle="https://eeec9dca.ngrok.io/raffleapi.php";
+    public static String url_raffle="https://festember.com/final15/festember15api/festember-raffle/raffleapi.php";
     public static String url_reg = "https://api.festember.com/user/register";
     public static String url_auth = "https://api.festember.com/user/auth";
     public static String url_details = "https://api.festember.com/user/getDetails";

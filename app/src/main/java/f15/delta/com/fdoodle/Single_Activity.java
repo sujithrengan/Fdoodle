@@ -33,6 +33,8 @@ String name="";
 String desc;
 // Tab titles
 private String[] tabs = { "Introduction", "Rules & Format", "Prizes","Timings","Contacts" };
+private String[] tabs2 = { "Introduction","Timings","Contacts" };
+
 TextView title;
 
 @Override
@@ -68,7 +70,7 @@ protected void onCreate(Bundle savedInstanceState) {
         actionBar.setDisplayShowTitleEnabled(false);
 
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-        actionBar.setStackedBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.ColorPrimary)));
+        actionBar.setStackedBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.ColorEvents)));
         // actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.ColorPrimaryDark)));
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
@@ -90,7 +92,7 @@ public void onPageScrollStateChanged(int arg0) {
         });
 
         // Adding Tabs
-        for (String tab_name : tabs) {
+        for (String tab_name : tabs2) {
         actionBar.addTab(actionBar.newTab().setText(tab_name)
         .setTabListener(this));
         }
