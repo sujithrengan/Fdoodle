@@ -19,7 +19,7 @@ public class DBController  extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase database) {
         String query;
 
-        query = "CREATE TABLE notifs ( notifText TEXT )";
+        query = "CREATE TABLE notifs ( notifText TEXT,time TEXT )";
         database.execSQL(query);
     }
     @Override
@@ -42,6 +42,8 @@ public class DBController  extends SQLiteOpenHelper {
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("notifText", queryValues.get("notifText"));
+        values.put("time", queryValues.get("time"));
+
         //values.put("index", queryValues.get("index"));
         database.insert("notifs", null, values);
         database.close();
@@ -67,7 +69,7 @@ public class DBController  extends SQLiteOpenHelper {
             do {
                 HashMap<String, String> map = new HashMap<String, String>();
                 map.put("notifText", cursor.getString(0));
-                //map.put("index", cursor.getString(1));
+                map.put("time", cursor.getString(1));
 
                 notifsList.add(map);
             } while (cursor.moveToNext());

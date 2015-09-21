@@ -5,6 +5,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,6 +33,8 @@ public class Notify extends ActionBarActivity {
     HashMap<String, String> queryValues;
     ArrayList<HashMap<String, String>> notifList;
     String notifs[];
+    private String[] time;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,14 +50,19 @@ public class Notify extends ActionBarActivity {
         }
         else
             em.setVisibility(View.VISIBLE);
-        notifs=new String[100];
-        for(int i=0;i<100;i++)
+        notifs=new String[notifList.size()];
+        time=new String[notifList.size()];
+        for(int i=0;i<notifList.size();i++)
         {
             notifs[i]="null";
+            time[i]="null";
         }
         for(int i=0;i<notifList.size();i++)
         {
             notifs[i] = notifList.get(i).get("notifText");
+            time[i]=notifList.get(i).get("time");
+
+            Log.e("time",time[i]);
 
         }
 
@@ -78,6 +86,7 @@ public class Notify extends ActionBarActivity {
         for (int i = notifList.size()-1; i >=0 ; i--) {
             map = new HashMap<String, String>();
             map.put(SampleAdapter.KEY_DEPT, notifs[i]);
+            map.put(SampleAdapter.KEY_SCORE,time[i]);
 
             sampleList.add(map);
         }
@@ -135,6 +144,7 @@ public class Notify extends ActionBarActivity {
                 convertView = mInflater.inflate(R.layout.notif_item, parent, false);
                 //viewHolder.imageViewIcon = (ImageView) convertView.findViewById(R.id.image_view_icon);
                 viewHolder.dept=(TextView)convertView.findViewById(R.id.notifText);
+                viewHolder.score=(TextView)convertView.findViewById(R.id.notiftime);
                 //viewHolder.score=(TextView)convertView.findViewById(R.id.score);
                 convertView.setTag(viewHolder);
             } else {
@@ -143,6 +153,7 @@ public class Notify extends ActionBarActivity {
 
             //viewHolder.imageViewIcon.setImageResource(mData.get(position).get(KEY_ICON));
             viewHolder.dept.setText(mData.get(position).get(KEY_DEPT));
+            viewHolder.score.setText(mData.get(position).get(KEY_SCORE));
             //viewHolder.score.setText(String.valueOf(mData.get(position).get(KEY_SCORE)));
            /*TextView t= (TextView)convertView.findViewById(R.id.departmentName);
            TextView t2= (TextView)convertView.findViewById(R.id.score);
@@ -157,7 +168,7 @@ public class Notify extends ActionBarActivity {
 
             };
             */
-            convertView.setBackgroundColor(Utilities.colours.get(position%5));
+            convertView.setBackgroundColor(Utilities.colours.get(position % 5));
 
 
             return convertView;
