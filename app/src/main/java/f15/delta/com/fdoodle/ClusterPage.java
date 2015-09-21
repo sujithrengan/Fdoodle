@@ -180,46 +180,58 @@ public class ClusterPage extends AppCompatActivity {
                             case 0: i.putExtra("id",cluster0.get(pos).id);
                                     i.putExtra("desc",stringPareser1(cluster0.get(pos).desc));
                                     i.putExtra("name",stringPareser1(cluster0.get(pos).name));
+                                    i.putExtra("contact",stringPareser1(cluster0.get(pos).contact));
+
                                     break;
                             case 1: i.putExtra("id",cluster1.get(pos).id);
                                 i.putExtra("desc",stringPareser1(cluster1.get(pos).desc));
                                 i.putExtra("name",stringPareser1(cluster1.get(pos).name));
+                                i.putExtra("contact",stringPareser1(cluster1.get(pos).contact));
                                 break;
                             case 2: i.putExtra("id",cluster2.get(pos).id);
                                 i.putExtra("desc",stringPareser1(cluster2.get(pos).desc));
                                 i.putExtra("name",stringPareser1(cluster2.get(pos).name));
+                                i.putExtra("contact",stringPareser1(cluster2.get(pos).contact));
                                 break;
                             case 3: i.putExtra("id",cluster3.get(pos).id);
                                 i.putExtra("desc",stringPareser1(cluster3.get(pos).desc));
                                 i.putExtra("name",stringPareser1(cluster3.get(pos).name));
+                                i.putExtra("contact",stringPareser1(cluster3.get(pos).contact));
                                 break;
                             case 4: i.putExtra("id",cluster4.get(pos).id);
                                 i.putExtra("desc",stringPareser1(cluster4.get(pos).desc));
                                 i.putExtra("name",stringPareser1(cluster4.get(pos).name));
+                                i.putExtra("contact",stringPareser1(cluster4.get(pos).contact));
                                 break;
                             case 5: i.putExtra("id",cluster5.get(pos).id);
                                 i.putExtra("desc",stringPareser1(cluster5.get(pos).desc));
                                 i.putExtra("name",stringPareser1(cluster5.get(pos).name));
+                                i.putExtra("contact",stringPareser1(cluster5.get(pos).contact));
                                 break;
                             case 6: i.putExtra("id",cluster6.get(pos).id);
                                 i.putExtra("desc",stringPareser1(cluster6.get(pos).desc));
                                 i.putExtra("name",stringPareser1(cluster6.get(pos).name));
+                                i.putExtra("contact",stringPareser1(cluster6.get(pos).contact));
                                 break;
                             case 7: i.putExtra("id",cluster7.get(pos).id);
                                 i.putExtra("desc",stringPareser1(cluster7.get(pos).desc));
                                 i.putExtra("name",stringPareser1(cluster7.get(pos).name));
+                                i.putExtra("contact",stringPareser1(cluster7.get(pos).contact));
                                 break;
                             case 8: i.putExtra("id",cluster8.get(pos).id);
                                 i.putExtra("desc",stringPareser1(cluster8.get(pos).desc));
                                 i.putExtra("name",stringPareser1(cluster8.get(pos).name));
+                                i.putExtra("contact",stringPareser1(cluster8.get(pos).contact));
                                 break;
                             case 9: i.putExtra("id",cluster9.get(pos).id);
                                 i.putExtra("desc",stringPareser1(cluster9.get(pos).desc));
                                 i.putExtra("name",stringPareser1(cluster9.get(pos).name));
+                                i.putExtra("contact",stringPareser1(cluster9.get(pos).contact));
                                 break;
                             case 10: i.putExtra("id",cluster10.get(pos).id);
                                 i.putExtra("desc",stringPareser1(cluster10.get(pos).desc));
                                 i.putExtra("name",stringPareser1(cluster10.get(pos).name));
+                                i.putExtra("contact",stringPareser1(cluster10.get(pos).contact));
                                 break;
 
                         }
@@ -271,7 +283,8 @@ public class ClusterPage extends AppCompatActivity {
                     events.get(i).venue,
                     events.get(i).desc,
                     events.get(i).date,
-                    events.get(i).cluster
+                    events.get(i).cluster,
+                    events.get(i).contact
             );
             if(temp.cluster.equals("dance"))cluster0.add(events.get(i));
             else if(temp.cluster.equals("music"))cluster1.add(temp);
@@ -358,13 +371,30 @@ public class ClusterPage extends AppCompatActivity {
             }
 
 
+
            response = fileOps.readFromFile("upcoming.txt");
             try {
                 JSONObject jsonObject = new JSONObject(response);
                 String data = jsonObject.getString("data");
+
                 JSONArray jsonArray = new JSONArray(data);
+                JSONArray jsonArray2 = new JSONArray(Utilities.contacts);
+                JSONObject jsonObject2;
+
+                int i2=0;
+                String co="contact";
                 for (int i = 0; i < jsonArray.length(); i++) {
                     jsonObject = jsonArray.getJSONObject(i);
+                    jsonObject2= jsonArray2.getJSONObject(i2);
+                    if(jsonObject.getString("event_name").equals(jsonObject2.getString("event_name")))
+                    {
+                        co=jsonObject2.getString("contact");
+                        i2++;
+                    }
+                    else
+                    {
+                        co="contact";
+                    }
                     events.add(new Event(
                             jsonObject.getInt("event_id"),
                             jsonObject.getString("event_name"),
@@ -373,7 +403,10 @@ public class ClusterPage extends AppCompatActivity {
                             jsonObject.getString("event_venue"),
                             description[i],
                             jsonObject.getString("event_date"),
-                            jsonObject.getString("event_cluster")
+                            jsonObject.getString("event_cluster"),
+                            co
+
+
                     ));
 
 
@@ -394,11 +427,12 @@ public class ClusterPage extends AppCompatActivity {
         public String desc;
         public String date;
         public String cluster;
+        public String contact;
         private Read_write_file fileOps;
 
 
 
-        public Event(int id,String name,String start_time,String end_time,String venue,String desc,String date,String cluster)
+        public Event(int id,String name,String start_time,String end_time,String venue,String desc,String date,String cluster,String contact)
         {
 
             this.id=id;
@@ -408,6 +442,7 @@ public class ClusterPage extends AppCompatActivity {
             this.venue=venue;
             this.cluster=cluster;
             this.date=date;
+            this.contact=contact;
             this.desc=desc;
 
 

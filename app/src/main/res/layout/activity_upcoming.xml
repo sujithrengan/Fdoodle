@@ -78,5 +78,17 @@
         android:layout_margin="5dp"
         android:gravity="center_vertical|center|center_horizontal" />
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/btn_notif"
+        android:text="Notifications"
+        android:textColor="#ffffff"
+        android:background="@color/ColorUpcoming"
+        android:layout_alignParentBottom="true"
+        android:gravity="center">
+
+        </Button>
+
 
 </RelativeLayout>

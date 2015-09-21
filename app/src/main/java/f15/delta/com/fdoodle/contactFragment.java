@@ -5,6 +5,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 /**
  * Created by Bharath on 17-Sep-15.
@@ -17,6 +19,13 @@ public class contactFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.contact_fragment, container, false);
+        TextView cont = (TextView) rootView.findViewById(R.id.contactText);
+        TextView title=(TextView)rootView.findViewById(R.id.textView2);
+        title.setTypeface(Utilities.typeface);
+        cont.setTypeface(Utilities.typeface);
+        title.setText(Utilities.event_name);
+        cont.setText(Utilities.event_contact);
+
 
         return rootView;
     }

@@ -49,7 +49,7 @@ public class GCMMessagerHandler extends IntentService {
             NotificationCompat.Builder mBuilder =
 
                     new NotificationCompat.Builder(context).setSmallIcon(R.drawable.festember_logo_old)
-                            .setContentTitle("Nittfest 2015")
+                            .setContentTitle("Festember 2015")
                             .setContentText(newMessage)
                             .setDefaults(Notification.DEFAULT_ALL)
                             .setLights(Color.GREEN, 500, 500);

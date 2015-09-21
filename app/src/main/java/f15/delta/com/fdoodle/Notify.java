@@ -36,6 +36,7 @@ public class Notify extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notify);
+        Utilities.initcolours(this);
 
         final TextView em=(TextView) findViewById(R.id.empty);
 
@@ -149,14 +150,15 @@ public class Notify extends ActionBarActivity {
            t.setText(mData.get(position).get(KEY_DEPT));
            t2.setText(mData.get(position).get(KEY_SCORE));*/
 
-            /*int[] colors = {
+           /* int[] colors = {
                     getApplicationContext().getResources().getColor(R.color.ColorSchedule),
                     getApplicationContext(). getResources().getColor(R.color.ColorProfile),
                     getApplicationContext().getResources().getColor(R.color.ColorEvents),
 
             };
-            convertView.setBackgroundResource(colors[position%3]);
-*/
+            */
+            convertView.setBackgroundColor(Utilities.colours.get(position%5));
+
 
             return convertView;
         }

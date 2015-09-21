@@ -72,16 +72,22 @@ android:layout_height="0dp"
             android:layout_height="match_parent"
             android:padding="5dp"
 android:visibility="invisible"
-            android:gravity="center|bottom" >
-<!--
+             >
+
             <ProgressBar
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:indeterminate="true" />
-                !-->
+                android:indeterminate="true"
+                android:id="@+id/prog"
+                android:layout_centerInParent="true"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:id="@+id/bmtext"
+                android:textColor="#000000"
+                android:layout_below="@+id/prog"
+                android:layout_marginTop="8dp"
+                android:layout_centerHorizontal="true"
                 android:layout_height="wrap_content"
                 android:textSize="24sp"/>
         </RelativeLayout>

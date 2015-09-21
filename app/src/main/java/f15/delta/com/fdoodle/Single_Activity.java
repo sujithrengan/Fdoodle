@@ -1,8 +1,10 @@
 package f15.delta.com.fdoodle;
 
 import android.app.ActionBar;
+import android.app.AlertDialog;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v4.app.FragmentActivity;
@@ -30,10 +32,10 @@ private TabPagerAdapter mAdapter;
 private ActionBar actionBar;
 int id=0;
 String name="";
-String desc;
+String desc,cont;
 // Tab titles
 private String[] tabs = { "Introduction", "Rules & Format", "Prizes","Timings","Contacts" };
-private String[] tabs2 = { "Introduction","Timings","Contacts" };
+private String[] tabs2 = { "Introduction","Contacts" };
 
 TextView title;
 
@@ -51,8 +53,11 @@ protected void onCreate(Bundle savedInstanceState) {
                 name = extras.getString("name");
                 id  = extras.getInt("id");
                 desc = extras.getString("desc");
+                cont = extras.getString("contact");
             Utilities.event_name=name;
             Utilities.event_desc=desc;
+            Utilities.event_contact=cont;
+
                 // and get whatever type user account id is
 
         }
@@ -116,58 +121,97 @@ public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTrans
 
         }
     public void callRegEvent(View view){
-        String url = "https://api.festember.com/user/register/event";
-        final ProgressDialog pDialog = new ProgressDialog(this);
-        pDialog.setMessage("Loading...");
-        pDialog.setCancelable(false);
-        pDialog.setCanceledOnTouchOutside(false);
-        pDialog.show();
 
-        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                Single_Activity.this);
 
-
-                        try {
-                            JSONObject jsonResponse = new JSONObject(response);
-                            int status = jsonResponse.getInt("status");
-                            String error = jsonResponse.getString("data");
-                            pDialog.dismiss();
-                            Toast.makeText(Single_Activity.this, error, Toast.LENGTH_SHORT).show();
-                            System.out.println(error);
+        // set title
+        alertDialogBuilder.setTitle("Register");
 
 
 
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            System.out.println("error");
-                        }
+
+        // set dialog message
+        alertDialogBuilder
+                .setMessage("Are you sure?")
+                .setCancelable(false)
+                .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, final int id) {
+                        // if this button is clicked, close
+                        // current activity
+
+
+                        String url = "https://api.festember.com/user/register/event";
+                        final ProgressDialog pDialog = new ProgressDialog(Single_Activity.this);
+                        pDialog.setMessage("Loading...");
+                        pDialog.setCancelable(false);
+                        pDialog.setCanceledOnTouchOutside(false);
+                        pDialog.show();
+
+                        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+                                new Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String response) {
+
+
+                                        try {
+                                            JSONObject jsonResponse = new JSONObject(response);
+                                            int status = jsonResponse.getInt("status");
+                                            String error = jsonResponse.getString("data");
+                                            pDialog.dismiss();
+                                            Toast.makeText(Single_Activity.this, error, Toast.LENGTH_SHORT).show();
+                                            System.out.println(error);
+
+
+
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                            System.out.println("error");
+                                        }
+                                    }
+                                },
+                                new Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+                                        pDialog.dismiss();
+                                        error.printStackTrace();
+                                        Toast.makeText(Single_Activity.this, "Error", Toast.LENGTH_LONG).show();
+
+                                    }
+                                }
+                        ) {
+                            @Override
+                            protected Map<String, String> getParams()
+                            {
+                                Map<String, String> params = new HashMap<>();
+                                // the POST parameters:
+                                params.put("user_id", Utilities.f_id);
+                                params.put("user_pass", Utilities.f_pass);
+                                params.put("event_id",""+id);
+
+                                return params;
+                            }
+                        };
+                        Volley.newRequestQueue(Single_Activity.this).add(postRequest);
+
                     }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        pDialog.dismiss();
-                        error.printStackTrace();
-                        Toast.makeText(Single_Activity.this, "Error", Toast.LENGTH_LONG).show();
-
+                })
+                .setNegativeButton("No",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int id) {
+                        // if this button is clicked, just close
+                        // the dialog box and do nothing
+                        dialog.cancel();
                     }
-                }
-        ) {
-            @Override
-            protected Map<String, String> getParams()
-            {
-                Map<String, String> params = new HashMap<>();
-                // the POST parameters:
-                params.put("user_id", Utilities.f_id);
-                params.put("user_pass", Utilities.f_pass);
-                params.put("event_id",""+id);
+                });
 
-                return params;
-            }
-        };
-        Volley.newRequestQueue(this).add(postRequest);
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // show it
+        alertDialog.show();
+
+
+
 
     }
     }

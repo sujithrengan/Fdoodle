@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
@@ -20,6 +21,7 @@ import android.util.Log;
 import android.util.LruCache;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.BounceInterpolator;
@@ -52,6 +54,7 @@ import java.util.ArrayList;
 public class SplashActivity extends Activity {
     int screen_width;
     int screen_height;
+    boolean loading=true;
     TextView bm=null;
     SharedPreferences prefs;
     String o="#BreakTheMonotony";
@@ -116,9 +119,11 @@ public class SplashActivity extends Activity {
             @Override
             public void run() {
 
-                if (i<50) Startmonotomy((i + 1));
-                else
+                if (i<33||loading) Startmonotomy((i + 1));
+                else {
+                    bm.setText(o);
                     state5();
+                }
             }
         }, 300-15*(i%16));
 
@@ -138,7 +143,7 @@ public class SplashActivity extends Activity {
     }
     public void state5()
     {
-        myHandler.postDelayed(r, 1000);
+        myHandler.postDelayed(r, 700);
     }
 
 
@@ -153,11 +158,13 @@ public class SplashActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_splash);
         DisplayMetrics displaymetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
         screen_height =Utilities.screen_height= displaymetrics.heightPixels;
         screen_width =Utilities.screen_width= displaymetrics.widthPixels;
+
 
         myHandler = new Handler();
         bm=(TextView)findViewById(R.id.bmtext);
@@ -174,8 +181,39 @@ public class SplashActivity extends Activity {
         new Utilstask().execute();
 
         StartAnimations();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                saveVouchers();
+            }
+        }).start();
 
     }
+
+    private void saveVouchers()
+    {
+        Bitmap bitmap1 = new SaveImage("festembervoucher1", null).loadFromCacheFile();
+        Bitmap bitmap2 = new SaveImage("festembervoucher2", null).loadFromCacheFile();
+        Bitmap bmp;
+        if(bitmap1==null)
+        {
+            bmp = BitmapFactory.decodeResource(getResources(),R.drawable.festembervoucher1);
+            SaveImage save = new SaveImage("festembervoucher1", bmp);
+            save.saveToCacheFile(bmp);
+            QRCodeWelcomePage.addImageToGallery(save.getCacheFilename(), SplashActivity.this);
+            System.out.println("Voucher 1 saved.");
+        }
+        if(bitmap2==null)
+        {
+            bmp = BitmapFactory.decodeResource(getResources(), R.drawable.festembervoucher2);
+            SaveImage save = new SaveImage("festembervoucher2", bmp);
+            save.saveToCacheFile(bmp);
+            QRCodeWelcomePage.addImageToGallery(save.getCacheFilename(), SplashActivity.this);
+            System.out.println("Voucher 2 saved.");
+        }
+
+    }
+
 
     private void updateUtils() {
 
@@ -216,6 +254,7 @@ public class SplashActivity extends Activity {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+            loading=false;
             //bm.setText(o);
             //state5();
 

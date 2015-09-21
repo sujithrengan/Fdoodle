@@ -53,11 +53,11 @@
         android:layout_height="0dp"
         android:gravity="center"
         android:layout_weight="1">
-    <ListView
-        android:id="@+id/registeredEventsListView"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="1" />
+        <ListView
+            android:id="@+id/registeredEventsListView"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1" />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -67,12 +67,30 @@
             android:id="@+id/loadingtext"
             android:text="Fetching..."/>
     </FrameLayout>
-    <TextView
-        android:layout_width="wrap_content"
-        android:id="@+id/couponText"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:paddingTop="10dp"
-        android:text="Your coupon code is "
-        android:textSize="30sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="7dp"
+        android:layout_height="wrap_content">
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Get voucher 1"
+            android:id="@+id/voucherOne"
+            android:background="@drawable/reg_button_style"
+            android:layout_marginRight="2dp"
+            android:layout_marginEnd="2dp"
+            />
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Get voucher 2"
+            android:id="@+id/voucherTwo"
+            android:layout_marginLeft="2dp"
+            android:layout_marginStart="2dp"
+            android:background="@drawable/reg_button_style"
+            />
+    </LinearLayout>
 </LinearLayout>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Fdoodle</string>
+    <string name="app_name">Festember 15</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="about_text">Free open source graphics
@@ -154,7 +154,7 @@
     <string name="title_activity_splash">SplashActivity</string>
     <string name="title_activity_f_activvity">fActivvity</string>
     <string name="title_activity_hscreen">Hscreen</string>
-    <string name="title_activity_raffle">RaffleActivity</string>
+    <string name="title_activity_raffle">Raffle</string>
     <string name="facebook_app_id">507440182763591</string>
     <string name="title_activity_upcoming">UpcomingActivity</string>
     <string name="title_activity_schedule">ScheduleActivity</string>
@@ -164,12 +164,12 @@
     <string name="Love"><![CDATA[Made with <3 by Delta Force]]></string>
     <string name="title_activity_qrcode_welcome_page">Your QR Code</string>
     <string name="title_activity_qrsplash_screen">QRSplashScreen</string>
-    <string name="title_activity_login">LoginActivity</string>
-    <string name="title_activity_register">RegisterActivity</string>
-    <string name="title_activity_cluster_page">ClusterPage</string>
+    <string name="title_activity_login">Login</string>
+    <string name="title_activity_register">Register</string>
+    <string name="title_activity_cluster_page">Events</string>
     <string name="title_activity_dummy">dummyActivity</string>
     <string name="title_activity_event">EventActivity</string>
-    <string name="title_activity_single_">Single_Activity</string>
+    <string name="title_activity_single_">Event</string>
     <string name="title_activity_notify">Notify</string>
 
 </resources>
