@@ -113,13 +113,10 @@
             android:label="@string/title_activity_cluster_page" >
         </activity>
         <activity
-            android:name=".EventActivity"
-            android:label="@string/title_activity_event" >
-        </activity>
-        <activity
             android:name=".Single_Activity"
             android:label="@string/title_activity_single_"
-            android:theme="@style/AppTheme2" >
+            android:theme="@style/AppTheme2"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".Notify"
