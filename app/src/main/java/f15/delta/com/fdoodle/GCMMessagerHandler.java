@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import java.util.Calendar;
 import java.util.HashMap;
 
 
@@ -36,9 +37,10 @@ public class GCMMessagerHandler extends IntentService {
         Bundle extras = intent.getExtras();
 
         mes = extras.getString("data");
-        clear(mes);//adding to db
-        Log.d("gcm_status", mes);
+        //clear(mes);//adding to db
+        //Log.d("gcm_status", mes);
         //generateNotification(getApplicationContext(), mes);
+        if(mes!=null)
         gn(getApplicationContext(),mes);
     }
 
@@ -61,7 +63,13 @@ public class GCMMessagerHandler extends IntentService {
             HashMap<String, String> queryValues = new HashMap<String, String>();
 
             // Add departmentName extracted from Object
+            Calendar c = Calendar.getInstance();
+           // date = c.get(Calendar.DATE);
             queryValues.put("notifText",newMessage);
+            String t=String.valueOf(c.get(Calendar.HOUR))+":"+String.valueOf(c.get(Calendar.MINUTE))+" , Day "+String.valueOf(c.get(Calendar.DATE)-25);
+            Log.e("time",t);
+            queryValues.put("time",t);
+
             // Add userID extracted from Object
 
             // Insert User into SQLite DB

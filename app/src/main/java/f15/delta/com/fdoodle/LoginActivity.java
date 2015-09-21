@@ -187,7 +187,7 @@ public class LoginActivity extends Activity {
                                     editor.putString("f_pass", password);
                                     Utilities.f_pass = password;
                                     editor.apply();
-                                    gcmreg();
+
                                     getDetails();
                                     //Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_LONG).show();
                                     //startActivity(i);
@@ -309,6 +309,7 @@ public class LoginActivity extends Activity {
                                     editor.apply();
                                     callDescParse(Utilities.url_eventsdesc,"description.txt");
                                     callDescParse(Utilities.url_events,"upcoming.txt");
+                                    gcmreg();
                                     startActivity(i);
                                     finish();
                                     break;
