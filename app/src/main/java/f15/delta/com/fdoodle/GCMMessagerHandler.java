@@ -14,6 +14,8 @@ import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import java.util.Date;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 
@@ -64,9 +66,11 @@ public class GCMMessagerHandler extends IntentService {
 
             // Add departmentName extracted from Object
             Calendar c = Calendar.getInstance();
+            String currentDateandTime = new SimpleDateFormat("HH:mm").format(new Date());
            // date = c.get(Calendar.DATE);
             queryValues.put("notifText",newMessage);
-            String t=String.valueOf(c.get(Calendar.HOUR))+":"+String.valueOf(c.get(Calendar.MINUTE))+" , Day "+String.valueOf(c.get(Calendar.DATE)-25);
+            //String t=String.valueOf(c.get(Calendar.HOUR))+":"+String.valueOf(c.get(Calendar.MINUTE))+" , Day "+String.valueOf(c.get(Calendar.DATE)-25);
+            String t=currentDateandTime+" , Day "+String.valueOf(c.get(Calendar.DATE)-25);
             Log.e("time",t);
             queryValues.put("time",t);
 
