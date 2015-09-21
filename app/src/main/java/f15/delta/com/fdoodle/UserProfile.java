@@ -44,6 +44,7 @@ public class UserProfile extends ActionBarActivity {
     ArrayAdapter<String> eventsArrayAdapter;
     String o="#BreakTheMonotony";
     TextView lt;
+    Read_write_file file;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +57,7 @@ public class UserProfile extends ActionBarActivity {
                 .getColor(R.color.ColorProfile)));
         getSupportActionBar().setTitle(Html.fromHtml("<font color='#ffffff'> Profile </font>"));
         setData();
+        file = new Read_write_file(UserProfile.this);
     }
 
 
@@ -119,6 +121,7 @@ public class UserProfile extends ActionBarActivity {
 
 
                         try {
+                            file.writeToFile(response,"event_reg.txt");
                             JSONObject jsonResponse = new JSONObject(response);
                             //Log.e("params",jsonResponse.toString());
                             int status = jsonResponse.getInt("status");
@@ -142,7 +145,7 @@ public class UserProfile extends ActionBarActivity {
 
                                         Log.e("param",j.toString());
                                         i++;
-                                        Profile.eventlist.add(j.get("event_name").toString());
+                                        Profile.eventlist.add(stringParser(j.get("event_name").toString()));
                                     }
                                     //eventsArrayAdapter = new ArrayAdapter<>(getApplicationContext(), R.layout.single_list_item,Profile.eventlist);
 
@@ -184,7 +187,55 @@ public class UserProfile extends ActionBarActivity {
                         //pDialog.dismiss();
                         error.printStackTrace();
                         lt.setText("Could not update :/");
-                        Toast.makeText(UserProfile.this, "Error", Toast.LENGTH_LONG).show();
+                        Toast.makeText(UserProfile.this, "Could not update, check your Internet", Toast.LENGTH_LONG).show();
+                        String response = file.readFromFile("event_reg.txt");
+
+
+                        JSONObject jsonResponse = null;
+                        try {
+                            jsonResponse = new JSONObject(response);
+                            JSONArray elist=jsonResponse.getJSONArray("data");
+                            Log.e("paramllist",elist.toString());
+                            int i=0;
+                            Profile.eventlist.clear();
+                            while(i<elist.length())
+                            {
+                                JSONObject j=(JSONObject)elist.get(i);
+                                Log.e("param",j.toString());
+                                i++;
+                                Profile.eventlist.add(stringParser(j.get("event_name").toString()));
+                            }
+
+
+
+                            final Typeface mFont = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/gnu.ttf");
+                            eventsArrayAdapter = new ArrayAdapter<String>(UserProfile.this, R.layout.single_list_item, R.id.regevent, Profile.eventlist) {
+                                @Override
+                                public View getView(int position, View convertView, ViewGroup parent) {
+                                    View view = super.getView(position, convertView, parent);
+                                    TextView textview = (TextView) view;
+                                    textview.setTypeface(mFont);
+                                    return textview;
+
+                                }
+
+
+
+                            };
+
+                            lt.setVisibility(View.INVISIBLE);
+                            regEventsList.setAdapter(eventsArrayAdapter);
+                            //Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_LONG).show();
+                            //startActivity(i);
+                            //finish();
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+
 
                     }
                 }
@@ -256,5 +307,25 @@ public class UserProfile extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    public String stringParser(String t){
+        String temp2="";
+        if (t.contains("_")) {
+            // Split it.
+            //t.substring(0,t.indexOf("_")-1);
+
+
+
+            String[] temp = t.split("_");
+            for(int j=0;j<temp.length;j++) {
+                String temp3 = temp[j].substring(0,1).toUpperCase() + temp[j].substring(1);
+                temp2 = temp2 + temp3 + " ";
+            }
+
+
+        }
+        else temp2=t.substring(0,1).toUpperCase() + t.substring(1);
+
+        return temp2;
     }
 }
