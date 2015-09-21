@@ -5,6 +5,7 @@ package f15.delta.com.fdoodle;
 
 import android.app.ProgressDialog;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -457,13 +459,26 @@ public void netparse(String response)
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upcoming);
 
-        setTitle("Upcoming Events Schedule");
+        setTitle("Upcoming Events");
+        Calendar c = Calendar.getInstance();
+        date = c.get(Calendar.DATE);
+        //Toast.makeText(this, String.valueOf(date),Toast.LENGTH_SHORT).show();
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setBackgroundColor(getResources().getColor(R.color.ColorUpcoming));
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         fileOps = new Read_write_file(this);
         p= Typeface.createFromAsset(getAssets(),"fonts/gnu.ttf");
+        Button b=(Button)findViewById(R.id.btn_notif);
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i=new Intent(UpcomingActivity.this,Notify.class);
+                UpcomingActivity.this.startActivity(i);
+
+
+            }
+        });
 
         /*pDialog = new ProgressDialog(this);
         pDialog.setMessage("Please wait...");
@@ -603,8 +618,10 @@ public void netparse(String response)
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_upcoming, menu);
         return true;
+
+
     }
 
 
@@ -618,8 +635,17 @@ public void netparse(String response)
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            parseevents();
+            optsel();
             return true;
         }
+        if (id == R.id.action_notif) {
+            Intent i=new Intent(UpcomingActivity.this,Notify.class);
+            this.startActivity(i);
+            return true;
+        }
+
+
 
         return super.onOptionsItemSelected(item);
     }

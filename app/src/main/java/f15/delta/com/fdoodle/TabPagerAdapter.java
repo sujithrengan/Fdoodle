@@ -25,10 +25,10 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
                 // Movies fragment activity
                 return new prizeFragment();
 
-            case 1:
+            case 2:
                 return new timeFragment();
 
-            case 2:
+            case 1:
                 return new contactFragment();
 
 
@@ -40,7 +40,7 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         // get item count - equal to number of tabs
-        return 3;
+        return 2;
     }
 
 }

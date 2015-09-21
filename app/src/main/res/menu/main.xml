@@ -18,7 +18,7 @@
 			<item android:id="@+id/menu_share" android:title="@string/menu_share"
 				android:orderInCategory="20" />
 
-    <item android:id="@+id/menu_sharefb" android:title="Share on Facebook"
+    <item android:id="@+id/menu_sharefb" android:title="Share for Raffle tickets"
         android:orderInCategory="20" />
 	
 

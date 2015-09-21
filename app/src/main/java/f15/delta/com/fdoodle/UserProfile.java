@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -52,12 +53,35 @@ public class UserProfile extends ActionBarActivity {
 
         setContentView(R.layout.activity_user_profile);
 
+        file=new Read_write_file(this);
 
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources()
                 .getColor(R.color.ColorProfile)));
         getSupportActionBar().setTitle(Html.fromHtml("<font color='#ffffff'> Profile </font>"));
         setData();
-        file = new Read_write_file(UserProfile.this);
+        buttonWork();
+    }
+
+    private void buttonWork()
+    {
+        final Button voucherOne = (Button) findViewById(R.id.voucherOne);
+        final Button voucherTwo = (Button) findViewById(R.id.voucherTwo);
+
+        voucherOne.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(UserProfile.this, "Voucher saved to gallery", Toast.LENGTH_SHORT).show();
+                voucherOne.setClickable(false);
+            }
+        });
+
+        voucherTwo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(UserProfile.this, "Voucher saved to gallery", Toast.LENGTH_SHORT).show();
+                voucherTwo.setClickable(false);
+            }
+        });
     }
 
 
@@ -73,8 +97,7 @@ public class UserProfile extends ActionBarActivity {
         fIDView.setTypeface(face);
         emailIDView = (TextView) findViewById(R.id.email_id);
         emailIDView.setTypeface(face);
-        couponView = (TextView) findViewById(R.id.couponText);
-        couponView.setTypeface(face);
+
 
         //Getting the details from SharedPreferences/Utilities
         //Get name, F_ID, college, email_ID, reg_events, couponCode
@@ -92,7 +115,7 @@ public class UserProfile extends ActionBarActivity {
         nameView.setText(nameView.getText().toString() + Profile.name + "!");
         fIDView.setText(fIDView.getText().toString() + String.valueOf(Profile.id));
         emailIDView.setText(emailIDView.getText().toString() + Profile.email);
-        couponView.setText(couponView.getText().toString() + Profile.coupon);
+        //couponView.setText(couponView.getText().toString() + Profile.coupon);
 
 
         //if(eventsArrayAdapter!=null)
@@ -121,7 +144,7 @@ public class UserProfile extends ActionBarActivity {
 
 
                         try {
-                            file.writeToFile(response,"event_reg.txt");
+                            file.writeToFile(response,"eventreglist.txt");
                             JSONObject jsonResponse = new JSONObject(response);
                             //Log.e("params",jsonResponse.toString());
                             int status = jsonResponse.getInt("status");
@@ -145,7 +168,7 @@ public class UserProfile extends ActionBarActivity {
 
                                         Log.e("param",j.toString());
                                         i++;
-                                        Profile.eventlist.add(stringParser(j.get("event_name").toString()));
+                                        Profile.eventlist.add(j.get("event_name").toString());
                                     }
                                     //eventsArrayAdapter = new ArrayAdapter<>(getApplicationContext(), R.layout.single_list_item,Profile.eventlist);
 
@@ -187,55 +210,67 @@ public class UserProfile extends ActionBarActivity {
                         //pDialog.dismiss();
                         error.printStackTrace();
                         lt.setText("Could not update :/");
-                        Toast.makeText(UserProfile.this, "Could not update, check your Internet", Toast.LENGTH_LONG).show();
-                        String response = file.readFromFile("event_reg.txt");
-
-
-                        JSONObject jsonResponse = null;
+                        String response=file.readFromFile("eventreglist.txt");
                         try {
-                            jsonResponse = new JSONObject(response);
-                            JSONArray elist=jsonResponse.getJSONArray("data");
-                            Log.e("paramllist",elist.toString());
-                            int i=0;
-                            Profile.eventlist.clear();
-                            while(i<elist.length())
-                            {
-                                JSONObject j=(JSONObject)elist.get(i);
-                                Log.e("param",j.toString());
-                                i++;
-                                Profile.eventlist.add(stringParser(j.get("event_name").toString()));
+                            file.writeToFile(response,"eventreglist.txt");
+                            JSONObject jsonResponse = new JSONObject(response);
+                            //Log.e("params",jsonResponse.toString());
+                            int status = jsonResponse.getInt("status");
+                            //String error = jsonResponse.getString("data");
+                            //pDialog.dismiss();
+                            switch (status) {
+                                case 0:
+                                    Toast.makeText(UserProfile.this, "There was a problem connecting to the server. Please check your username and password and try again.", Toast.LENGTH_LONG).show();
+
+
+                                    break;
+                                case 1:case 2:
+
+                                    JSONArray elist=jsonResponse.getJSONArray("data");
+                                    Log.e("paramllist",elist.toString());
+                                    int i=0;
+                                    Profile.eventlist.clear();
+                                    while(i<elist.length())
+                                    {
+                                        JSONObject j=(JSONObject)elist.get(i);
+
+                                        Log.e("param",j.toString());
+                                        i++;
+                                        Profile.eventlist.add(j.get("event_name").toString());
+                                    }
+                                    //eventsArrayAdapter = new ArrayAdapter<>(getApplicationContext(), R.layout.single_list_item,Profile.eventlist);
+
+
+
+                                    final Typeface mFont = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/gnu.ttf");
+                                    eventsArrayAdapter = new ArrayAdapter<String>(UserProfile.this, R.layout.single_list_item, R.id.regevent, Profile.eventlist) {
+                                        @Override
+                                        public View getView(int position, View convertView, ViewGroup parent) {
+                                            View view = super.getView(position, convertView, parent);
+                                            TextView textview = (TextView) view;
+                                            textview.setTypeface(mFont);
+                                            return textview;
+
+                                        }
+
+
+
+                                    };
+
+                                    lt.setVisibility(View.INVISIBLE);
+                                    regEventsList.setAdapter(eventsArrayAdapter);
+                                    //Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_LONG).show();
+                                    //startActivity(i);
+                                    //finish();
+                                    break;
+
+
                             }
-
-
-
-                            final Typeface mFont = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/gnu.ttf");
-                            eventsArrayAdapter = new ArrayAdapter<String>(UserProfile.this, R.layout.single_list_item, R.id.regevent, Profile.eventlist) {
-                                @Override
-                                public View getView(int position, View convertView, ViewGroup parent) {
-                                    View view = super.getView(position, convertView, parent);
-                                    TextView textview = (TextView) view;
-                                    textview.setTypeface(mFont);
-                                    return textview;
-
-                                }
-
-
-
-                            };
-
-                            lt.setVisibility(View.INVISIBLE);
-                            regEventsList.setAdapter(eventsArrayAdapter);
-                            //Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_LONG).show();
-                            //startActivity(i);
-                            //finish();
-
 
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
-
-
+                        Toast.makeText(UserProfile.this, "Error updating. Please try later.", Toast.LENGTH_LONG).show();
 
                     }
                 }
@@ -307,25 +342,5 @@ public class UserProfile extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-    public String stringParser(String t){
-        String temp2="";
-        if (t.contains("_")) {
-            // Split it.
-            //t.substring(0,t.indexOf("_")-1);
-
-
-
-            String[] temp = t.split("_");
-            for(int j=0;j<temp.length;j++) {
-                String temp3 = temp[j].substring(0,1).toUpperCase() + temp[j].substring(1);
-                temp2 = temp2 + temp3 + " ";
-            }
-
-
-        }
-        else temp2=t.substring(0,1).toUpperCase() + t.substring(1);
-
-        return temp2;
     }
 }
