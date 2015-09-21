@@ -2,6 +2,7 @@ package f15.delta.com.fdoodle;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
@@ -23,7 +24,16 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -56,6 +66,7 @@ import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -68,6 +79,8 @@ import java.util.regex.Pattern;
 public class LoginActivity extends Activity {
 
     private EditText username_text,password_text;
+    String regid = new String();
+    GoogleCloudMessaging gcm = null;
     private CheckBox checkBox;
     public String user_mail,password;
     public SharedPreferences prefs;
@@ -174,6 +187,7 @@ public class LoginActivity extends Activity {
                                     editor.putString("f_pass", password);
                                     Utilities.f_pass = password;
                                     editor.apply();
+                                    gcmreg();
                                     getDetails();
                                     //Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_LONG).show();
                                     //startActivity(i);
@@ -220,6 +234,33 @@ public class LoginActivity extends Activity {
         //Volley.newRequestQueue(this).add(postRequest);
 
     }
+
+
+    public void gcmreg()
+    {
+
+        new AsyncTask<Void, Void, String>() {
+            @Override
+            protected String doInBackground(Void... params) {
+                String msg = "";
+                try {
+                    if (gcm == null) {
+                        gcm = GoogleCloudMessaging.getInstance(getApplicationContext());
+                    }
+                    regid = gcm.register("835229264934");
+                    msg = regid;
+                    pregister(LoginActivity.this, regid);
+
+                } catch (IOException ex) {
+                    msg = "Error :" + ex.getMessage();
+                    Log.e("gcm_status", msg);
+                }
+                return msg;
+            }
+        }.execute(null, null, null);
+    }
+
+
     public void getDetails(){
 
         final ProgressDialog pDialog = new ProgressDialog(this);
@@ -372,6 +413,96 @@ public class LoginActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    void pregister(final Context context, final String regId) {
+        new AsyncTask<Void, Void, String>() {
+            @Override
+            protected String doInBackground(Void... params) {
+                String msg = "";
+                Log.e("gcm_status", "registering device (regId = " + regId + ")");
+                String serverUrl = Utilities.url_gcm;
+                Map<String, String> paramss = new HashMap<String, String>();
+                paramss.put("fes_id", Utilities.f_id);
+                paramss.put("gcm_id", regId);
+                for (int i = 1; i <= 1; i++) {
+                    Log.e("gcm_status", "Attempt #" + i + " to register");
+                    try {
+                        post(serverUrl, paramss);
+                        return msg;
+                    } catch (IOException e) {
+                        Log.e("gcm_status", "Failed to register on attempt " + i + ":" + e);
+                    }
+                }
+                return msg;
+            }
+
+            @Override
+            protected void onPostExecute(String msg) {
+            }
+        }.execute(null, null, null);
+
+    }
+
+    private void post(String endpoint, Map<String, String> params)
+            throws IOException {
+
+        URL url;
+        try {
+            url = new URL(endpoint);
+        } catch (MalformedURLException e) {
+            throw new IllegalArgumentException("invalid url: " + endpoint);
+        }
+        StringBuilder bodyBuilder = new StringBuilder();
+        Iterator<Map.Entry<String, String>> iterator = params.entrySet().iterator();
+        // constructs the POST body using the parameters
+        while (iterator.hasNext()) {
+            Map.Entry<String, String> param = iterator.next();
+            bodyBuilder.append(param.getKey()).append('=')
+                    .append(param.getValue());
+            if (iterator.hasNext()) {
+                bodyBuilder.append('&');
+            }
+        }
+        String body = bodyBuilder.toString();
+        byte[] bytes = body.getBytes();
+        Log.e("gcm_status", "Posting '" + body + "' to " + url);
+        HttpURLConnection conn = null;
+        try {
+            conn = (HttpURLConnection) url.openConnection();
+            conn.setDoOutput(true);
+            conn.setUseCaches(false);
+            conn.setFixedLengthStreamingMode(bytes.length);
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Content-Type",
+                    "application/x-www-form-urlencoded;charset=UTF-8");
+            // post the request
+            OutputStream out = conn.getOutputStream();
+            out.write(bytes);
+            InputStream in = conn.getInputStream();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+            String line;
+            try {
+                while ((line = reader.readLine()) != null) {
+                    Log.e("check", line);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            out.close();
+        } finally {
+            if (conn != null) {
+                conn.disconnect();
+            }
+        }
     }
 
 }

@@ -170,5 +170,6 @@
     <string name="title_activity_dummy">dummyActivity</string>
     <string name="title_activity_event">EventActivity</string>
     <string name="title_activity_single_">Single_Activity</string>
+    <string name="title_activity_notify">Notify</string>
 
 </resources>

@@ -3,9 +3,15 @@
     package="f15.delta.com.fdoodle" >
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.SET_WALLPAPER" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <permission
+        android:name="f15.delta.com.fdoodle.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="f15.delta.com.fdoodle.permission.C2D_MESSAGE" />
 
 
     <application
@@ -18,11 +24,11 @@
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
+
         <provider
             android:name="com.facebook.FacebookContentProvider"
             android:authorities="com.facebook.app.FacebookContentProvider507440182763591"
             android:exported="true" />
-
 
         <activity
             android:name=".MainActivity"
@@ -70,8 +76,8 @@
         </activity>
         <activity
             android:name=".ScheduleActivity"
-            android:theme="@style/AppTheme2"
-            android:label="@string/title_activity_schedule" >
+            android:label="@string/title_activity_schedule"
+            android:theme="@style/AppTheme2" >
         </activity>
         <activity
             android:name=".PopupActivity"
@@ -113,8 +119,25 @@
         <activity
             android:name=".Single_Activity"
             android:label="@string/title_activity_single_"
-            android:theme="@style/AppTheme2">
+            android:theme="@style/AppTheme2" >
         </activity>
+        <activity
+            android:name=".Notify"
+            android:label="@string/title_activity_notify" >
+        </activity>
+
+        <receiver
+            android:name=".GCMBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+
+                <category android:name="com.example.shreenivas.gcmtest" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name=".GCMMessagerHandler" />
+
     </application>
 
 </manifest>

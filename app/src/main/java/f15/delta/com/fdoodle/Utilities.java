@@ -16,9 +16,11 @@ public class Utilities
 
 
 
+
     public static String url_events="https://api.festember.com/events/list";
     public static String url_eventsdesc="https://api.festember.com/events/desclist";
     public static String url_registerevent="https://";
+    public static String url_gcm="https://festember.com/~kousik/festember-app-gcm/register.php";
     public static String url_profile_events="https://api.festember.com/user/getEvents";
     public static String url_raffle="https://festember.com/final15/festember15api/festember-raffle/raffleapi.php";
     public static String url_reg = "https://api.festember.com/user/register";
