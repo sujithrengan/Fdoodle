@@ -11,6 +11,10 @@ public class Utilities
 {
 
 
+    public static int screen_width;
+    public static int screen_height;
+
+
 
     public static String url_events="https://api.festember.com/events/list";
     public static String url_eventsdesc="https://api.festember.com/events/desclist";

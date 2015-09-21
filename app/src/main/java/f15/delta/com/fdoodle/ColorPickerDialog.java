@@ -26,10 +26,14 @@ import android.graphics.RectF;
 import android.graphics.Shader;
 import android.graphics.SweepGradient;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
 
 public class ColorPickerDialog extends Dialog {
+
+    public int screen_width;
+    public int screen_height;
 
 	public interface OnColorChangedListener {
 		void colorChanged(int color);
@@ -58,7 +62,7 @@ public class ColorPickerDialog extends Dialog {
 			mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 			mPaint.setShader(s);
 			mPaint.setStyle(Paint.Style.STROKE);
-			mPaint.setStrokeWidth(32);
+			mPaint.setStrokeWidth(64*Utilities.screen_width/480);
 
 			mLinearColors = getColors(color);
 			Shader shader = new LinearGradient(0, 0, Center_X * 2, 0,
@@ -67,7 +71,7 @@ public class ColorPickerDialog extends Dialog {
 			mGradientPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 			mGradientPaint.setStyle(Paint.Style.STROKE);
 			mGradientPaint.setShader(shader);
-			mGradientPaint.setStrokeWidth(32);
+			mGradientPaint.setStrokeWidth(64*Utilities.screen_width/480);
 
 			mCenterPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 			mCenterPaint.setColor(color);
@@ -122,7 +126,7 @@ public class ColorPickerDialog extends Dialog {
 			mGradientPaint.setShader(shader);
 
 			canvas.translate(-Center_X, 0);
-			canvas.drawLine(0, r + 50, Center_X * 2, r + 50, mGradientPaint);
+			canvas.drawLine(0, r + 100*Utilities.screen_width/480, Center_X * 2, r + 100*Utilities.screen_width/480, mGradientPaint);
 		}
 
 		@Override
@@ -136,13 +140,13 @@ public class ColorPickerDialog extends Dialog {
 			 * Math.ceil(parentHeight*.5);
 			 */
 
-			setMeasuredDimension(Center_X * 2, Center_Y * 2 + 70);
+			setMeasuredDimension(Center_X * 2, Center_Y * 2 + 140*Utilities.screen_width/480);
 		}
 
-		private static int Center_X = 110;
-		private static int Center_Y = 100;
-		private static final int CENTER_RADIUS = 32;
-		private static final int COLOR_CIRCLE = 100;
+		private static int Center_X = 220*Utilities.screen_width/480;
+		private static int Center_Y = 200*Utilities.screen_width/480;
+		private static final int CENTER_RADIUS = 64*Utilities.screen_width/480;
+		private static final int COLOR_CIRCLE = 200*Utilities.screen_width/480;
 
 		private int ave(int s, int d, float p) {
 			return s + Math.round(p * (d - s));
@@ -239,6 +243,9 @@ public class ColorPickerDialog extends Dialog {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+
+
 		OnColorChangedListener l = new OnColorChangedListener() {
 			public void colorChanged(int color) {
 				mListener.colorChanged(color);

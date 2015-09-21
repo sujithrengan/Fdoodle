@@ -156,8 +156,9 @@ public class SplashActivity extends Activity {
         setContentView(R.layout.activity_splash);
         DisplayMetrics displaymetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-        screen_height = displaymetrics.heightPixels;
-        screen_width = displaymetrics.widthPixels;
+        screen_height =Utilities.screen_height= displaymetrics.heightPixels;
+        screen_width =Utilities.screen_width= displaymetrics.widthPixels;
+
         myHandler = new Handler();
         bm=(TextView)findViewById(R.id.bmtext);
         fileOps = new Read_write_file(this);
