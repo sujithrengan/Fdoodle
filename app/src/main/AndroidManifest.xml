@@ -19,7 +19,6 @@
         android:hardwareAccelerated="false"
         android:icon="@drawable/festember_logo_old"
         android:label="@string/app_name"
-
         android:largeHeap="true"
         android:theme="@style/AppTheme" >
         <meta-data
@@ -50,7 +49,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".SplashActivity"
-            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             android:label="" >
             <intent-filter>
@@ -61,7 +59,6 @@
         </activity>
         <activity
             android:name=".Hscreen"
-            android:screenOrientation="portrait"
             android:label="@string/title_activity_hscreen" >
         </activity>
         <activity
@@ -71,76 +68,59 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
             android:name=".RaffleActivity"
-            android:screenOrientation="portrait"
             android:label="@string/title_activity_raffle" >
         </activity>
         <activity
             android:name=".UpcomingActivity"
-            android:screenOrientation="portrait"
             android:label="@string/title_activity_upcoming"
             android:theme="@style/Theme.AppCompat.NoActionBar" >
         </activity>
         <activity
             android:name=".ScheduleActivity"
-            android:screenOrientation="portrait"
             android:label="@string/title_activity_schedule"
             android:theme="@style/AppTheme2" >
         </activity>
         <activity
             android:name=".PopupActivity"
-            android:screenOrientation="portrait"
             android:label="@string/title_activity_popup"
             android:theme="@android:style/Theme.Holo.Dialog.NoActionBar.MinWidth" >
         </activity>
         <activity
             android:name=".UserProfile"
-            android:screenOrientation="portrait"
             android:label="@string/title_activity_user_profile" >
         </activity>
         <activity
             android:name=".QRCodeLogin"
-            android:screenOrientation="portrait"
             android:label="@string/title_activity_qrcode_login" >
         </activity>
         <activity
             android:name=".QRCodeWelcomePage"
-            android:screenOrientation="portrait"
             android:label="@string/title_activity_qrcode_welcome_page" >
         </activity>
         <activity
             android:name=".QRSplashScreen"
-            android:screenOrientation="portrait"
             android:label="@string/title_activity_qrsplash_screen" >
         </activity>
         <activity
             android:name=".LoginActivity"
-            android:screenOrientation="portrait"
             android:label="@string/title_activity_login" >
         </activity>
         <activity
             android:name=".RegisterActivity"
-            android:screenOrientation="portrait"
             android:label="@string/title_activity_register" >
         </activity>
         <activity
             android:name=".ClusterPage"
-            android:screenOrientation="portrait"
             android:label="@string/title_activity_cluster_page" >
         </activity>
-        <activity
-            android:name=".EventActivity"
-            android:screenOrientation="portrait"
-            android:label="@string/title_activity_event" >
-        </activity>
+
         <activity
             android:name=".Single_Activity"
-            android:screenOrientation="portrait"
             android:label="@string/title_activity_single_"
             android:theme="@style/AppTheme2" >
         </activity>
         <activity
             android:name=".Notify"
-            android:screenOrientation="portrait"
             android:label="Notifications" >
         </activity>
 

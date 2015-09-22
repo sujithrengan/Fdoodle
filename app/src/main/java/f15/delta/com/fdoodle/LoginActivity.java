@@ -212,7 +212,7 @@ public class LoginActivity extends Activity {
                     public void onErrorResponse(VolleyError error) {
                         pDialog.dismiss();
                         error.printStackTrace();
-                        Toast.makeText(LoginActivity.this, "Error", Toast.LENGTH_LONG).show();
+                        Toast.makeText(LoginActivity.this, "Please check your internet", Toast.LENGTH_LONG).show();
 
                     }
                 }

@@ -870,7 +870,7 @@ public class RegisterActivity extends Activity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         error.printStackTrace();
-                        Toast.makeText(RegisterActivity.this,"Fail",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegisterActivity.this,"Please check your internet",Toast.LENGTH_SHORT).show();
                         pDialog.dismiss();
                         signUp.setEnabled(true);
                     }
